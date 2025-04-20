@@ -14,23 +14,33 @@ import 'account_related/account.dart' as _i2;
 import 'account_related/account_project_bridge.dart' as _i3;
 import 'account_related/active_translations.dart' as _i4;
 import 'account_related/plan_tier.dart' as _i5;
-import 'account_related/projects.dart' as _i6;
-import 'account_related/subscription_recurrency.dart' as _i7;
-import 'account_related/translation_path_contexts.dart' as _i8;
-import 'translation/label_locale.dart' as _i9;
+import 'account_related/project_code_base.dart' as _i6;
+import 'account_related/projects.dart' as _i7;
+import 'account_related/subscription_recurrency.dart' as _i8;
+import 'account_related/translation_path_contexts.dart' as _i9;
+import 'project/arb_keys_appearances_path.dart' as _i10;
+import 'project/code_base_file.dart' as _i11;
+import 'project/code_base_folder.dart' as _i12;
+import 'project/label_locale.dart' as _i13;
+import 'project/last_update_sha_stamp.dart' as _i14;
+import 'project/project_arb_keys_appearances_path.dart' as _i15;
 import 'package:gobabel_client/src/protocol/account_related/projects.dart'
-    as _i10;
-import 'package:gobabel_client/src/protocol/account_related/active_translations.dart'
-    as _i11;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i12;
+    as _i16;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i17;
 export 'account_related/account.dart';
 export 'account_related/account_project_bridge.dart';
 export 'account_related/active_translations.dart';
 export 'account_related/plan_tier.dart';
+export 'account_related/project_code_base.dart';
 export 'account_related/projects.dart';
 export 'account_related/subscription_recurrency.dart';
 export 'account_related/translation_path_contexts.dart';
-export 'translation/label_locale.dart';
+export 'project/arb_keys_appearances_path.dart';
+export 'project/code_base_file.dart';
+export 'project/code_base_folder.dart';
+export 'project/label_locale.dart';
+export 'project/last_update_sha_stamp.dart';
+export 'project/project_arb_keys_appearances_path.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -58,17 +68,35 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i5.PlanTier) {
       return _i5.PlanTier.fromJson(data) as T;
     }
-    if (t == _i6.Project) {
-      return _i6.Project.fromJson(data) as T;
+    if (t == _i6.ProjectCodeBase) {
+      return _i6.ProjectCodeBase.fromJson(data) as T;
     }
-    if (t == _i7.SubscriptionRecurrency) {
-      return _i7.SubscriptionRecurrency.fromJson(data) as T;
+    if (t == _i7.Project) {
+      return _i7.Project.fromJson(data) as T;
     }
-    if (t == _i8.TranslationPathContext) {
-      return _i8.TranslationPathContext.fromJson(data) as T;
+    if (t == _i8.SubscriptionRecurrency) {
+      return _i8.SubscriptionRecurrency.fromJson(data) as T;
     }
-    if (t == _i9.LabelLocale) {
-      return _i9.LabelLocale.fromJson(data) as T;
+    if (t == _i9.TranslationPathContext) {
+      return _i9.TranslationPathContext.fromJson(data) as T;
+    }
+    if (t == _i10.ArbKeysAppearancesPath) {
+      return _i10.ArbKeysAppearancesPath.fromJson(data) as T;
+    }
+    if (t == _i11.CodeBaseFile) {
+      return _i11.CodeBaseFile.fromJson(data) as T;
+    }
+    if (t == _i12.CodeBaseFolder) {
+      return _i12.CodeBaseFolder.fromJson(data) as T;
+    }
+    if (t == _i13.LabelLocale) {
+      return _i13.LabelLocale.fromJson(data) as T;
+    }
+    if (t == _i14.LastUpdateShaStamp) {
+      return _i14.LastUpdateShaStamp.fromJson(data) as T;
+    }
+    if (t == _i15.ProjectArbKeysAppearancesPath) {
+      return _i15.ProjectArbKeysAppearancesPath.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.AccountInfo?>()) {
       return (data != null ? _i2.AccountInfo.fromJson(data) : null) as T;
@@ -83,19 +111,41 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i5.PlanTier?>()) {
       return (data != null ? _i5.PlanTier.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.Project?>()) {
-      return (data != null ? _i6.Project.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.ProjectCodeBase?>()) {
+      return (data != null ? _i6.ProjectCodeBase.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.SubscriptionRecurrency?>()) {
-      return (data != null ? _i7.SubscriptionRecurrency.fromJson(data) : null)
+    if (t == _i1.getType<_i7.Project?>()) {
+      return (data != null ? _i7.Project.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i8.SubscriptionRecurrency?>()) {
+      return (data != null ? _i8.SubscriptionRecurrency.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i8.TranslationPathContext?>()) {
-      return (data != null ? _i8.TranslationPathContext.fromJson(data) : null)
+    if (t == _i1.getType<_i9.TranslationPathContext?>()) {
+      return (data != null ? _i9.TranslationPathContext.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i9.LabelLocale?>()) {
-      return (data != null ? _i9.LabelLocale.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.ArbKeysAppearancesPath?>()) {
+      return (data != null ? _i10.ArbKeysAppearancesPath.fromJson(data) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i11.CodeBaseFile?>()) {
+      return (data != null ? _i11.CodeBaseFile.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i12.CodeBaseFolder?>()) {
+      return (data != null ? _i12.CodeBaseFolder.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i13.LabelLocale?>()) {
+      return (data != null ? _i13.LabelLocale.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i14.LastUpdateShaStamp?>()) {
+      return (data != null ? _i14.LastUpdateShaStamp.fromJson(data) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i15.ProjectArbKeysAppearancesPath?>()) {
+      return (data != null
+          ? _i15.ProjectArbKeysAppearancesPath.fromJson(data)
+          : null) as T;
     }
     if (t == _i1.getType<List<_i3.AccountProjectBridge>?>()) {
       return (data != null
@@ -118,18 +168,88 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           : null) as T;
     }
-    if (t == List<_i8.TranslationPathContext>) {
+    if (t == List<_i9.TranslationPathContext>) {
       return (data as List)
-          .map((e) => deserialize<_i8.TranslationPathContext>(e))
+          .map((e) => deserialize<_i9.TranslationPathContext>(e))
           .toList() as T;
+    }
+    if (t == Map<String, Set<String>>) {
+      return (data as Map).map((k, v) =>
+          MapEntry(deserialize<String>(k), deserialize<Set<String>>(v))) as T;
+    }
+    if (t == Set<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toSet() as T;
+    }
+    if (t == List<_i12.CodeBaseFolder>) {
+      return (data as List)
+          .map((e) => deserialize<_i12.CodeBaseFolder>(e))
+          .toList() as T;
+    }
+    if (t == List<_i11.CodeBaseFile>) {
+      return (data as List)
+          .map((e) => deserialize<_i11.CodeBaseFile>(e))
+          .toList() as T;
+    }
+    if (t == List<({String sha, DateTime updatedDate})>) {
+      return (data as List)
+          .map((e) => deserialize<({String sha, DateTime updatedDate})>(e))
+          .toList() as T;
+    }
+    if (t == _i1.getType<({String sha, DateTime updatedDate})>()) {
+      return (
+        sha: deserialize<String>(((data as Map)['n'] as Map)['sha']),
+        updatedDate: deserialize<DateTime>(data['n']['updatedDate']),
+      ) as T;
     }
     if (t == Map<String, String>) {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<String>(v))) as T;
     }
-    if (t == List<_i10.Project>) {
-      return (data as List).map((e) => deserialize<_i10.Project>(e)).toList()
+    if (t == List<_i16.Project>) {
+      return (data as List).map((e) => deserialize<_i16.Project>(e)).toList()
           as T;
+    }
+    if (t ==
+        _i1.getType<List<({String countryCode, String languageCode})>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) =>
+                  deserialize<({String countryCode, String languageCode})>(e))
+              .toList()
+          : null) as T;
+    }
+    if (t == _i1.getType<({String countryCode, String languageCode})>()) {
+      return (
+        countryCode:
+            deserialize<String>(((data as Map)['n'] as Map)['countryCode']),
+        languageCode: deserialize<String>(data['n']['languageCode']),
+      ) as T;
+    }
+    if (t == _i1.getType<({String countryCode, String languageCode})>()) {
+      return (
+        countryCode:
+            deserialize<String>(((data as Map)['n'] as Map)['countryCode']),
+        languageCode: deserialize<String>(data['n']['languageCode']),
+      ) as T;
+    }
+    if (t == _i1.getType<List<({String sha, DateTime updatedDate})>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<({String sha, DateTime updatedDate})>(e))
+              .toList()
+          : null) as T;
+    }
+    if (t == _i1.getType<({String sha, DateTime updatedDate})>()) {
+      return (
+        sha: deserialize<String>(((data as Map)['n'] as Map)['sha']),
+        updatedDate: deserialize<DateTime>(data['n']['updatedDate']),
+      ) as T;
+    }
+    if (t == _i1.getType<({String sha, DateTime updatedDate})>()) {
+      return (
+        sha: deserialize<String>(((data as Map)['n'] as Map)['sha']),
+        updatedDate: deserialize<DateTime>(data['n']['updatedDate']),
+      ) as T;
     }
     if (t == Map<String, Map<String, Map<String, String>>>) {
       return (data as Map).map((k, v) => MapEntry(deserialize<String>(k),
@@ -139,13 +259,20 @@ class Protocol extends _i1.SerializationManager {
       return (data as Map).map((k, v) => MapEntry(
           deserialize<String>(k), deserialize<Map<String, String>>(v))) as T;
     }
-    if (t == List<_i11.ActiveTranslations>) {
-      return (data as List)
-          .map((e) => deserialize<_i11.ActiveTranslations>(e))
-          .toList() as T;
+    if (t == _i1.getType<({String sha, DateTime updatedDate})>()) {
+      return (
+        sha: deserialize<String>(((data as Map)['n'] as Map)['sha']),
+        updatedDate: deserialize<DateTime>(data['n']['updatedDate']),
+      ) as T;
+    }
+    if (t == _i1.getType<({String sha, DateTime updatedDate})>()) {
+      return (
+        sha: deserialize<String>(((data as Map)['n'] as Map)['sha']),
+        updatedDate: deserialize<DateTime>(data['n']['updatedDate']),
+      ) as T;
     }
     try {
-      return _i12.Protocol().deserialize<T>(data, t);
+      return _i17.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -166,19 +293,37 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i5.PlanTier) {
       return 'PlanTier';
     }
-    if (data is _i6.Project) {
+    if (data is _i6.ProjectCodeBase) {
+      return 'ProjectCodeBase';
+    }
+    if (data is _i7.Project) {
       return 'Project';
     }
-    if (data is _i7.SubscriptionRecurrency) {
+    if (data is _i8.SubscriptionRecurrency) {
       return 'SubscriptionRecurrency';
     }
-    if (data is _i8.TranslationPathContext) {
+    if (data is _i9.TranslationPathContext) {
       return 'TranslationPathContext';
     }
-    if (data is _i9.LabelLocale) {
+    if (data is _i10.ArbKeysAppearancesPath) {
+      return 'ArbKeysAppearancesPath';
+    }
+    if (data is _i11.CodeBaseFile) {
+      return 'CodeBaseFile';
+    }
+    if (data is _i12.CodeBaseFolder) {
+      return 'CodeBaseFolder';
+    }
+    if (data is _i13.LabelLocale) {
       return 'LabelLocale';
     }
-    className = _i12.Protocol().getClassNameForObject(data);
+    if (data is _i14.LastUpdateShaStamp) {
+      return 'LastUpdateShaStamp';
+    }
+    if (data is _i15.ProjectArbKeysAppearancesPath) {
+      return 'ProjectArbKeysAppearancesPath';
+    }
+    className = _i17.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -203,22 +348,124 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'PlanTier') {
       return deserialize<_i5.PlanTier>(data['data']);
     }
+    if (dataClassName == 'ProjectCodeBase') {
+      return deserialize<_i6.ProjectCodeBase>(data['data']);
+    }
     if (dataClassName == 'Project') {
-      return deserialize<_i6.Project>(data['data']);
+      return deserialize<_i7.Project>(data['data']);
     }
     if (dataClassName == 'SubscriptionRecurrency') {
-      return deserialize<_i7.SubscriptionRecurrency>(data['data']);
+      return deserialize<_i8.SubscriptionRecurrency>(data['data']);
     }
     if (dataClassName == 'TranslationPathContext') {
-      return deserialize<_i8.TranslationPathContext>(data['data']);
+      return deserialize<_i9.TranslationPathContext>(data['data']);
+    }
+    if (dataClassName == 'ArbKeysAppearancesPath') {
+      return deserialize<_i10.ArbKeysAppearancesPath>(data['data']);
+    }
+    if (dataClassName == 'CodeBaseFile') {
+      return deserialize<_i11.CodeBaseFile>(data['data']);
+    }
+    if (dataClassName == 'CodeBaseFolder') {
+      return deserialize<_i12.CodeBaseFolder>(data['data']);
     }
     if (dataClassName == 'LabelLocale') {
-      return deserialize<_i9.LabelLocale>(data['data']);
+      return deserialize<_i13.LabelLocale>(data['data']);
+    }
+    if (dataClassName == 'LastUpdateShaStamp') {
+      return deserialize<_i14.LastUpdateShaStamp>(data['data']);
+    }
+    if (dataClassName == 'ProjectArbKeysAppearancesPath') {
+      return deserialize<_i15.ProjectArbKeysAppearancesPath>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i12.Protocol().deserializeByClassName(data);
+      return _i17.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
+}
+
+/// Maps any `Record`s known to this [Protocol] to their JSON representation
+///
+/// Throws in case the record type is not known.
+///
+/// This method will return `null` (only) for `null` inputs.
+Map<String, dynamic>? mapRecordToJson(Record? record) {
+  if (record == null) {
+    return null;
+  }
+  if (record is ({String countryCode, String languageCode})) {
+    return {
+      "n": {
+        "countryCode": record.countryCode,
+        "languageCode": record.languageCode,
+      },
+    };
+  }
+  if (record is ({String sha, DateTime updatedDate})) {
+    return {
+      "n": {
+        "sha": record.sha,
+        "updatedDate": record.updatedDate,
+      },
+    };
+  }
+  if (record is ({String sha, DateTime updatedDate})) {
+    return {
+      "n": {
+        "sha": record.sha,
+        "updatedDate": record.updatedDate,
+      },
+    };
+  }
+  throw Exception('Unsupported record type ${record.runtimeType}');
+}
+
+/// Maps container types (like [List], [Map], [Set]) containing [Record]s to their JSON representation.
+///
+/// It should not be called for [SerializableModel] types. These handle the "[Record] in container" mapping internally already.
+///
+/// It is only supposed to be called from generated protocol code.
+///
+/// Returns either a `List<dynamic>` (for List, Sets, and Maps with non-String keys) or a `Map<String, dynamic>` in case the input was a `Map<String, …>`.
+Object? mapRecordContainingContainerToJson(Object obj) {
+  if (obj is! Iterable && obj is! Map) {
+    throw ArgumentError.value(
+      obj,
+      'obj',
+      'The object to serialize should be of type List, Map, or Set',
+    );
+  }
+
+  dynamic mapIfNeeded(Object? obj) {
+    return switch (obj) {
+      Record record => mapRecordToJson(record),
+      Iterable iterable => mapRecordContainingContainerToJson(iterable),
+      Map map => mapRecordContainingContainerToJson(map),
+      Object? value => value,
+    };
+  }
+
+  switch (obj) {
+    case Map<String, dynamic>():
+      return {
+        for (var entry in obj.entries) entry.key: mapIfNeeded(entry.value),
+      };
+    case Map():
+      return [
+        for (var entry in obj.entries)
+          {
+            'k': mapIfNeeded(entry.key),
+            'v': mapIfNeeded(entry.value),
+          }
+      ];
+
+    case Iterable():
+      return [
+        for (var e in obj) mapIfNeeded(e),
+      ];
+  }
+
+  return obj;
 }

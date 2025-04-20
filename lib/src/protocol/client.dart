@@ -19,10 +19,12 @@ import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
     as _i5;
 import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
     as _i6;
-import 'package:gobabel_client/src/protocol/account_related/active_translations.dart'
+import 'package:gobabel_client/src/protocol/project/code_base_folder.dart'
     as _i7;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i8;
-import 'protocol.dart' as _i9;
+import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+    as _i8;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i9;
+import 'protocol.dart' as _i10;
 
 /// {@category Endpoint}
 class EndpointAccount extends _i1.EndpointRef {
@@ -47,7 +49,7 @@ class EndpointArb extends _i1.EndpointRef {
   String get name => 'arb';
 
   _i2.Future<void> update({
-    required String shaIdentifier,
+    required BigInt projectShaIdentifier,
     required String languageCode,
     required String countryCode,
     required Map<String, String> updatedLabels,
@@ -56,7 +58,7 @@ class EndpointArb extends _i1.EndpointRef {
         'arb',
         'update',
         {
-          'shaIdentifier': shaIdentifier,
+          'projectShaIdentifier': projectShaIdentifier,
           'languageCode': languageCode,
           'countryCode': countryCode,
           'updatedLabels': updatedLabels,
@@ -110,6 +112,61 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointSyncProject extends _i1.EndpointRef {
+  EndpointSyncProject(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'syncProject';
+
+  _i2.Future<List<({String countryCode, String languageCode})>?>
+      getProjectLanguages({
+    required String token,
+    required BigInt projectShaIdentifier,
+  }) =>
+          caller.callServerEndpoint<
+              List<({String countryCode, String languageCode})>?>(
+            'syncProject',
+            'getProjectLanguages',
+            {
+              'token': token,
+              'projectShaIdentifier': projectShaIdentifier,
+            },
+          );
+
+  _i2.Future<List<({String sha, DateTime updatedDate})>?> getLastUpdateSha({
+    required String token,
+    required BigInt projectShaIdentifier,
+  }) =>
+      caller.callServerEndpoint<List<({String sha, DateTime updatedDate})>?>(
+        'syncProject',
+        'getLastUpdateSha',
+        {
+          'token': token,
+          'projectShaIdentifier': projectShaIdentifier,
+        },
+      );
+
+  _i2.Future<void> sincronize({
+    required String token,
+    required BigInt projectShaIdentifier,
+    required String name,
+    required String description,
+    required _i7.CodeBaseFolder projectCodeBase,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'syncProject',
+        'sincronize',
+        {
+          'token': token,
+          'projectShaIdentifier': projectShaIdentifier,
+          'name': name,
+          'description': description,
+          'projectCodeBase': projectCodeBase,
+        },
+      );
+}
+
+/// {@category Endpoint}
 class EndpointTier extends _i1.EndpointRef {
   EndpointTier(_i1.EndpointCaller caller) : super(caller);
 
@@ -142,20 +199,20 @@ class EndpointTranslateArb extends _i1.EndpointRef {
   /// Return the result of the translated strings
   _i2.Future<Map<String, String>> translate({
     required String token,
-    required String shaIdentifier,
+    required BigInt projectShaIdentifier,
     required String toLanguageCode,
     required String toCountryCode,
     required String referenceLanguageCode,
     required String referenceCountryCode,
     required Map<String, String> referenceArb,
-    required Map<String, String> pathsOfKeys,
+    required _i8.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
         'translateArb',
         'translate',
         {
           'token': token,
-          'shaIdentifier': shaIdentifier,
+          'projectShaIdentifier': projectShaIdentifier,
           'toLanguageCode': toLanguageCode,
           'toCountryCode': toCountryCode,
           'referenceLanguageCode': referenceLanguageCode,
@@ -175,39 +232,32 @@ class EndpointTranslations extends _i1.EndpointRef {
 
   _i2.Future<void> updateTranslations({
     required String token,
-    required String shaIdentifier,
+    required String currentCommitSha,
+    required BigInt projectShaIdentifier,
     required Map<String, Map<String, Map<String, String>>> madeTranslations,
+    required _i7.CodeBaseFolder projectCodeBase,
+    required _i8.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<void>(
         'translations',
         'updateTranslations',
         {
           'token': token,
-          'shaIdentifier': shaIdentifier,
+          'currentCommitSha': currentCommitSha,
+          'projectShaIdentifier': projectShaIdentifier,
           'madeTranslations': madeTranslations,
-        },
-      );
-
-  _i2.Future<List<_i7.ActiveTranslations>> getTranslations({
-    required String token,
-    required String shaIdentifier,
-  }) =>
-      caller.callServerEndpoint<List<_i7.ActiveTranslations>>(
-        'translations',
-        'getTranslations',
-        {
-          'token': token,
-          'shaIdentifier': shaIdentifier,
+          'projectCodeBase': projectCodeBase,
+          'pathsOfKeys': pathsOfKeys,
         },
       );
 }
 
 class Modules {
   Modules(Client client) {
-    auth = _i8.Caller(client);
+    auth = _i9.Caller(client);
   }
 
-  late final _i8.Caller auth;
+  late final _i9.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -226,7 +276,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i9.Protocol(),
+          _i10.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -240,6 +290,7 @@ class Client extends _i1.ServerpodClientShared {
     arb = EndpointArb(this);
     project = EndpointProject(this);
     subscriptionsManagement = EndpointSubscriptionsManagement(this);
+    syncProject = EndpointSyncProject(this);
     tier = EndpointTier(this);
     translateArb = EndpointTranslateArb(this);
     translations = EndpointTranslations(this);
@@ -253,6 +304,8 @@ class Client extends _i1.ServerpodClientShared {
   late final EndpointProject project;
 
   late final EndpointSubscriptionsManagement subscriptionsManagement;
+
+  late final EndpointSyncProject syncProject;
 
   late final EndpointTier tier;
 
@@ -268,6 +321,7 @@ class Client extends _i1.ServerpodClientShared {
         'arb': arb,
         'project': project,
         'subscriptionsManagement': subscriptionsManagement,
+        'syncProject': syncProject,
         'tier': tier,
         'translateArb': translateArb,
         'translations': translations,
