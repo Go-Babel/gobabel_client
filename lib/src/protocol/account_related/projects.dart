@@ -21,6 +21,8 @@ abstract class Project implements _i1.SerializableModel {
   Project._({
     this.id,
     required this.name,
+    required this.createdAt,
+    required this.updatedAt,
     required this.currentTranslationsKeysSha,
     required this.projectShaIdentifier,
     required this.description,
@@ -40,6 +42,8 @@ abstract class Project implements _i1.SerializableModel {
   factory Project({
     int? id,
     required String name,
+    required DateTime createdAt,
+    required DateTime updatedAt,
     required String currentTranslationsKeysSha,
     required BigInt projectShaIdentifier,
     required String description,
@@ -60,6 +64,10 @@ abstract class Project implements _i1.SerializableModel {
     return Project(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
+      createdAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+      updatedAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
       currentTranslationsKeysSha:
           jsonSerialization['currentTranslationsKeysSha'] as String,
       projectShaIdentifier: _i1.BigIntJsonExtension.fromJson(
@@ -106,6 +114,10 @@ abstract class Project implements _i1.SerializableModel {
 
   String name;
 
+  DateTime createdAt;
+
+  DateTime updatedAt;
+
   String currentTranslationsKeysSha;
 
   BigInt projectShaIdentifier;
@@ -140,6 +152,8 @@ abstract class Project implements _i1.SerializableModel {
   Project copyWith({
     int? id,
     String? name,
+    DateTime? createdAt,
+    DateTime? updatedAt,
     String? currentTranslationsKeysSha,
     BigInt? projectShaIdentifier,
     String? description,
@@ -160,6 +174,8 @@ abstract class Project implements _i1.SerializableModel {
     return {
       if (id != null) 'id': id,
       'name': name,
+      'createdAt': createdAt.toJson(),
+      'updatedAt': updatedAt.toJson(),
       'currentTranslationsKeysSha': currentTranslationsKeysSha,
       'projectShaIdentifier': projectShaIdentifier.toJson(),
       'description': description,
@@ -194,6 +210,8 @@ class _ProjectImpl extends Project {
   _ProjectImpl({
     int? id,
     required String name,
+    required DateTime createdAt,
+    required DateTime updatedAt,
     required String currentTranslationsKeysSha,
     required BigInt projectShaIdentifier,
     required String description,
@@ -211,6 +229,8 @@ class _ProjectImpl extends Project {
   }) : super._(
           id: id,
           name: name,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
           currentTranslationsKeysSha: currentTranslationsKeysSha,
           projectShaIdentifier: projectShaIdentifier,
           description: description,
@@ -234,6 +254,8 @@ class _ProjectImpl extends Project {
   Project copyWith({
     Object? id = _Undefined,
     String? name,
+    DateTime? createdAt,
+    DateTime? updatedAt,
     String? currentTranslationsKeysSha,
     BigInt? projectShaIdentifier,
     String? description,
@@ -252,6 +274,8 @@ class _ProjectImpl extends Project {
     return Project(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
       currentTranslationsKeysSha:
           currentTranslationsKeysSha ?? this.currentTranslationsKeysSha,
       projectShaIdentifier: projectShaIdentifier ?? this.projectShaIdentifier,

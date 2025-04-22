@@ -19,14 +19,12 @@ import 'account_related/projects.dart' as _i7;
 import 'account_related/subscription_recurrency.dart' as _i8;
 import 'account_related/translation_path_contexts.dart' as _i9;
 import 'project/arb_keys_appearances_path.dart' as _i10;
-import 'project/code_base_file.dart' as _i11;
-import 'project/code_base_folder.dart' as _i12;
-import 'project/label_locale.dart' as _i13;
-import 'project/last_update_sha_stamp.dart' as _i14;
-import 'project/project_arb_keys_appearances_path.dart' as _i15;
+import 'project/label_locale.dart' as _i11;
+import 'project/last_update_sha_stamp.dart' as _i12;
+import 'project/project_arb_keys_appearances_path.dart' as _i13;
 import 'package:gobabel_client/src/protocol/account_related/projects.dart'
-    as _i16;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i17;
+    as _i14;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i15;
 export 'account_related/account.dart';
 export 'account_related/account_project_bridge.dart';
 export 'account_related/active_translations.dart';
@@ -36,8 +34,6 @@ export 'account_related/projects.dart';
 export 'account_related/subscription_recurrency.dart';
 export 'account_related/translation_path_contexts.dart';
 export 'project/arb_keys_appearances_path.dart';
-export 'project/code_base_file.dart';
-export 'project/code_base_folder.dart';
 export 'project/label_locale.dart';
 export 'project/last_update_sha_stamp.dart';
 export 'project/project_arb_keys_appearances_path.dart';
@@ -83,20 +79,14 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i10.ArbKeysAppearancesPath) {
       return _i10.ArbKeysAppearancesPath.fromJson(data) as T;
     }
-    if (t == _i11.CodeBaseFile) {
-      return _i11.CodeBaseFile.fromJson(data) as T;
+    if (t == _i11.LabelLocale) {
+      return _i11.LabelLocale.fromJson(data) as T;
     }
-    if (t == _i12.CodeBaseFolder) {
-      return _i12.CodeBaseFolder.fromJson(data) as T;
+    if (t == _i12.LastUpdateShaStamp) {
+      return _i12.LastUpdateShaStamp.fromJson(data) as T;
     }
-    if (t == _i13.LabelLocale) {
-      return _i13.LabelLocale.fromJson(data) as T;
-    }
-    if (t == _i14.LastUpdateShaStamp) {
-      return _i14.LastUpdateShaStamp.fromJson(data) as T;
-    }
-    if (t == _i15.ProjectArbKeysAppearancesPath) {
-      return _i15.ProjectArbKeysAppearancesPath.fromJson(data) as T;
+    if (t == _i13.ProjectArbKeysAppearancesPath) {
+      return _i13.ProjectArbKeysAppearancesPath.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.AccountInfo?>()) {
       return (data != null ? _i2.AccountInfo.fromJson(data) : null) as T;
@@ -129,22 +119,16 @@ class Protocol extends _i1.SerializationManager {
       return (data != null ? _i10.ArbKeysAppearancesPath.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i11.CodeBaseFile?>()) {
-      return (data != null ? _i11.CodeBaseFile.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.LabelLocale?>()) {
+      return (data != null ? _i11.LabelLocale.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.CodeBaseFolder?>()) {
-      return (data != null ? _i12.CodeBaseFolder.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i13.LabelLocale?>()) {
-      return (data != null ? _i13.LabelLocale.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i14.LastUpdateShaStamp?>()) {
-      return (data != null ? _i14.LastUpdateShaStamp.fromJson(data) : null)
+    if (t == _i1.getType<_i12.LastUpdateShaStamp?>()) {
+      return (data != null ? _i12.LastUpdateShaStamp.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i15.ProjectArbKeysAppearancesPath?>()) {
+    if (t == _i1.getType<_i13.ProjectArbKeysAppearancesPath?>()) {
       return (data != null
-          ? _i15.ProjectArbKeysAppearancesPath.fromJson(data)
+          ? _i13.ProjectArbKeysAppearancesPath.fromJson(data)
           : null) as T;
     }
     if (t == _i1.getType<List<_i3.AccountProjectBridge>?>()) {
@@ -153,6 +137,9 @@ class Protocol extends _i1.SerializationManager {
               .map((e) => deserialize<_i3.AccountProjectBridge>(e))
               .toList()
           : null) as T;
+    }
+    if (t == Set<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toSet() as T;
     }
     if (t == _i1.getType<List<_i4.ActiveTranslations>?>()) {
       return (data != null
@@ -177,19 +164,6 @@ class Protocol extends _i1.SerializationManager {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<Set<String>>(v))) as T;
     }
-    if (t == Set<String>) {
-      return (data as List).map((e) => deserialize<String>(e)).toSet() as T;
-    }
-    if (t == List<_i12.CodeBaseFolder>) {
-      return (data as List)
-          .map((e) => deserialize<_i12.CodeBaseFolder>(e))
-          .toList() as T;
-    }
-    if (t == List<_i11.CodeBaseFile>) {
-      return (data as List)
-          .map((e) => deserialize<_i11.CodeBaseFile>(e))
-          .toList() as T;
-    }
     if (t == List<({String sha, DateTime updatedDate})>) {
       return (data as List)
           .map((e) => deserialize<({String sha, DateTime updatedDate})>(e))
@@ -205,30 +179,69 @@ class Protocol extends _i1.SerializationManager {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<String>(v))) as T;
     }
-    if (t == List<_i16.Project>) {
-      return (data as List).map((e) => deserialize<_i16.Project>(e)).toList()
+    if (t == List<_i14.Project>) {
+      return (data as List).map((e) => deserialize<_i14.Project>(e)).toList()
           as T;
     }
     if (t ==
-        _i1.getType<List<({String countryCode, String languageCode})>?>()) {
-      return (data != null
-          ? (data as List)
-              .map((e) =>
-                  deserialize<({String countryCode, String languageCode})>(e))
-              .toList()
-          : null) as T;
+        _i1.getType<
+            ({
+              List<
+                  ({
+                    String countryCode,
+                    String downloadLink,
+                    String languageCode
+                  })> languages,
+              DateTime updatedAt
+            })>()) {
+      return (
+        languages: deserialize<
+            List<
+                ({
+                  String countryCode,
+                  String downloadLink,
+                  String languageCode
+                })>>(((data as Map)['n'] as Map)['languages']),
+        updatedAt: deserialize<DateTime>(data['n']['updatedAt']),
+      ) as T;
     }
-    if (t == _i1.getType<({String countryCode, String languageCode})>()) {
+    if (t ==
+        List<
+            ({String countryCode, String downloadLink, String languageCode})>) {
+      return (data as List)
+          .map((e) => deserialize<
+              ({
+                String countryCode,
+                String downloadLink,
+                String languageCode
+              })>(e))
+          .toList() as T;
+    }
+    if (t ==
+        _i1.getType<
+            ({
+              String countryCode,
+              String downloadLink,
+              String languageCode
+            })>()) {
       return (
         countryCode:
             deserialize<String>(((data as Map)['n'] as Map)['countryCode']),
+        downloadLink: deserialize<String>(data['n']['downloadLink']),
         languageCode: deserialize<String>(data['n']['languageCode']),
       ) as T;
     }
-    if (t == _i1.getType<({String countryCode, String languageCode})>()) {
+    if (t ==
+        _i1.getType<
+            ({
+              String countryCode,
+              String downloadLink,
+              String languageCode
+            })>()) {
       return (
         countryCode:
             deserialize<String>(((data as Map)['n'] as Map)['countryCode']),
+        downloadLink: deserialize<String>(data['n']['downloadLink']),
         languageCode: deserialize<String>(data['n']['languageCode']),
       ) as T;
     }
@@ -251,6 +264,9 @@ class Protocol extends _i1.SerializationManager {
         updatedDate: deserialize<DateTime>(data['n']['updatedDate']),
       ) as T;
     }
+    if (t == Set<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toSet() as T;
+    }
     if (t == Map<String, Map<String, Map<String, String>>>) {
       return (data as Map).map((k, v) => MapEntry(deserialize<String>(k),
           deserialize<Map<String, Map<String, String>>>(v))) as T;
@@ -272,7 +288,7 @@ class Protocol extends _i1.SerializationManager {
       ) as T;
     }
     try {
-      return _i17.Protocol().deserialize<T>(data, t);
+      return _i15.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -308,22 +324,16 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i10.ArbKeysAppearancesPath) {
       return 'ArbKeysAppearancesPath';
     }
-    if (data is _i11.CodeBaseFile) {
-      return 'CodeBaseFile';
-    }
-    if (data is _i12.CodeBaseFolder) {
-      return 'CodeBaseFolder';
-    }
-    if (data is _i13.LabelLocale) {
+    if (data is _i11.LabelLocale) {
       return 'LabelLocale';
     }
-    if (data is _i14.LastUpdateShaStamp) {
+    if (data is _i12.LastUpdateShaStamp) {
       return 'LastUpdateShaStamp';
     }
-    if (data is _i15.ProjectArbKeysAppearancesPath) {
+    if (data is _i13.ProjectArbKeysAppearancesPath) {
       return 'ProjectArbKeysAppearancesPath';
     }
-    className = _i17.Protocol().getClassNameForObject(data);
+    className = _i15.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -363,24 +373,18 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'ArbKeysAppearancesPath') {
       return deserialize<_i10.ArbKeysAppearancesPath>(data['data']);
     }
-    if (dataClassName == 'CodeBaseFile') {
-      return deserialize<_i11.CodeBaseFile>(data['data']);
-    }
-    if (dataClassName == 'CodeBaseFolder') {
-      return deserialize<_i12.CodeBaseFolder>(data['data']);
-    }
     if (dataClassName == 'LabelLocale') {
-      return deserialize<_i13.LabelLocale>(data['data']);
+      return deserialize<_i11.LabelLocale>(data['data']);
     }
     if (dataClassName == 'LastUpdateShaStamp') {
-      return deserialize<_i14.LastUpdateShaStamp>(data['data']);
+      return deserialize<_i12.LastUpdateShaStamp>(data['data']);
     }
     if (dataClassName == 'ProjectArbKeysAppearancesPath') {
-      return deserialize<_i15.ProjectArbKeysAppearancesPath>(data['data']);
+      return deserialize<_i13.ProjectArbKeysAppearancesPath>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i17.Protocol().deserializeByClassName(data);
+      return _i15.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
@@ -395,10 +399,31 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
   if (record == null) {
     return null;
   }
-  if (record is ({String countryCode, String languageCode})) {
+  if (record is ({
+    List<
+        ({
+          String countryCode,
+          String downloadLink,
+          String languageCode
+        })> languages,
+    DateTime updatedAt
+  })) {
+    return {
+      "n": {
+        "languages": record.languages,
+        "updatedAt": record.updatedAt,
+      },
+    };
+  }
+  if (record is ({
+    String countryCode,
+    String downloadLink,
+    String languageCode
+  })) {
     return {
       "n": {
         "countryCode": record.countryCode,
+        "downloadLink": record.downloadLink,
         "languageCode": record.languageCode,
       },
     };

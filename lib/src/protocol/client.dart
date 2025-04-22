@@ -19,12 +19,10 @@ import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
     as _i5;
 import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
     as _i6;
-import 'package:gobabel_client/src/protocol/project/code_base_folder.dart'
-    as _i7;
 import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
-    as _i8;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i9;
-import 'protocol.dart' as _i10;
+    as _i7;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i8;
+import 'protocol.dart' as _i9;
 
 /// {@category Endpoint}
 class EndpointAccount extends _i1.EndpointRef {
@@ -118,20 +116,31 @@ class EndpointSyncProject extends _i1.EndpointRef {
   @override
   String get name => 'syncProject';
 
-  _i2.Future<List<({String countryCode, String languageCode})>?>
-      getProjectLanguages({
-    required String token,
-    required BigInt projectShaIdentifier,
-  }) =>
-          caller.callServerEndpoint<
-              List<({String countryCode, String languageCode})>?>(
-            'syncProject',
-            'getProjectLanguages',
-            {
-              'token': token,
-              'projectShaIdentifier': projectShaIdentifier,
-            },
-          );
+  _i2.Future<
+      ({
+        List<
+            ({
+              String countryCode,
+              String downloadLink,
+              String languageCode
+            })> languages,
+        DateTime updatedAt
+      })> getProjectLanguages(
+          {required BigInt projectShaIdentifier}) =>
+      caller.callServerEndpoint<
+          ({
+            List<
+                ({
+                  String countryCode,
+                  String downloadLink,
+                  String languageCode
+                })> languages,
+            DateTime updatedAt
+          })>(
+        'syncProject',
+        'getProjectLanguages',
+        {'projectShaIdentifier': projectShaIdentifier},
+      );
 
   _i2.Future<List<({String sha, DateTime updatedDate})>?> getLastUpdateSha({
     required String token,
@@ -151,7 +160,7 @@ class EndpointSyncProject extends _i1.EndpointRef {
     required BigInt projectShaIdentifier,
     required String name,
     required String description,
-    required _i7.CodeBaseFolder projectCodeBase,
+    required Set<String> projectCodeBaseFolders,
   }) =>
       caller.callServerEndpoint<void>(
         'syncProject',
@@ -161,7 +170,7 @@ class EndpointSyncProject extends _i1.EndpointRef {
           'projectShaIdentifier': projectShaIdentifier,
           'name': name,
           'description': description,
-          'projectCodeBase': projectCodeBase,
+          'projectCodeBaseFolders': projectCodeBaseFolders,
         },
       );
 }
@@ -205,7 +214,7 @@ class EndpointTranslateArb extends _i1.EndpointRef {
     required String referenceLanguageCode,
     required String referenceCountryCode,
     required Map<String, String> referenceArb,
-    required _i8.ArbKeysAppearancesPath pathsOfKeys,
+    required _i7.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
         'translateArb',
@@ -235,8 +244,8 @@ class EndpointTranslations extends _i1.EndpointRef {
     required String currentCommitSha,
     required BigInt projectShaIdentifier,
     required Map<String, Map<String, Map<String, String>>> madeTranslations,
-    required _i7.CodeBaseFolder projectCodeBase,
-    required _i8.ArbKeysAppearancesPath pathsOfKeys,
+    required Set<String> projectCodeBaseFolders,
+    required _i7.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<void>(
         'translations',
@@ -246,7 +255,7 @@ class EndpointTranslations extends _i1.EndpointRef {
           'currentCommitSha': currentCommitSha,
           'projectShaIdentifier': projectShaIdentifier,
           'madeTranslations': madeTranslations,
-          'projectCodeBase': projectCodeBase,
+          'projectCodeBaseFolders': projectCodeBaseFolders,
           'pathsOfKeys': pathsOfKeys,
         },
       );
@@ -254,10 +263,10 @@ class EndpointTranslations extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i9.Caller(client);
+    auth = _i8.Caller(client);
   }
 
-  late final _i9.Caller auth;
+  late final _i8.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -276,7 +285,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i10.Protocol(),
+          _i9.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

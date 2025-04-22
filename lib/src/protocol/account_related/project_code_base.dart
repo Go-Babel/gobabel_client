@@ -10,27 +10,27 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../project/code_base_folder.dart' as _i2;
 
 abstract class ProjectCodeBase implements _i1.SerializableModel {
   ProjectCodeBase._({
     this.id,
     this.projectId,
-    required this.codeBase,
+    required this.codeBaseFolders,
   });
 
   factory ProjectCodeBase({
     int? id,
     int? projectId,
-    required _i2.CodeBaseFolder codeBase,
+    required Set<String> codeBaseFolders,
   }) = _ProjectCodeBaseImpl;
 
   factory ProjectCodeBase.fromJson(Map<String, dynamic> jsonSerialization) {
     return ProjectCodeBase(
       id: jsonSerialization['id'] as int?,
       projectId: jsonSerialization['projectId'] as int?,
-      codeBase: _i2.CodeBaseFolder.fromJson(
-          (jsonSerialization['codeBase'] as Map<String, dynamic>)),
+      codeBaseFolders: _i1.SetJsonExtension.fromJson(
+          (jsonSerialization['codeBaseFolders'] as List),
+          itemFromJson: (e) => e as String)!,
     );
   }
 
@@ -41,7 +41,7 @@ abstract class ProjectCodeBase implements _i1.SerializableModel {
 
   int? projectId;
 
-  _i2.CodeBaseFolder codeBase;
+  Set<String> codeBaseFolders;
 
   /// Returns a shallow copy of this [ProjectCodeBase]
   /// with some or all fields replaced by the given arguments.
@@ -49,14 +49,14 @@ abstract class ProjectCodeBase implements _i1.SerializableModel {
   ProjectCodeBase copyWith({
     int? id,
     int? projectId,
-    _i2.CodeBaseFolder? codeBase,
+    Set<String>? codeBaseFolders,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       if (projectId != null) 'projectId': projectId,
-      'codeBase': codeBase.toJson(),
+      'codeBaseFolders': codeBaseFolders.toJson(),
     };
   }
 
@@ -72,11 +72,11 @@ class _ProjectCodeBaseImpl extends ProjectCodeBase {
   _ProjectCodeBaseImpl({
     int? id,
     int? projectId,
-    required _i2.CodeBaseFolder codeBase,
+    required Set<String> codeBaseFolders,
   }) : super._(
           id: id,
           projectId: projectId,
-          codeBase: codeBase,
+          codeBaseFolders: codeBaseFolders,
         );
 
   /// Returns a shallow copy of this [ProjectCodeBase]
@@ -86,12 +86,13 @@ class _ProjectCodeBaseImpl extends ProjectCodeBase {
   ProjectCodeBase copyWith({
     Object? id = _Undefined,
     Object? projectId = _Undefined,
-    _i2.CodeBaseFolder? codeBase,
+    Set<String>? codeBaseFolders,
   }) {
     return ProjectCodeBase(
       id: id is int? ? id : this.id,
       projectId: projectId is int? ? projectId : this.projectId,
-      codeBase: codeBase ?? this.codeBase.copyWith(),
+      codeBaseFolders:
+          codeBaseFolders ?? this.codeBaseFolders.map((e0) => e0).toSet(),
     );
   }
 }
