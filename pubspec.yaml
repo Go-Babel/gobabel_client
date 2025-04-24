@@ -1,5 +1,6 @@
 name: gobabel_client
 description: The GO-Babel client package.
+version: 0.0.1
 repository: https://github.com/Go-Babel/gobabel_client
 issue_tracker: https://github.com/Go-Babel/gobabel_client/issues
 
