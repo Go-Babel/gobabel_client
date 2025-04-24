@@ -1,5 +1,7 @@
 name: gobabel_client
-description: Starting point for a Serverpod client.
+description: The GO-Babel client package.
+repository: https://github.com/Go-Babel/gobabel_client
+issue_tracker: https://github.com/Go-Babel/gobabel_client/issues
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
