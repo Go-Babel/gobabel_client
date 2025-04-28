@@ -13,16 +13,20 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:gobabel_client/src/protocol/account_related/account.dart'
     as _i3;
-import 'package:gobabel_client/src/protocol/account_related/projects.dart'
+import 'package:gobabel_client/src/protocol/account_related/localizated_context.dart'
     as _i4;
-import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
+import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
     as _i5;
-import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
+import 'package:gobabel_client/src/protocol/account_related/project.dart'
     as _i6;
-import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
     as _i7;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i8;
-import 'protocol.dart' as _i9;
+import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
+    as _i8;
+import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+    as _i9;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i10;
+import 'protocol.dart' as _i11;
 
 /// {@category Endpoint}
 class EndpointAccount extends _i1.EndpointRef {
@@ -65,16 +69,102 @@ class EndpointArb extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointPrivateContext extends _i1.EndpointRef {
+  EndpointPrivateContext(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'privateContext';
+
+  _i2.Future<
+      ({
+        String appContextText,
+        List<_i4.LocalizatedContext> localizedContexts,
+        _i5.ProjectCodeBase? projectCodeBase
+      })> contextData(
+          {required BigInt projectShaIdentifier}) =>
+      caller.callServerEndpoint<
+          ({
+            String appContextText,
+            List<_i4.LocalizatedContext> localizedContexts,
+            _i5.ProjectCodeBase? projectCodeBase
+          })>(
+        'privateContext',
+        'contextData',
+        {'projectShaIdentifier': projectShaIdentifier},
+      );
+
+  /// Will return the created label
+  _i2.Future<void> updateAppMainContext({
+    required BigInt projectShaIdentifier,
+    required String appContextText,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'privateContext',
+        'updateAppMainContext',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'appContextText': appContextText,
+        },
+      );
+
+  _i2.Future<void> deleteLocalizationLabel({
+    required BigInt projectShaIdentifier,
+    required int localizatedContextId,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'privateContext',
+        'deleteLocalizationLabel',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'localizatedContextId': localizatedContextId,
+        },
+      );
+
+  /// Will return the created label
+  _i2.Future<_i4.LocalizatedContext> createLocalizationLabel({
+    required BigInt projectShaIdentifier,
+    required String contextString,
+    required String path,
+  }) =>
+      caller.callServerEndpoint<_i4.LocalizatedContext>(
+        'privateContext',
+        'createLocalizationLabel',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'contextString': contextString,
+          'path': path,
+        },
+      );
+
+  _i2.Future<_i4.LocalizatedContext> updateLocalizationLabel({
+    required BigInt projectShaIdentifier,
+    required int localizedContextId,
+    required String contextString,
+    required String path,
+  }) =>
+      caller.callServerEndpoint<_i4.LocalizatedContext>(
+        'privateContext',
+        'updateLocalizationLabel',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'localizedContextId': localizedContextId,
+          'contextString': contextString,
+          'path': path,
+        },
+      );
+}
+
+/// {@category Endpoint}
 class EndpointProject extends _i1.EndpointRef {
   EndpointProject(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'project';
 
-  _i2.Future<List<_i4.Project>> getProject() =>
-      caller.callServerEndpoint<List<_i4.Project>>(
+  _i2.Future<List<_i6.Project>> getProjects() =>
+      caller.callServerEndpoint<List<_i6.Project>>(
         'project',
-        'getProject',
+        'getProjects',
         {},
       );
 }
@@ -94,8 +184,8 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
       );
 
   _i2.Future<String> generateSubscriptionPaymentLink({
-    required _i5.PlanTier targetPlanTier,
-    required _i6.SubscriptionRecurrency targetSubscriptionRecurrency,
+    required _i7.PlanTier targetPlanTier,
+    required _i8.SubscriptionRecurrency targetSubscriptionRecurrency,
     required String userEmail,
   }) =>
       caller.callServerEndpoint<String>(
@@ -155,6 +245,7 @@ class EndpointSyncProject extends _i1.EndpointRef {
         },
       );
 
+  /// languageCode and countryCode will only be required if project is new
   _i2.Future<void> sincronize({
     required String token,
     required BigInt projectShaIdentifier,
@@ -185,7 +276,7 @@ class EndpointTier extends _i1.EndpointRef {
   _i2.Future<void> updatePlayerTier({
     required String email,
     required String tierManipulationKey,
-    required _i5.PlanTier planTier,
+    required _i7.PlanTier planTier,
   }) =>
       caller.callServerEndpoint<void>(
         'tier',
@@ -214,7 +305,7 @@ class EndpointTranslateArb extends _i1.EndpointRef {
     required String referenceLanguageCode,
     required String referenceCountryCode,
     required Map<String, String> referenceArb,
-    required _i7.ArbKeysAppearancesPath pathsOfKeys,
+    required _i9.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
         'translateArb',
@@ -245,7 +336,7 @@ class EndpointTranslations extends _i1.EndpointRef {
     required BigInt projectShaIdentifier,
     required Map<String, Map<String, Map<String, String>>> madeTranslations,
     required Set<String> projectCodeBaseFolders,
-    required _i7.ArbKeysAppearancesPath pathsOfKeys,
+    required _i9.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<void>(
         'translations',
@@ -263,10 +354,10 @@ class EndpointTranslations extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i8.Caller(client);
+    auth = _i10.Caller(client);
   }
 
-  late final _i8.Caller auth;
+  late final _i10.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -285,7 +376,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i9.Protocol(),
+          _i11.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -297,6 +388,7 @@ class Client extends _i1.ServerpodClientShared {
         ) {
     account = EndpointAccount(this);
     arb = EndpointArb(this);
+    privateContext = EndpointPrivateContext(this);
     project = EndpointProject(this);
     subscriptionsManagement = EndpointSubscriptionsManagement(this);
     syncProject = EndpointSyncProject(this);
@@ -309,6 +401,8 @@ class Client extends _i1.ServerpodClientShared {
   late final EndpointAccount account;
 
   late final EndpointArb arb;
+
+  late final EndpointPrivateContext privateContext;
 
   late final EndpointProject project;
 
@@ -328,6 +422,7 @@ class Client extends _i1.ServerpodClientShared {
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'account': account,
         'arb': arb,
+        'privateContext': privateContext,
         'project': project,
         'subscriptionsManagement': subscriptionsManagement,
         'syncProject': syncProject,

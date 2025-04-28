@@ -11,39 +11,34 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../account_related/project.dart' as _i2;
-import '../account_related/account.dart' as _i3;
 
-abstract class AccountProjectBridge implements _i1.SerializableModel {
-  AccountProjectBridge._({
+abstract class LocalizatedContext implements _i1.SerializableModel {
+  LocalizatedContext._({
     this.id,
+    required this.contextString,
+    required this.path,
     required this.projectId,
     this.project,
-    required this.accountId,
-    this.account,
   });
 
-  factory AccountProjectBridge({
+  factory LocalizatedContext({
     int? id,
+    required String contextString,
+    required String path,
     required int projectId,
     _i2.Project? project,
-    required int accountId,
-    _i3.AccountInfo? account,
-  }) = _AccountProjectBridgeImpl;
+  }) = _LocalizatedContextImpl;
 
-  factory AccountProjectBridge.fromJson(
-      Map<String, dynamic> jsonSerialization) {
-    return AccountProjectBridge(
+  factory LocalizatedContext.fromJson(Map<String, dynamic> jsonSerialization) {
+    return LocalizatedContext(
       id: jsonSerialization['id'] as int?,
+      contextString: jsonSerialization['contextString'] as String,
+      path: jsonSerialization['path'] as String,
       projectId: jsonSerialization['projectId'] as int,
       project: jsonSerialization['project'] == null
           ? null
           : _i2.Project.fromJson(
               (jsonSerialization['project'] as Map<String, dynamic>)),
-      accountId: jsonSerialization['accountId'] as int,
-      account: jsonSerialization['account'] == null
-          ? null
-          : _i3.AccountInfo.fromJson(
-              (jsonSerialization['account'] as Map<String, dynamic>)),
     );
   }
 
@@ -52,32 +47,32 @@ abstract class AccountProjectBridge implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
+  String contextString;
+
+  String path;
+
   int projectId;
 
   _i2.Project? project;
 
-  int accountId;
-
-  _i3.AccountInfo? account;
-
-  /// Returns a shallow copy of this [AccountProjectBridge]
+  /// Returns a shallow copy of this [LocalizatedContext]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  AccountProjectBridge copyWith({
+  LocalizatedContext copyWith({
     int? id,
+    String? contextString,
+    String? path,
     int? projectId,
     _i2.Project? project,
-    int? accountId,
-    _i3.AccountInfo? account,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'contextString': contextString,
+      'path': path,
       'projectId': projectId,
       if (project != null) 'project': project?.toJson(),
-      'accountId': accountId,
-      if (account != null) 'account': account?.toJson(),
     };
   }
 
@@ -89,38 +84,38 @@ abstract class AccountProjectBridge implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _AccountProjectBridgeImpl extends AccountProjectBridge {
-  _AccountProjectBridgeImpl({
+class _LocalizatedContextImpl extends LocalizatedContext {
+  _LocalizatedContextImpl({
     int? id,
+    required String contextString,
+    required String path,
     required int projectId,
     _i2.Project? project,
-    required int accountId,
-    _i3.AccountInfo? account,
   }) : super._(
           id: id,
+          contextString: contextString,
+          path: path,
           projectId: projectId,
           project: project,
-          accountId: accountId,
-          account: account,
         );
 
-  /// Returns a shallow copy of this [AccountProjectBridge]
+  /// Returns a shallow copy of this [LocalizatedContext]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  AccountProjectBridge copyWith({
+  LocalizatedContext copyWith({
     Object? id = _Undefined,
+    String? contextString,
+    String? path,
     int? projectId,
     Object? project = _Undefined,
-    int? accountId,
-    Object? account = _Undefined,
   }) {
-    return AccountProjectBridge(
+    return LocalizatedContext(
       id: id is int? ? id : this.id,
+      contextString: contextString ?? this.contextString,
+      path: path ?? this.path,
       projectId: projectId ?? this.projectId,
       project: project is _i2.Project? ? project : this.project?.copyWith(),
-      accountId: accountId ?? this.accountId,
-      account: account is _i3.AccountInfo? ? account : this.account?.copyWith(),
     );
   }
 }

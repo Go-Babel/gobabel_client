@@ -13,26 +13,30 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'account_related/account.dart' as _i2;
 import 'account_related/account_project_bridge.dart' as _i3;
 import 'account_related/active_translations.dart' as _i4;
-import 'account_related/plan_tier.dart' as _i5;
-import 'account_related/project_code_base.dart' as _i6;
-import 'account_related/projects.dart' as _i7;
-import 'account_related/subscription_recurrency.dart' as _i8;
-import 'account_related/translation_path_contexts.dart' as _i9;
+import 'account_related/localizated_context.dart' as _i5;
+import 'account_related/plan_tier.dart' as _i6;
+import 'account_related/project.dart' as _i7;
+import 'account_related/project_code_base.dart' as _i8;
+import 'account_related/subscription_recurrency.dart' as _i9;
 import 'project/arb_keys_appearances_path.dart' as _i10;
 import 'project/label_locale.dart' as _i11;
 import 'project/last_update_sha_stamp.dart' as _i12;
 import 'project/project_arb_keys_appearances_path.dart' as _i13;
-import 'package:gobabel_client/src/protocol/account_related/projects.dart'
+import 'package:gobabel_client/src/protocol/account_related/localizated_context.dart'
     as _i14;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i15;
+import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
+    as _i15;
+import 'package:gobabel_client/src/protocol/account_related/project.dart'
+    as _i16;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i17;
 export 'account_related/account.dart';
 export 'account_related/account_project_bridge.dart';
 export 'account_related/active_translations.dart';
+export 'account_related/localizated_context.dart';
 export 'account_related/plan_tier.dart';
+export 'account_related/project.dart';
 export 'account_related/project_code_base.dart';
-export 'account_related/projects.dart';
 export 'account_related/subscription_recurrency.dart';
-export 'account_related/translation_path_contexts.dart';
 export 'project/arb_keys_appearances_path.dart';
 export 'project/label_locale.dart';
 export 'project/last_update_sha_stamp.dart';
@@ -61,20 +65,20 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i4.ActiveTranslations) {
       return _i4.ActiveTranslations.fromJson(data) as T;
     }
-    if (t == _i5.PlanTier) {
-      return _i5.PlanTier.fromJson(data) as T;
+    if (t == _i5.LocalizatedContext) {
+      return _i5.LocalizatedContext.fromJson(data) as T;
     }
-    if (t == _i6.ProjectCodeBase) {
-      return _i6.ProjectCodeBase.fromJson(data) as T;
+    if (t == _i6.PlanTier) {
+      return _i6.PlanTier.fromJson(data) as T;
     }
     if (t == _i7.Project) {
       return _i7.Project.fromJson(data) as T;
     }
-    if (t == _i8.SubscriptionRecurrency) {
-      return _i8.SubscriptionRecurrency.fromJson(data) as T;
+    if (t == _i8.ProjectCodeBase) {
+      return _i8.ProjectCodeBase.fromJson(data) as T;
     }
-    if (t == _i9.TranslationPathContext) {
-      return _i9.TranslationPathContext.fromJson(data) as T;
+    if (t == _i9.SubscriptionRecurrency) {
+      return _i9.SubscriptionRecurrency.fromJson(data) as T;
     }
     if (t == _i10.ArbKeysAppearancesPath) {
       return _i10.ArbKeysAppearancesPath.fromJson(data) as T;
@@ -98,21 +102,20 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i4.ActiveTranslations?>()) {
       return (data != null ? _i4.ActiveTranslations.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i5.PlanTier?>()) {
-      return (data != null ? _i5.PlanTier.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.LocalizatedContext?>()) {
+      return (data != null ? _i5.LocalizatedContext.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.ProjectCodeBase?>()) {
-      return (data != null ? _i6.ProjectCodeBase.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.PlanTier?>()) {
+      return (data != null ? _i6.PlanTier.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i7.Project?>()) {
       return (data != null ? _i7.Project.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.SubscriptionRecurrency?>()) {
-      return (data != null ? _i8.SubscriptionRecurrency.fromJson(data) : null)
-          as T;
+    if (t == _i1.getType<_i8.ProjectCodeBase?>()) {
+      return (data != null ? _i8.ProjectCodeBase.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.TranslationPathContext?>()) {
-      return (data != null ? _i9.TranslationPathContext.fromJson(data) : null)
+    if (t == _i1.getType<_i9.SubscriptionRecurrency?>()) {
+      return (data != null ? _i9.SubscriptionRecurrency.fromJson(data) : null)
           as T;
     }
     if (t == _i1.getType<_i10.ArbKeysAppearancesPath?>()) {
@@ -138,9 +141,6 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           : null) as T;
     }
-    if (t == Set<String>) {
-      return (data as List).map((e) => deserialize<String>(e)).toSet() as T;
-    }
     if (t == _i1.getType<List<_i4.ActiveTranslations>?>()) {
       return (data != null
           ? (data as List)
@@ -155,10 +155,15 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           : null) as T;
     }
-    if (t == List<_i9.TranslationPathContext>) {
-      return (data as List)
-          .map((e) => deserialize<_i9.TranslationPathContext>(e))
-          .toList() as T;
+    if (t == _i1.getType<List<_i5.LocalizatedContext>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i5.LocalizatedContext>(e))
+              .toList()
+          : null) as T;
+    }
+    if (t == Set<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toSet() as T;
     }
     if (t == Map<String, Set<String>>) {
       return (data as Map).map((k, v) =>
@@ -179,8 +184,30 @@ class Protocol extends _i1.SerializationManager {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<String>(v))) as T;
     }
-    if (t == List<_i14.Project>) {
-      return (data as List).map((e) => deserialize<_i14.Project>(e)).toList()
+    if (t ==
+        _i1.getType<
+            ({
+              String appContextText,
+              List<_i14.LocalizatedContext> localizedContexts,
+              _i15.ProjectCodeBase? projectCodeBase
+            })>()) {
+      return (
+        appContextText:
+            deserialize<String>(((data as Map)['n'] as Map)['appContextText']),
+        localizedContexts: deserialize<List<_i14.LocalizatedContext>>(
+            data['n']['localizedContexts']),
+        projectCodeBase: ((data)['n'] as Map)['projectCodeBase'] == null
+            ? null
+            : deserialize<_i15.ProjectCodeBase>(data['n']['projectCodeBase']),
+      ) as T;
+    }
+    if (t == List<_i14.LocalizatedContext>) {
+      return (data as List)
+          .map((e) => deserialize<_i14.LocalizatedContext>(e))
+          .toList() as T;
+    }
+    if (t == List<_i16.Project>) {
+      return (data as List).map((e) => deserialize<_i16.Project>(e)).toList()
           as T;
     }
     if (t ==
@@ -288,7 +315,7 @@ class Protocol extends _i1.SerializationManager {
       ) as T;
     }
     try {
-      return _i15.Protocol().deserialize<T>(data, t);
+      return _i17.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -306,20 +333,20 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i4.ActiveTranslations) {
       return 'ActiveTranslations';
     }
-    if (data is _i5.PlanTier) {
-      return 'PlanTier';
+    if (data is _i5.LocalizatedContext) {
+      return 'LocalizatedContext';
     }
-    if (data is _i6.ProjectCodeBase) {
-      return 'ProjectCodeBase';
+    if (data is _i6.PlanTier) {
+      return 'PlanTier';
     }
     if (data is _i7.Project) {
       return 'Project';
     }
-    if (data is _i8.SubscriptionRecurrency) {
-      return 'SubscriptionRecurrency';
+    if (data is _i8.ProjectCodeBase) {
+      return 'ProjectCodeBase';
     }
-    if (data is _i9.TranslationPathContext) {
-      return 'TranslationPathContext';
+    if (data is _i9.SubscriptionRecurrency) {
+      return 'SubscriptionRecurrency';
     }
     if (data is _i10.ArbKeysAppearancesPath) {
       return 'ArbKeysAppearancesPath';
@@ -333,7 +360,7 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i13.ProjectArbKeysAppearancesPath) {
       return 'ProjectArbKeysAppearancesPath';
     }
-    className = _i15.Protocol().getClassNameForObject(data);
+    className = _i17.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -355,20 +382,20 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'ActiveTranslations') {
       return deserialize<_i4.ActiveTranslations>(data['data']);
     }
-    if (dataClassName == 'PlanTier') {
-      return deserialize<_i5.PlanTier>(data['data']);
+    if (dataClassName == 'LocalizatedContext') {
+      return deserialize<_i5.LocalizatedContext>(data['data']);
     }
-    if (dataClassName == 'ProjectCodeBase') {
-      return deserialize<_i6.ProjectCodeBase>(data['data']);
+    if (dataClassName == 'PlanTier') {
+      return deserialize<_i6.PlanTier>(data['data']);
     }
     if (dataClassName == 'Project') {
       return deserialize<_i7.Project>(data['data']);
     }
-    if (dataClassName == 'SubscriptionRecurrency') {
-      return deserialize<_i8.SubscriptionRecurrency>(data['data']);
+    if (dataClassName == 'ProjectCodeBase') {
+      return deserialize<_i8.ProjectCodeBase>(data['data']);
     }
-    if (dataClassName == 'TranslationPathContext') {
-      return deserialize<_i9.TranslationPathContext>(data['data']);
+    if (dataClassName == 'SubscriptionRecurrency') {
+      return deserialize<_i9.SubscriptionRecurrency>(data['data']);
     }
     if (dataClassName == 'ArbKeysAppearancesPath') {
       return deserialize<_i10.ArbKeysAppearancesPath>(data['data']);
@@ -384,7 +411,7 @@ class Protocol extends _i1.SerializationManager {
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i15.Protocol().deserializeByClassName(data);
+      return _i17.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
@@ -398,6 +425,19 @@ class Protocol extends _i1.SerializationManager {
 Map<String, dynamic>? mapRecordToJson(Record? record) {
   if (record == null) {
     return null;
+  }
+  if (record is ({
+    String appContextText,
+    List<_i14.LocalizatedContext> localizedContexts,
+    _i15.ProjectCodeBase? projectCodeBase
+  })) {
+    return {
+      "n": {
+        "appContextText": record.appContextText,
+        "localizedContexts": record.localizedContexts,
+        "projectCodeBase": record.projectCodeBase,
+      },
+    };
   }
   if (record is ({
     List<

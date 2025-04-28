@@ -12,7 +12,7 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../account_related/active_translations.dart' as _i2;
 import '../account_related/account_project_bridge.dart' as _i3;
-import '../account_related/translation_path_contexts.dart' as _i4;
+import '../account_related/localizated_context.dart' as _i4;
 import '../project/last_update_sha_stamp.dart' as _i5;
 import '../account_related/project_code_base.dart' as _i6;
 import '../project/project_arb_keys_appearances_path.dart' as _i7;
@@ -30,7 +30,7 @@ abstract class Project implements _i1.SerializableModel {
     this.activeTranslations,
     this.accountprojectbridge,
     required this.appContextText,
-    required this.contextsPerPath,
+    this.localizatedContext,
     required this.lastShaStampId,
     this.lastShaStamp,
     required this.codeBaseId,
@@ -51,7 +51,7 @@ abstract class Project implements _i1.SerializableModel {
     List<_i2.ActiveTranslations>? activeTranslations,
     List<_i3.AccountProjectBridge>? accountprojectbridge,
     required String appContextText,
-    required List<_i4.TranslationPathContext> contextsPerPath,
+    List<_i4.LocalizatedContext>? localizatedContext,
     required int lastShaStampId,
     _i5.LastUpdateShaStamp? lastShaStamp,
     required int codeBaseId,
@@ -83,9 +83,9 @@ abstract class Project implements _i1.SerializableModel {
               _i3.AccountProjectBridge.fromJson((e as Map<String, dynamic>)))
           .toList(),
       appContextText: jsonSerialization['appContextText'] as String,
-      contextsPerPath: (jsonSerialization['contextsPerPath'] as List)
-          .map((e) =>
-              _i4.TranslationPathContext.fromJson((e as Map<String, dynamic>)))
+      localizatedContext: (jsonSerialization['localizatedContext'] as List?)
+          ?.map((e) =>
+              _i4.LocalizatedContext.fromJson((e as Map<String, dynamic>)))
           .toList(),
       lastShaStampId: jsonSerialization['lastShaStampId'] as int,
       lastShaStamp: jsonSerialization['lastShaStamp'] == null
@@ -132,7 +132,7 @@ abstract class Project implements _i1.SerializableModel {
 
   String appContextText;
 
-  List<_i4.TranslationPathContext> contextsPerPath;
+  List<_i4.LocalizatedContext>? localizatedContext;
 
   int lastShaStampId;
 
@@ -161,7 +161,7 @@ abstract class Project implements _i1.SerializableModel {
     List<_i2.ActiveTranslations>? activeTranslations,
     List<_i3.AccountProjectBridge>? accountprojectbridge,
     String? appContextText,
-    List<_i4.TranslationPathContext>? contextsPerPath,
+    List<_i4.LocalizatedContext>? localizatedContext,
     int? lastShaStampId,
     _i5.LastUpdateShaStamp? lastShaStamp,
     int? codeBaseId,
@@ -187,7 +187,9 @@ abstract class Project implements _i1.SerializableModel {
         'accountprojectbridge':
             accountprojectbridge?.toJson(valueToJson: (v) => v.toJson()),
       'appContextText': appContextText,
-      'contextsPerPath': contextsPerPath.toJson(valueToJson: (v) => v.toJson()),
+      if (localizatedContext != null)
+        'localizatedContext':
+            localizatedContext?.toJson(valueToJson: (v) => v.toJson()),
       'lastShaStampId': lastShaStampId,
       if (lastShaStamp != null) 'lastShaStamp': lastShaStamp?.toJson(),
       'codeBaseId': codeBaseId,
@@ -219,7 +221,7 @@ class _ProjectImpl extends Project {
     List<_i2.ActiveTranslations>? activeTranslations,
     List<_i3.AccountProjectBridge>? accountprojectbridge,
     required String appContextText,
-    required List<_i4.TranslationPathContext> contextsPerPath,
+    List<_i4.LocalizatedContext>? localizatedContext,
     required int lastShaStampId,
     _i5.LastUpdateShaStamp? lastShaStamp,
     required int codeBaseId,
@@ -238,7 +240,7 @@ class _ProjectImpl extends Project {
           activeTranslations: activeTranslations,
           accountprojectbridge: accountprojectbridge,
           appContextText: appContextText,
-          contextsPerPath: contextsPerPath,
+          localizatedContext: localizatedContext,
           lastShaStampId: lastShaStampId,
           lastShaStamp: lastShaStamp,
           codeBaseId: codeBaseId,
@@ -263,7 +265,7 @@ class _ProjectImpl extends Project {
     Object? activeTranslations = _Undefined,
     Object? accountprojectbridge = _Undefined,
     String? appContextText,
-    List<_i4.TranslationPathContext>? contextsPerPath,
+    Object? localizatedContext = _Undefined,
     int? lastShaStampId,
     Object? lastShaStamp = _Undefined,
     int? codeBaseId,
@@ -289,8 +291,9 @@ class _ProjectImpl extends Project {
               ? accountprojectbridge
               : this.accountprojectbridge?.map((e0) => e0.copyWith()).toList(),
       appContextText: appContextText ?? this.appContextText,
-      contextsPerPath: contextsPerPath ??
-          this.contextsPerPath.map((e0) => e0.copyWith()).toList(),
+      localizatedContext: localizatedContext is List<_i4.LocalizatedContext>?
+          ? localizatedContext
+          : this.localizatedContext?.map((e0) => e0.copyWith()).toList(),
       lastShaStampId: lastShaStampId ?? this.lastShaStampId,
       lastShaStamp: lastShaStamp is _i5.LastUpdateShaStamp?
           ? lastShaStamp
