@@ -29,26 +29,26 @@ import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i10;
 import 'protocol.dart' as _i11;
 
 /// {@category Endpoint}
-class EndpointAccount extends _i1.EndpointRef {
-  EndpointAccount(_i1.EndpointCaller caller) : super(caller);
+class EndpointPrivateAccount extends _i1.EndpointRef {
+  EndpointPrivateAccount(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'account';
+  String get name => 'privateAccount';
 
   _i2.Future<_i3.AccountInfo> getAccountInfo() =>
       caller.callServerEndpoint<_i3.AccountInfo>(
-        'account',
+        'privateAccount',
         'getAccountInfo',
         {},
       );
 }
 
 /// {@category Endpoint}
-class EndpointArb extends _i1.EndpointRef {
-  EndpointArb(_i1.EndpointCaller caller) : super(caller);
+class EndpointPrivateArb extends _i1.EndpointRef {
+  EndpointPrivateArb(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'arb';
+  String get name => 'privateArb';
 
   _i2.Future<void> update({
     required BigInt projectShaIdentifier,
@@ -57,7 +57,7 @@ class EndpointArb extends _i1.EndpointRef {
     required Map<String, String> updatedLabels,
   }) =>
       caller.callServerEndpoint<void>(
-        'arb',
+        'privateArb',
         'update',
         {
           'projectShaIdentifier': projectShaIdentifier,
@@ -155,15 +155,15 @@ class EndpointPrivateContext extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointProject extends _i1.EndpointRef {
-  EndpointProject(_i1.EndpointCaller caller) : super(caller);
+class EndpointPrivateProject extends _i1.EndpointRef {
+  EndpointPrivateProject(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'project';
+  String get name => 'privateProject';
 
   _i2.Future<List<_i6.Project>> getProjects() =>
       caller.callServerEndpoint<List<_i6.Project>>(
-        'project',
+        'privateProject',
         'getProjects',
         {},
       );
@@ -200,11 +200,11 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointSyncProject extends _i1.EndpointRef {
-  EndpointSyncProject(_i1.EndpointCaller caller) : super(caller);
+class EndpointPublicSyncProject extends _i1.EndpointRef {
+  EndpointPublicSyncProject(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'syncProject';
+  String get name => 'publicSyncProject';
 
   _i2.Future<
       ({
@@ -227,7 +227,7 @@ class EndpointSyncProject extends _i1.EndpointRef {
                 })> languages,
             DateTime updatedAt
           })>(
-        'syncProject',
+        'publicSyncProject',
         'getProjectLanguages',
         {'projectShaIdentifier': projectShaIdentifier},
       );
@@ -237,7 +237,7 @@ class EndpointSyncProject extends _i1.EndpointRef {
     required BigInt projectShaIdentifier,
   }) =>
       caller.callServerEndpoint<List<({String sha, DateTime updatedDate})>?>(
-        'syncProject',
+        'publicSyncProject',
         'getLastUpdateSha',
         {
           'token': token,
@@ -254,7 +254,7 @@ class EndpointSyncProject extends _i1.EndpointRef {
     required Set<String> projectCodeBaseFolders,
   }) =>
       caller.callServerEndpoint<void>(
-        'syncProject',
+        'publicSyncProject',
         'sincronize',
         {
           'token': token,
@@ -267,11 +267,11 @@ class EndpointSyncProject extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointTier extends _i1.EndpointRef {
-  EndpointTier(_i1.EndpointCaller caller) : super(caller);
+class EndpointPublicTier extends _i1.EndpointRef {
+  EndpointPublicTier(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'tier';
+  String get name => 'publicTier';
 
   _i2.Future<void> updatePlayerTier({
     required String email,
@@ -279,7 +279,7 @@ class EndpointTier extends _i1.EndpointRef {
     required _i7.PlanTier planTier,
   }) =>
       caller.callServerEndpoint<void>(
-        'tier',
+        'publicTier',
         'updatePlayerTier',
         {
           'email': email,
@@ -290,11 +290,11 @@ class EndpointTier extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointTranslateArb extends _i1.EndpointRef {
-  EndpointTranslateArb(_i1.EndpointCaller caller) : super(caller);
+class EndpointPublicTranslateArb extends _i1.EndpointRef {
+  EndpointPublicTranslateArb(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'translateArb';
+  String get name => 'publicTranslateArb';
 
   /// Return the result of the translated strings
   _i2.Future<Map<String, String>> translate({
@@ -308,7 +308,7 @@ class EndpointTranslateArb extends _i1.EndpointRef {
     required _i9.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
-        'translateArb',
+        'publicTranslateArb',
         'translate',
         {
           'token': token,
@@ -324,11 +324,11 @@ class EndpointTranslateArb extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointTranslations extends _i1.EndpointRef {
-  EndpointTranslations(_i1.EndpointCaller caller) : super(caller);
+class EndpointPublicTranslations extends _i1.EndpointRef {
+  EndpointPublicTranslations(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'translations';
+  String get name => 'publicTranslations';
 
   _i2.Future<void> updateTranslations({
     required String token,
@@ -339,7 +339,7 @@ class EndpointTranslations extends _i1.EndpointRef {
     required _i9.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<void>(
-        'translations',
+        'publicTranslations',
         'updateTranslations',
         {
           'token': token,
@@ -386,49 +386,49 @@ class Client extends _i1.ServerpodClientShared {
           disconnectStreamsOnLostInternetConnection:
               disconnectStreamsOnLostInternetConnection,
         ) {
-    account = EndpointAccount(this);
-    arb = EndpointArb(this);
+    privateAccount = EndpointPrivateAccount(this);
+    privateArb = EndpointPrivateArb(this);
     privateContext = EndpointPrivateContext(this);
-    project = EndpointProject(this);
+    privateProject = EndpointPrivateProject(this);
     subscriptionsManagement = EndpointSubscriptionsManagement(this);
-    syncProject = EndpointSyncProject(this);
-    tier = EndpointTier(this);
-    translateArb = EndpointTranslateArb(this);
-    translations = EndpointTranslations(this);
+    publicSyncProject = EndpointPublicSyncProject(this);
+    publicTier = EndpointPublicTier(this);
+    publicTranslateArb = EndpointPublicTranslateArb(this);
+    publicTranslations = EndpointPublicTranslations(this);
     modules = Modules(this);
   }
 
-  late final EndpointAccount account;
+  late final EndpointPrivateAccount privateAccount;
 
-  late final EndpointArb arb;
+  late final EndpointPrivateArb privateArb;
 
   late final EndpointPrivateContext privateContext;
 
-  late final EndpointProject project;
+  late final EndpointPrivateProject privateProject;
 
   late final EndpointSubscriptionsManagement subscriptionsManagement;
 
-  late final EndpointSyncProject syncProject;
+  late final EndpointPublicSyncProject publicSyncProject;
 
-  late final EndpointTier tier;
+  late final EndpointPublicTier publicTier;
 
-  late final EndpointTranslateArb translateArb;
+  late final EndpointPublicTranslateArb publicTranslateArb;
 
-  late final EndpointTranslations translations;
+  late final EndpointPublicTranslations publicTranslations;
 
   late final Modules modules;
 
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
-        'account': account,
-        'arb': arb,
+        'privateAccount': privateAccount,
+        'privateArb': privateArb,
         'privateContext': privateContext,
-        'project': project,
+        'privateProject': privateProject,
         'subscriptionsManagement': subscriptionsManagement,
-        'syncProject': syncProject,
-        'tier': tier,
-        'translateArb': translateArb,
-        'translations': translations,
+        'publicSyncProject': publicSyncProject,
+        'publicTier': publicTier,
+        'publicTranslateArb': publicTranslateArb,
+        'publicTranslations': publicTranslations,
       };
 
   @override
