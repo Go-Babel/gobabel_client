@@ -11,35 +11,38 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'account_related/account.dart' as _i2;
-import 'account_related/account_project_bridge.dart' as _i3;
-import 'account_related/active_translations.dart' as _i4;
-import 'account_related/localizated_context.dart' as _i5;
-import 'account_related/plan_tier.dart' as _i6;
-import 'account_related/project.dart' as _i7;
+import 'account_related/account_api_key.dart' as _i3;
+import 'account_related/account_project_bridge.dart' as _i4;
+import 'account_related/active_translations.dart' as _i5;
+import 'account_related/localizated_context.dart' as _i6;
+import 'account_related/plan_tier.dart' as _i7;
 import 'account_related/project_code_base.dart' as _i8;
 import 'account_related/subscription_recurrency.dart' as _i9;
 import 'project/arb_keys_appearances_path.dart' as _i10;
 import 'project/label_locale.dart' as _i11;
 import 'project/last_update_sha_stamp.dart' as _i12;
-import 'project/project_arb_keys_appearances_path.dart' as _i13;
+import 'project/project.dart' as _i13;
+import 'project/project_api_key.dart' as _i14;
+import 'project/project_arb_keys_appearances_path.dart' as _i15;
 import 'package:gobabel_client/src/protocol/account_related/localizated_context.dart'
-    as _i14;
-import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
-    as _i15;
-import 'package:gobabel_client/src/protocol/account_related/project.dart'
     as _i16;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i17;
+import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
+    as _i17;
+import 'package:gobabel_client/src/protocol/project/project.dart' as _i18;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i19;
 export 'account_related/account.dart';
+export 'account_related/account_api_key.dart';
 export 'account_related/account_project_bridge.dart';
 export 'account_related/active_translations.dart';
 export 'account_related/localizated_context.dart';
 export 'account_related/plan_tier.dart';
-export 'account_related/project.dart';
 export 'account_related/project_code_base.dart';
 export 'account_related/subscription_recurrency.dart';
 export 'project/arb_keys_appearances_path.dart';
 export 'project/label_locale.dart';
 export 'project/last_update_sha_stamp.dart';
+export 'project/project.dart';
+export 'project/project_api_key.dart';
 export 'project/project_arb_keys_appearances_path.dart';
 export 'client.dart';
 
@@ -59,20 +62,20 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i2.AccountInfo) {
       return _i2.AccountInfo.fromJson(data) as T;
     }
-    if (t == _i3.AccountProjectBridge) {
-      return _i3.AccountProjectBridge.fromJson(data) as T;
+    if (t == _i3.AccountApiKey) {
+      return _i3.AccountApiKey.fromJson(data) as T;
     }
-    if (t == _i4.ActiveTranslations) {
-      return _i4.ActiveTranslations.fromJson(data) as T;
+    if (t == _i4.AccountProjectBridge) {
+      return _i4.AccountProjectBridge.fromJson(data) as T;
     }
-    if (t == _i5.LocalizatedContext) {
-      return _i5.LocalizatedContext.fromJson(data) as T;
+    if (t == _i5.ActiveTranslations) {
+      return _i5.ActiveTranslations.fromJson(data) as T;
     }
-    if (t == _i6.PlanTier) {
-      return _i6.PlanTier.fromJson(data) as T;
+    if (t == _i6.LocalizatedContext) {
+      return _i6.LocalizatedContext.fromJson(data) as T;
     }
-    if (t == _i7.Project) {
-      return _i7.Project.fromJson(data) as T;
+    if (t == _i7.PlanTier) {
+      return _i7.PlanTier.fromJson(data) as T;
     }
     if (t == _i8.ProjectCodeBase) {
       return _i8.ProjectCodeBase.fromJson(data) as T;
@@ -89,27 +92,33 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i12.LastUpdateShaStamp) {
       return _i12.LastUpdateShaStamp.fromJson(data) as T;
     }
-    if (t == _i13.ProjectArbKeysAppearancesPath) {
-      return _i13.ProjectArbKeysAppearancesPath.fromJson(data) as T;
+    if (t == _i13.Project) {
+      return _i13.Project.fromJson(data) as T;
+    }
+    if (t == _i14.ProjectApiKey) {
+      return _i14.ProjectApiKey.fromJson(data) as T;
+    }
+    if (t == _i15.ProjectArbKeysAppearancesPath) {
+      return _i15.ProjectArbKeysAppearancesPath.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.AccountInfo?>()) {
       return (data != null ? _i2.AccountInfo.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i3.AccountProjectBridge?>()) {
-      return (data != null ? _i3.AccountProjectBridge.fromJson(data) : null)
+    if (t == _i1.getType<_i3.AccountApiKey?>()) {
+      return (data != null ? _i3.AccountApiKey.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i4.AccountProjectBridge?>()) {
+      return (data != null ? _i4.AccountProjectBridge.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i4.ActiveTranslations?>()) {
-      return (data != null ? _i4.ActiveTranslations.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.ActiveTranslations?>()) {
+      return (data != null ? _i5.ActiveTranslations.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i5.LocalizatedContext?>()) {
-      return (data != null ? _i5.LocalizatedContext.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.LocalizatedContext?>()) {
+      return (data != null ? _i6.LocalizatedContext.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.PlanTier?>()) {
-      return (data != null ? _i6.PlanTier.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i7.Project?>()) {
-      return (data != null ? _i7.Project.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.PlanTier?>()) {
+      return (data != null ? _i7.PlanTier.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i8.ProjectCodeBase?>()) {
       return (data != null ? _i8.ProjectCodeBase.fromJson(data) : null) as T;
@@ -129,36 +138,21 @@ class Protocol extends _i1.SerializationManager {
       return (data != null ? _i12.LastUpdateShaStamp.fromJson(data) : null)
           as T;
     }
-    if (t == _i1.getType<_i13.ProjectArbKeysAppearancesPath?>()) {
+    if (t == _i1.getType<_i13.Project?>()) {
+      return (data != null ? _i13.Project.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i14.ProjectApiKey?>()) {
+      return (data != null ? _i14.ProjectApiKey.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i15.ProjectArbKeysAppearancesPath?>()) {
       return (data != null
-          ? _i13.ProjectArbKeysAppearancesPath.fromJson(data)
+          ? _i15.ProjectArbKeysAppearancesPath.fromJson(data)
           : null) as T;
     }
-    if (t == _i1.getType<List<_i3.AccountProjectBridge>?>()) {
+    if (t == _i1.getType<List<_i4.AccountProjectBridge>?>()) {
       return (data != null
           ? (data as List)
-              .map((e) => deserialize<_i3.AccountProjectBridge>(e))
-              .toList()
-          : null) as T;
-    }
-    if (t == _i1.getType<List<_i4.ActiveTranslations>?>()) {
-      return (data != null
-          ? (data as List)
-              .map((e) => deserialize<_i4.ActiveTranslations>(e))
-              .toList()
-          : null) as T;
-    }
-    if (t == _i1.getType<List<_i3.AccountProjectBridge>?>()) {
-      return (data != null
-          ? (data as List)
-              .map((e) => deserialize<_i3.AccountProjectBridge>(e))
-              .toList()
-          : null) as T;
-    }
-    if (t == _i1.getType<List<_i5.LocalizatedContext>?>()) {
-      return (data != null
-          ? (data as List)
-              .map((e) => deserialize<_i5.LocalizatedContext>(e))
+              .map((e) => deserialize<_i4.AccountProjectBridge>(e))
               .toList()
           : null) as T;
     }
@@ -180,6 +174,34 @@ class Protocol extends _i1.SerializationManager {
         updatedDate: deserialize<DateTime>(data['n']['updatedDate']),
       ) as T;
     }
+    if (t == _i1.getType<List<_i5.ActiveTranslations>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i5.ActiveTranslations>(e))
+              .toList()
+          : null) as T;
+    }
+    if (t == _i1.getType<List<_i14.ProjectApiKey>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i14.ProjectApiKey>(e))
+              .toList()
+          : null) as T;
+    }
+    if (t == _i1.getType<List<_i4.AccountProjectBridge>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i4.AccountProjectBridge>(e))
+              .toList()
+          : null) as T;
+    }
+    if (t == _i1.getType<List<_i6.LocalizatedContext>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i6.LocalizatedContext>(e))
+              .toList()
+          : null) as T;
+    }
     if (t == Map<String, String>) {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<String>(v))) as T;
@@ -188,27 +210,38 @@ class Protocol extends _i1.SerializationManager {
         _i1.getType<
             ({
               String appContextText,
-              List<_i14.LocalizatedContext> localizedContexts,
-              _i15.ProjectCodeBase? projectCodeBase
+              List<_i16.LocalizatedContext> localizedContexts,
+              _i17.ProjectCodeBase? projectCodeBase
             })>()) {
       return (
         appContextText:
             deserialize<String>(((data as Map)['n'] as Map)['appContextText']),
-        localizedContexts: deserialize<List<_i14.LocalizatedContext>>(
+        localizedContexts: deserialize<List<_i16.LocalizatedContext>>(
             data['n']['localizedContexts']),
         projectCodeBase: ((data)['n'] as Map)['projectCodeBase'] == null
             ? null
-            : deserialize<_i15.ProjectCodeBase>(data['n']['projectCodeBase']),
+            : deserialize<_i17.ProjectCodeBase>(data['n']['projectCodeBase']),
       ) as T;
     }
-    if (t == List<_i14.LocalizatedContext>) {
+    if (t == List<_i16.LocalizatedContext>) {
       return (data as List)
-          .map((e) => deserialize<_i14.LocalizatedContext>(e))
+          .map((e) => deserialize<_i16.LocalizatedContext>(e))
           .toList() as T;
     }
-    if (t == List<_i16.Project>) {
-      return (data as List).map((e) => deserialize<_i16.Project>(e)).toList()
+    if (t == List<_i18.Project>) {
+      return (data as List).map((e) => deserialize<_i18.Project>(e)).toList()
           as T;
+    }
+    if (t == Set<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toSet() as T;
+    }
+    if (t == Map<String, Map<String, Map<String, String>>>) {
+      return (data as Map).map((k, v) => MapEntry(deserialize<String>(k),
+          deserialize<Map<String, Map<String, String>>>(v))) as T;
+    }
+    if (t == Map<String, Map<String, String>>) {
+      return (data as Map).map((k, v) => MapEntry(
+          deserialize<String>(k), deserialize<Map<String, String>>(v))) as T;
     }
     if (t ==
         _i1.getType<
@@ -291,17 +324,6 @@ class Protocol extends _i1.SerializationManager {
         updatedDate: deserialize<DateTime>(data['n']['updatedDate']),
       ) as T;
     }
-    if (t == Set<String>) {
-      return (data as List).map((e) => deserialize<String>(e)).toSet() as T;
-    }
-    if (t == Map<String, Map<String, Map<String, String>>>) {
-      return (data as Map).map((k, v) => MapEntry(deserialize<String>(k),
-          deserialize<Map<String, Map<String, String>>>(v))) as T;
-    }
-    if (t == Map<String, Map<String, String>>) {
-      return (data as Map).map((k, v) => MapEntry(
-          deserialize<String>(k), deserialize<Map<String, String>>(v))) as T;
-    }
     if (t == _i1.getType<({String sha, DateTime updatedDate})>()) {
       return (
         sha: deserialize<String>(((data as Map)['n'] as Map)['sha']),
@@ -315,7 +337,7 @@ class Protocol extends _i1.SerializationManager {
       ) as T;
     }
     try {
-      return _i17.Protocol().deserialize<T>(data, t);
+      return _i19.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -327,20 +349,20 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i2.AccountInfo) {
       return 'AccountInfo';
     }
-    if (data is _i3.AccountProjectBridge) {
+    if (data is _i3.AccountApiKey) {
+      return 'AccountApiKey';
+    }
+    if (data is _i4.AccountProjectBridge) {
       return 'AccountProjectBridge';
     }
-    if (data is _i4.ActiveTranslations) {
+    if (data is _i5.ActiveTranslations) {
       return 'ActiveTranslations';
     }
-    if (data is _i5.LocalizatedContext) {
+    if (data is _i6.LocalizatedContext) {
       return 'LocalizatedContext';
     }
-    if (data is _i6.PlanTier) {
+    if (data is _i7.PlanTier) {
       return 'PlanTier';
-    }
-    if (data is _i7.Project) {
-      return 'Project';
     }
     if (data is _i8.ProjectCodeBase) {
       return 'ProjectCodeBase';
@@ -357,10 +379,16 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i12.LastUpdateShaStamp) {
       return 'LastUpdateShaStamp';
     }
-    if (data is _i13.ProjectArbKeysAppearancesPath) {
+    if (data is _i13.Project) {
+      return 'Project';
+    }
+    if (data is _i14.ProjectApiKey) {
+      return 'ProjectApiKey';
+    }
+    if (data is _i15.ProjectArbKeysAppearancesPath) {
       return 'ProjectArbKeysAppearancesPath';
     }
-    className = _i17.Protocol().getClassNameForObject(data);
+    className = _i19.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -376,20 +404,20 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'AccountInfo') {
       return deserialize<_i2.AccountInfo>(data['data']);
     }
+    if (dataClassName == 'AccountApiKey') {
+      return deserialize<_i3.AccountApiKey>(data['data']);
+    }
     if (dataClassName == 'AccountProjectBridge') {
-      return deserialize<_i3.AccountProjectBridge>(data['data']);
+      return deserialize<_i4.AccountProjectBridge>(data['data']);
     }
     if (dataClassName == 'ActiveTranslations') {
-      return deserialize<_i4.ActiveTranslations>(data['data']);
+      return deserialize<_i5.ActiveTranslations>(data['data']);
     }
     if (dataClassName == 'LocalizatedContext') {
-      return deserialize<_i5.LocalizatedContext>(data['data']);
+      return deserialize<_i6.LocalizatedContext>(data['data']);
     }
     if (dataClassName == 'PlanTier') {
-      return deserialize<_i6.PlanTier>(data['data']);
-    }
-    if (dataClassName == 'Project') {
-      return deserialize<_i7.Project>(data['data']);
+      return deserialize<_i7.PlanTier>(data['data']);
     }
     if (dataClassName == 'ProjectCodeBase') {
       return deserialize<_i8.ProjectCodeBase>(data['data']);
@@ -406,12 +434,18 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'LastUpdateShaStamp') {
       return deserialize<_i12.LastUpdateShaStamp>(data['data']);
     }
+    if (dataClassName == 'Project') {
+      return deserialize<_i13.Project>(data['data']);
+    }
+    if (dataClassName == 'ProjectApiKey') {
+      return deserialize<_i14.ProjectApiKey>(data['data']);
+    }
     if (dataClassName == 'ProjectArbKeysAppearancesPath') {
-      return deserialize<_i13.ProjectArbKeysAppearancesPath>(data['data']);
+      return deserialize<_i15.ProjectArbKeysAppearancesPath>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i17.Protocol().deserializeByClassName(data);
+      return _i19.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
@@ -428,8 +462,8 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
   }
   if (record is ({
     String appContextText,
-    List<_i14.LocalizatedContext> localizedContexts,
-    _i15.ProjectCodeBase? projectCodeBase
+    List<_i16.LocalizatedContext> localizedContexts,
+    _i17.ProjectCodeBase? projectCodeBase
   })) {
     return {
       "n": {

@@ -12,22 +12,25 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../account_related/account_project_bridge.dart' as _i2;
 import '../account_related/plan_tier.dart' as _i3;
+import '../account_related/account_api_key.dart' as _i4;
 
 abstract class AccountInfo implements _i1.SerializableModel {
   AccountInfo._({
     this.id,
     required this.userInfoId,
     this.accountprojectbridge,
-    required this.apiKey,
     required this.planTier,
+    required this.accountApiKeyId,
+    this.accountApiKey,
   });
 
   factory AccountInfo({
     int? id,
     required int userInfoId,
     List<_i2.AccountProjectBridge>? accountprojectbridge,
-    required String apiKey,
     required _i3.PlanTier planTier,
+    required int accountApiKeyId,
+    _i4.AccountApiKey? accountApiKey,
   }) = _AccountInfoImpl;
 
   factory AccountInfo.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -38,9 +41,12 @@ abstract class AccountInfo implements _i1.SerializableModel {
           ?.map((e) =>
               _i2.AccountProjectBridge.fromJson((e as Map<String, dynamic>)))
           .toList(),
-      apiKey: jsonSerialization['apiKey'] as String,
-      planTier:
-          _i3.PlanTier.fromJson((jsonSerialization['planTier'] as String)),
+      planTier: _i3.PlanTier.fromJson((jsonSerialization['planTier'] as int)),
+      accountApiKeyId: jsonSerialization['accountApiKeyId'] as int,
+      accountApiKey: jsonSerialization['accountApiKey'] == null
+          ? null
+          : _i4.AccountApiKey.fromJson(
+              (jsonSerialization['accountApiKey'] as Map<String, dynamic>)),
     );
   }
 
@@ -53,9 +59,11 @@ abstract class AccountInfo implements _i1.SerializableModel {
 
   List<_i2.AccountProjectBridge>? accountprojectbridge;
 
-  String apiKey;
-
   _i3.PlanTier planTier;
+
+  int accountApiKeyId;
+
+  _i4.AccountApiKey? accountApiKey;
 
   /// Returns a shallow copy of this [AccountInfo]
   /// with some or all fields replaced by the given arguments.
@@ -64,8 +72,9 @@ abstract class AccountInfo implements _i1.SerializableModel {
     int? id,
     int? userInfoId,
     List<_i2.AccountProjectBridge>? accountprojectbridge,
-    String? apiKey,
     _i3.PlanTier? planTier,
+    int? accountApiKeyId,
+    _i4.AccountApiKey? accountApiKey,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -75,8 +84,9 @@ abstract class AccountInfo implements _i1.SerializableModel {
       if (accountprojectbridge != null)
         'accountprojectbridge':
             accountprojectbridge?.toJson(valueToJson: (v) => v.toJson()),
-      'apiKey': apiKey,
       'planTier': planTier.toJson(),
+      'accountApiKeyId': accountApiKeyId,
+      if (accountApiKey != null) 'accountApiKey': accountApiKey?.toJson(),
     };
   }
 
@@ -93,14 +103,16 @@ class _AccountInfoImpl extends AccountInfo {
     int? id,
     required int userInfoId,
     List<_i2.AccountProjectBridge>? accountprojectbridge,
-    required String apiKey,
     required _i3.PlanTier planTier,
+    required int accountApiKeyId,
+    _i4.AccountApiKey? accountApiKey,
   }) : super._(
           id: id,
           userInfoId: userInfoId,
           accountprojectbridge: accountprojectbridge,
-          apiKey: apiKey,
           planTier: planTier,
+          accountApiKeyId: accountApiKeyId,
+          accountApiKey: accountApiKey,
         );
 
   /// Returns a shallow copy of this [AccountInfo]
@@ -111,8 +123,9 @@ class _AccountInfoImpl extends AccountInfo {
     Object? id = _Undefined,
     int? userInfoId,
     Object? accountprojectbridge = _Undefined,
-    String? apiKey,
     _i3.PlanTier? planTier,
+    int? accountApiKeyId,
+    Object? accountApiKey = _Undefined,
   }) {
     return AccountInfo(
       id: id is int? ? id : this.id,
@@ -121,8 +134,11 @@ class _AccountInfoImpl extends AccountInfo {
           accountprojectbridge is List<_i2.AccountProjectBridge>?
               ? accountprojectbridge
               : this.accountprojectbridge?.map((e0) => e0.copyWith()).toList(),
-      apiKey: apiKey ?? this.apiKey,
       planTier: planTier ?? this.planTier,
+      accountApiKeyId: accountApiKeyId ?? this.accountApiKeyId,
+      accountApiKey: accountApiKey is _i4.AccountApiKey?
+          ? accountApiKey
+          : this.accountApiKey?.copyWith(),
     );
   }
 }

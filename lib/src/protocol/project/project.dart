@@ -11,11 +11,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../account_related/active_translations.dart' as _i2;
-import '../account_related/account_project_bridge.dart' as _i3;
-import '../account_related/localizated_context.dart' as _i4;
-import '../project/last_update_sha_stamp.dart' as _i5;
-import '../account_related/project_code_base.dart' as _i6;
-import '../project/project_arb_keys_appearances_path.dart' as _i7;
+import '../project/project_api_key.dart' as _i3;
+import '../account_related/account.dart' as _i4;
+import '../account_related/account_project_bridge.dart' as _i5;
+import '../account_related/localizated_context.dart' as _i6;
+import '../project/last_update_sha_stamp.dart' as _i7;
+import '../account_related/project_code_base.dart' as _i8;
+import '../project/project_arb_keys_appearances_path.dart' as _i9;
 
 abstract class Project implements _i1.SerializableModel {
   Project._({
@@ -28,6 +30,9 @@ abstract class Project implements _i1.SerializableModel {
     required this.description,
     required this.projectReferenceName,
     this.activeTranslations,
+    this.projectApiKeys,
+    required this.projectAccountOwnerId,
+    this.projectAccountOwner,
     this.accountprojectbridge,
     required this.appContextText,
     this.localizatedContext,
@@ -49,15 +54,18 @@ abstract class Project implements _i1.SerializableModel {
     required String description,
     required String projectReferenceName,
     List<_i2.ActiveTranslations>? activeTranslations,
-    List<_i3.AccountProjectBridge>? accountprojectbridge,
+    List<_i3.ProjectApiKey>? projectApiKeys,
+    required int projectAccountOwnerId,
+    _i4.AccountInfo? projectAccountOwner,
+    List<_i5.AccountProjectBridge>? accountprojectbridge,
     required String appContextText,
-    List<_i4.LocalizatedContext>? localizatedContext,
+    List<_i6.LocalizatedContext>? localizatedContext,
     required int lastShaStampId,
-    _i5.LastUpdateShaStamp? lastShaStamp,
+    _i7.LastUpdateShaStamp? lastShaStamp,
     required int codeBaseId,
-    _i6.ProjectCodeBase? codeBase,
+    _i8.ProjectCodeBase? codeBase,
     required int pathAppearancesPerKeyId,
-    _i7.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
+    _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
   }) = _ProjectImpl;
 
   factory Project.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -78,30 +86,38 @@ abstract class Project implements _i1.SerializableModel {
           ?.map((e) =>
               _i2.ActiveTranslations.fromJson((e as Map<String, dynamic>)))
           .toList(),
+      projectApiKeys: (jsonSerialization['projectApiKeys'] as List?)
+          ?.map((e) => _i3.ProjectApiKey.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      projectAccountOwnerId: jsonSerialization['projectAccountOwnerId'] as int,
+      projectAccountOwner: jsonSerialization['projectAccountOwner'] == null
+          ? null
+          : _i4.AccountInfo.fromJson((jsonSerialization['projectAccountOwner']
+              as Map<String, dynamic>)),
       accountprojectbridge: (jsonSerialization['accountprojectbridge'] as List?)
           ?.map((e) =>
-              _i3.AccountProjectBridge.fromJson((e as Map<String, dynamic>)))
+              _i5.AccountProjectBridge.fromJson((e as Map<String, dynamic>)))
           .toList(),
       appContextText: jsonSerialization['appContextText'] as String,
       localizatedContext: (jsonSerialization['localizatedContext'] as List?)
           ?.map((e) =>
-              _i4.LocalizatedContext.fromJson((e as Map<String, dynamic>)))
+              _i6.LocalizatedContext.fromJson((e as Map<String, dynamic>)))
           .toList(),
       lastShaStampId: jsonSerialization['lastShaStampId'] as int,
       lastShaStamp: jsonSerialization['lastShaStamp'] == null
           ? null
-          : _i5.LastUpdateShaStamp.fromJson(
+          : _i7.LastUpdateShaStamp.fromJson(
               (jsonSerialization['lastShaStamp'] as Map<String, dynamic>)),
       codeBaseId: jsonSerialization['codeBaseId'] as int,
       codeBase: jsonSerialization['codeBase'] == null
           ? null
-          : _i6.ProjectCodeBase.fromJson(
+          : _i8.ProjectCodeBase.fromJson(
               (jsonSerialization['codeBase'] as Map<String, dynamic>)),
       pathAppearancesPerKeyId:
           jsonSerialization['pathAppearancesPerKeyId'] as int,
       pathAppearancesPerKey: jsonSerialization['pathAppearancesPerKey'] == null
           ? null
-          : _i7.ProjectArbKeysAppearancesPath.fromJson(
+          : _i9.ProjectArbKeysAppearancesPath.fromJson(
               (jsonSerialization['pathAppearancesPerKey']
                   as Map<String, dynamic>)),
     );
@@ -128,23 +144,29 @@ abstract class Project implements _i1.SerializableModel {
 
   List<_i2.ActiveTranslations>? activeTranslations;
 
-  List<_i3.AccountProjectBridge>? accountprojectbridge;
+  List<_i3.ProjectApiKey>? projectApiKeys;
+
+  int projectAccountOwnerId;
+
+  _i4.AccountInfo? projectAccountOwner;
+
+  List<_i5.AccountProjectBridge>? accountprojectbridge;
 
   String appContextText;
 
-  List<_i4.LocalizatedContext>? localizatedContext;
+  List<_i6.LocalizatedContext>? localizatedContext;
 
   int lastShaStampId;
 
-  _i5.LastUpdateShaStamp? lastShaStamp;
+  _i7.LastUpdateShaStamp? lastShaStamp;
 
   int codeBaseId;
 
-  _i6.ProjectCodeBase? codeBase;
+  _i8.ProjectCodeBase? codeBase;
 
   int pathAppearancesPerKeyId;
 
-  _i7.ProjectArbKeysAppearancesPath? pathAppearancesPerKey;
+  _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey;
 
   /// Returns a shallow copy of this [Project]
   /// with some or all fields replaced by the given arguments.
@@ -159,15 +181,18 @@ abstract class Project implements _i1.SerializableModel {
     String? description,
     String? projectReferenceName,
     List<_i2.ActiveTranslations>? activeTranslations,
-    List<_i3.AccountProjectBridge>? accountprojectbridge,
+    List<_i3.ProjectApiKey>? projectApiKeys,
+    int? projectAccountOwnerId,
+    _i4.AccountInfo? projectAccountOwner,
+    List<_i5.AccountProjectBridge>? accountprojectbridge,
     String? appContextText,
-    List<_i4.LocalizatedContext>? localizatedContext,
+    List<_i6.LocalizatedContext>? localizatedContext,
     int? lastShaStampId,
-    _i5.LastUpdateShaStamp? lastShaStamp,
+    _i7.LastUpdateShaStamp? lastShaStamp,
     int? codeBaseId,
-    _i6.ProjectCodeBase? codeBase,
+    _i8.ProjectCodeBase? codeBase,
     int? pathAppearancesPerKeyId,
-    _i7.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
+    _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -183,6 +208,12 @@ abstract class Project implements _i1.SerializableModel {
       if (activeTranslations != null)
         'activeTranslations':
             activeTranslations?.toJson(valueToJson: (v) => v.toJson()),
+      if (projectApiKeys != null)
+        'projectApiKeys':
+            projectApiKeys?.toJson(valueToJson: (v) => v.toJson()),
+      'projectAccountOwnerId': projectAccountOwnerId,
+      if (projectAccountOwner != null)
+        'projectAccountOwner': projectAccountOwner?.toJson(),
       if (accountprojectbridge != null)
         'accountprojectbridge':
             accountprojectbridge?.toJson(valueToJson: (v) => v.toJson()),
@@ -219,15 +250,18 @@ class _ProjectImpl extends Project {
     required String description,
     required String projectReferenceName,
     List<_i2.ActiveTranslations>? activeTranslations,
-    List<_i3.AccountProjectBridge>? accountprojectbridge,
+    List<_i3.ProjectApiKey>? projectApiKeys,
+    required int projectAccountOwnerId,
+    _i4.AccountInfo? projectAccountOwner,
+    List<_i5.AccountProjectBridge>? accountprojectbridge,
     required String appContextText,
-    List<_i4.LocalizatedContext>? localizatedContext,
+    List<_i6.LocalizatedContext>? localizatedContext,
     required int lastShaStampId,
-    _i5.LastUpdateShaStamp? lastShaStamp,
+    _i7.LastUpdateShaStamp? lastShaStamp,
     required int codeBaseId,
-    _i6.ProjectCodeBase? codeBase,
+    _i8.ProjectCodeBase? codeBase,
     required int pathAppearancesPerKeyId,
-    _i7.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
+    _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
   }) : super._(
           id: id,
           name: name,
@@ -238,6 +272,9 @@ class _ProjectImpl extends Project {
           description: description,
           projectReferenceName: projectReferenceName,
           activeTranslations: activeTranslations,
+          projectApiKeys: projectApiKeys,
+          projectAccountOwnerId: projectAccountOwnerId,
+          projectAccountOwner: projectAccountOwner,
           accountprojectbridge: accountprojectbridge,
           appContextText: appContextText,
           localizatedContext: localizatedContext,
@@ -263,6 +300,9 @@ class _ProjectImpl extends Project {
     String? description,
     String? projectReferenceName,
     Object? activeTranslations = _Undefined,
+    Object? projectApiKeys = _Undefined,
+    int? projectAccountOwnerId,
+    Object? projectAccountOwner = _Undefined,
     Object? accountprojectbridge = _Undefined,
     String? appContextText,
     Object? localizatedContext = _Undefined,
@@ -286,26 +326,34 @@ class _ProjectImpl extends Project {
       activeTranslations: activeTranslations is List<_i2.ActiveTranslations>?
           ? activeTranslations
           : this.activeTranslations?.map((e0) => e0.copyWith()).toList(),
+      projectApiKeys: projectApiKeys is List<_i3.ProjectApiKey>?
+          ? projectApiKeys
+          : this.projectApiKeys?.map((e0) => e0.copyWith()).toList(),
+      projectAccountOwnerId:
+          projectAccountOwnerId ?? this.projectAccountOwnerId,
+      projectAccountOwner: projectAccountOwner is _i4.AccountInfo?
+          ? projectAccountOwner
+          : this.projectAccountOwner?.copyWith(),
       accountprojectbridge:
-          accountprojectbridge is List<_i3.AccountProjectBridge>?
+          accountprojectbridge is List<_i5.AccountProjectBridge>?
               ? accountprojectbridge
               : this.accountprojectbridge?.map((e0) => e0.copyWith()).toList(),
       appContextText: appContextText ?? this.appContextText,
-      localizatedContext: localizatedContext is List<_i4.LocalizatedContext>?
+      localizatedContext: localizatedContext is List<_i6.LocalizatedContext>?
           ? localizatedContext
           : this.localizatedContext?.map((e0) => e0.copyWith()).toList(),
       lastShaStampId: lastShaStampId ?? this.lastShaStampId,
-      lastShaStamp: lastShaStamp is _i5.LastUpdateShaStamp?
+      lastShaStamp: lastShaStamp is _i7.LastUpdateShaStamp?
           ? lastShaStamp
           : this.lastShaStamp?.copyWith(),
       codeBaseId: codeBaseId ?? this.codeBaseId,
-      codeBase: codeBase is _i6.ProjectCodeBase?
+      codeBase: codeBase is _i8.ProjectCodeBase?
           ? codeBase
           : this.codeBase?.copyWith(),
       pathAppearancesPerKeyId:
           pathAppearancesPerKeyId ?? this.pathAppearancesPerKeyId,
       pathAppearancesPerKey:
-          pathAppearancesPerKey is _i7.ProjectArbKeysAppearancesPath?
+          pathAppearancesPerKey is _i9.ProjectArbKeysAppearancesPath?
               ? pathAppearancesPerKey
               : this.pathAppearancesPerKey?.copyWith(),
     );

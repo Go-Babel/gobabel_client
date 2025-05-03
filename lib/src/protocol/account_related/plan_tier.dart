@@ -17,23 +17,23 @@ enum PlanTier implements _i1.SerializableModel {
   pro,
   unlimited;
 
-  static PlanTier fromJson(String name) {
-    switch (name) {
-      case 'none':
+  static PlanTier fromJson(int index) {
+    switch (index) {
+      case 0:
         return PlanTier.none;
-      case 'base':
+      case 1:
         return PlanTier.base;
-      case 'pro':
+      case 2:
         return PlanTier.pro;
-      case 'unlimited':
+      case 3:
         return PlanTier.unlimited;
       default:
-        throw ArgumentError('Value "$name" cannot be converted to "PlanTier"');
+        throw ArgumentError('Value "$index" cannot be converted to "PlanTier"');
     }
   }
 
   @override
-  String toJson() => name;
+  int toJson() => index;
   @override
   String toString() => name;
 }

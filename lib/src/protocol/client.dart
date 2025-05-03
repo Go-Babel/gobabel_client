@@ -17,8 +17,7 @@ import 'package:gobabel_client/src/protocol/account_related/localizated_context.
     as _i4;
 import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
     as _i5;
-import 'package:gobabel_client/src/protocol/account_related/project.dart'
-    as _i6;
+import 'package:gobabel_client/src/protocol/project/project.dart' as _i6;
 import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
     as _i7;
 import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
@@ -200,11 +199,95 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
-class EndpointPublicSyncProject extends _i1.EndpointRef {
-  EndpointPublicSyncProject(_i1.EndpointCaller caller) : super(caller);
+class EndpointPublicCreateProject extends _i1.EndpointRef {
+  EndpointPublicCreateProject(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'publicSyncProject';
+  String get name => 'publicCreateProject';
+
+  _i2.Future<void> call({
+    required String accountApiKey,
+    required BigInt projectShaIdentifier,
+    required String name,
+    required String description,
+    required Set<String> projectCodeBaseFolders,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'publicCreateProject',
+        'call',
+        {
+          'accountApiKey': accountApiKey,
+          'projectShaIdentifier': projectShaIdentifier,
+          'name': name,
+          'description': description,
+          'projectCodeBaseFolders': projectCodeBaseFolders,
+        },
+      );
+}
+
+/// {@category Endpoint}
+class EndpointPublicGenerate extends _i1.EndpointRef {
+  EndpointPublicGenerate(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'publicGenerate';
+
+  _i2.Future<void> call({
+    required String projectApiToken,
+    required String currentCommitSha,
+    required BigInt projectShaIdentifier,
+    required Map<String, Map<String, Map<String, String>>> madeTranslations,
+    required Set<String> projectCodeBaseFolders,
+    required _i9.ArbKeysAppearancesPath pathsOfKeys,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'publicGenerate',
+        'call',
+        {
+          'projectApiToken': projectApiToken,
+          'currentCommitSha': currentCommitSha,
+          'projectShaIdentifier': projectShaIdentifier,
+          'madeTranslations': madeTranslations,
+          'projectCodeBaseFolders': projectCodeBaseFolders,
+          'pathsOfKeys': pathsOfKeys,
+        },
+      );
+}
+
+/// {@category Endpoint}
+class EndpointPublicSync extends _i1.EndpointRef {
+  EndpointPublicSync(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'publicSync';
+
+  /// languageCode and countryCode will only be required if project is new
+  _i2.Future<void> call({
+    required String projectApiToken,
+    required BigInt projectShaIdentifier,
+    required String name,
+    required String description,
+    required Set<String> projectCodeBaseFolders,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'publicSync',
+        'call',
+        {
+          'projectApiToken': projectApiToken,
+          'projectShaIdentifier': projectShaIdentifier,
+          'name': name,
+          'description': description,
+          'projectCodeBaseFolders': projectCodeBaseFolders,
+        },
+      );
+}
+
+/// {@category Endpoint}
+class EndpointPublicProject extends _i1.EndpointRef {
+  EndpointPublicProject(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'publicProject';
 
   _i2.Future<
       ({
@@ -227,41 +310,21 @@ class EndpointPublicSyncProject extends _i1.EndpointRef {
                 })> languages,
             DateTime updatedAt
           })>(
-        'publicSyncProject',
+        'publicProject',
         'getProjectLanguages',
         {'projectShaIdentifier': projectShaIdentifier},
       );
 
   _i2.Future<List<({String sha, DateTime updatedDate})>?> getLastUpdateSha({
-    required String token,
+    required String projectApiToken,
     required BigInt projectShaIdentifier,
   }) =>
       caller.callServerEndpoint<List<({String sha, DateTime updatedDate})>?>(
-        'publicSyncProject',
+        'publicProject',
         'getLastUpdateSha',
         {
-          'token': token,
+          'projectApiToken': projectApiToken,
           'projectShaIdentifier': projectShaIdentifier,
-        },
-      );
-
-  /// languageCode and countryCode will only be required if project is new
-  _i2.Future<void> sincronize({
-    required String token,
-    required BigInt projectShaIdentifier,
-    required String name,
-    required String description,
-    required Set<String> projectCodeBaseFolders,
-  }) =>
-      caller.callServerEndpoint<void>(
-        'publicSyncProject',
-        'sincronize',
-        {
-          'token': token,
-          'projectShaIdentifier': projectShaIdentifier,
-          'name': name,
-          'description': description,
-          'projectCodeBaseFolders': projectCodeBaseFolders,
         },
       );
 }
@@ -298,7 +361,7 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
 
   /// Return the result of the translated strings
   _i2.Future<Map<String, String>> translate({
-    required String token,
+    required String projectApiToken,
     required BigInt projectShaIdentifier,
     required String toLanguageCode,
     required String toCountryCode,
@@ -311,42 +374,13 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
         'publicTranslateArb',
         'translate',
         {
-          'token': token,
+          'projectApiToken': projectApiToken,
           'projectShaIdentifier': projectShaIdentifier,
           'toLanguageCode': toLanguageCode,
           'toCountryCode': toCountryCode,
           'referenceLanguageCode': referenceLanguageCode,
           'referenceCountryCode': referenceCountryCode,
           'referenceArb': referenceArb,
-          'pathsOfKeys': pathsOfKeys,
-        },
-      );
-}
-
-/// {@category Endpoint}
-class EndpointPublicTranslations extends _i1.EndpointRef {
-  EndpointPublicTranslations(_i1.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'publicTranslations';
-
-  _i2.Future<void> updateTranslations({
-    required String token,
-    required String currentCommitSha,
-    required BigInt projectShaIdentifier,
-    required Map<String, Map<String, Map<String, String>>> madeTranslations,
-    required Set<String> projectCodeBaseFolders,
-    required _i9.ArbKeysAppearancesPath pathsOfKeys,
-  }) =>
-      caller.callServerEndpoint<void>(
-        'publicTranslations',
-        'updateTranslations',
-        {
-          'token': token,
-          'currentCommitSha': currentCommitSha,
-          'projectShaIdentifier': projectShaIdentifier,
-          'madeTranslations': madeTranslations,
-          'projectCodeBaseFolders': projectCodeBaseFolders,
           'pathsOfKeys': pathsOfKeys,
         },
       );
@@ -391,10 +425,12 @@ class Client extends _i1.ServerpodClientShared {
     privateContext = EndpointPrivateContext(this);
     privateProject = EndpointPrivateProject(this);
     subscriptionsManagement = EndpointSubscriptionsManagement(this);
-    publicSyncProject = EndpointPublicSyncProject(this);
+    publicCreateProject = EndpointPublicCreateProject(this);
+    publicGenerate = EndpointPublicGenerate(this);
+    publicSync = EndpointPublicSync(this);
+    publicProject = EndpointPublicProject(this);
     publicTier = EndpointPublicTier(this);
     publicTranslateArb = EndpointPublicTranslateArb(this);
-    publicTranslations = EndpointPublicTranslations(this);
     modules = Modules(this);
   }
 
@@ -408,13 +444,17 @@ class Client extends _i1.ServerpodClientShared {
 
   late final EndpointSubscriptionsManagement subscriptionsManagement;
 
-  late final EndpointPublicSyncProject publicSyncProject;
+  late final EndpointPublicCreateProject publicCreateProject;
+
+  late final EndpointPublicGenerate publicGenerate;
+
+  late final EndpointPublicSync publicSync;
+
+  late final EndpointPublicProject publicProject;
 
   late final EndpointPublicTier publicTier;
 
   late final EndpointPublicTranslateArb publicTranslateArb;
-
-  late final EndpointPublicTranslations publicTranslations;
 
   late final Modules modules;
 
@@ -425,10 +465,12 @@ class Client extends _i1.ServerpodClientShared {
         'privateContext': privateContext,
         'privateProject': privateProject,
         'subscriptionsManagement': subscriptionsManagement,
-        'publicSyncProject': publicSyncProject,
+        'publicCreateProject': publicCreateProject,
+        'publicGenerate': publicGenerate,
+        'publicSync': publicSync,
+        'publicProject': publicProject,
         'publicTier': publicTier,
         'publicTranslateArb': publicTranslateArb,
-        'publicTranslations': publicTranslations,
       };
 
   @override

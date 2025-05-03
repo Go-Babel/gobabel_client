@@ -11,39 +11,35 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import '../project/project.dart' as _i2;
-import '../account_related/account.dart' as _i3;
 
-abstract class AccountProjectBridge implements _i1.SerializableModel {
-  AccountProjectBridge._({
+abstract class ProjectApiKey implements _i1.SerializableModel {
+  ProjectApiKey._({
     this.id,
     required this.projectId,
     this.project,
-    required this.accountId,
-    this.account,
+    required this.apiKey,
+    required this.createdAt,
   });
 
-  factory AccountProjectBridge({
+  factory ProjectApiKey({
     int? id,
     required int projectId,
     _i2.Project? project,
-    required int accountId,
-    _i3.AccountInfo? account,
-  }) = _AccountProjectBridgeImpl;
+    required String apiKey,
+    required DateTime createdAt,
+  }) = _ProjectApiKeyImpl;
 
-  factory AccountProjectBridge.fromJson(
-      Map<String, dynamic> jsonSerialization) {
-    return AccountProjectBridge(
+  factory ProjectApiKey.fromJson(Map<String, dynamic> jsonSerialization) {
+    return ProjectApiKey(
       id: jsonSerialization['id'] as int?,
       projectId: jsonSerialization['projectId'] as int,
       project: jsonSerialization['project'] == null
           ? null
           : _i2.Project.fromJson(
               (jsonSerialization['project'] as Map<String, dynamic>)),
-      accountId: jsonSerialization['accountId'] as int,
-      account: jsonSerialization['account'] == null
-          ? null
-          : _i3.AccountInfo.fromJson(
-              (jsonSerialization['account'] as Map<String, dynamic>)),
+      apiKey: jsonSerialization['apiKey'] as String,
+      createdAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
     );
   }
 
@@ -56,19 +52,19 @@ abstract class AccountProjectBridge implements _i1.SerializableModel {
 
   _i2.Project? project;
 
-  int accountId;
+  String apiKey;
 
-  _i3.AccountInfo? account;
+  DateTime createdAt;
 
-  /// Returns a shallow copy of this [AccountProjectBridge]
+  /// Returns a shallow copy of this [ProjectApiKey]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  AccountProjectBridge copyWith({
+  ProjectApiKey copyWith({
     int? id,
     int? projectId,
     _i2.Project? project,
-    int? accountId,
-    _i3.AccountInfo? account,
+    String? apiKey,
+    DateTime? createdAt,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -76,8 +72,8 @@ abstract class AccountProjectBridge implements _i1.SerializableModel {
       if (id != null) 'id': id,
       'projectId': projectId,
       if (project != null) 'project': project?.toJson(),
-      'accountId': accountId,
-      if (account != null) 'account': account?.toJson(),
+      'apiKey': apiKey,
+      'createdAt': createdAt.toJson(),
     };
   }
 
@@ -89,38 +85,38 @@ abstract class AccountProjectBridge implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _AccountProjectBridgeImpl extends AccountProjectBridge {
-  _AccountProjectBridgeImpl({
+class _ProjectApiKeyImpl extends ProjectApiKey {
+  _ProjectApiKeyImpl({
     int? id,
     required int projectId,
     _i2.Project? project,
-    required int accountId,
-    _i3.AccountInfo? account,
+    required String apiKey,
+    required DateTime createdAt,
   }) : super._(
           id: id,
           projectId: projectId,
           project: project,
-          accountId: accountId,
-          account: account,
+          apiKey: apiKey,
+          createdAt: createdAt,
         );
 
-  /// Returns a shallow copy of this [AccountProjectBridge]
+  /// Returns a shallow copy of this [ProjectApiKey]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  AccountProjectBridge copyWith({
+  ProjectApiKey copyWith({
     Object? id = _Undefined,
     int? projectId,
     Object? project = _Undefined,
-    int? accountId,
-    Object? account = _Undefined,
+    String? apiKey,
+    DateTime? createdAt,
   }) {
-    return AccountProjectBridge(
+    return ProjectApiKey(
       id: id is int? ? id : this.id,
       projectId: projectId ?? this.projectId,
       project: project is _i2.Project? ? project : this.project?.copyWith(),
-      accountId: accountId ?? this.accountId,
-      account: account is _i3.AccountInfo? ? account : this.account?.copyWith(),
+      apiKey: apiKey ?? this.apiKey,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }
