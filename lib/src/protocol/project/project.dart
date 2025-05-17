@@ -15,7 +15,7 @@ import '../project/project_api_key.dart' as _i3;
 import '../account_related/account.dart' as _i4;
 import '../account_related/account_project_bridge.dart' as _i5;
 import '../account_related/localizated_context.dart' as _i6;
-import '../project/last_update_sha_stamp.dart' as _i7;
+import '../project/generate_history.dart' as _i7;
 import '../account_related/project_code_base.dart' as _i8;
 import '../project/project_arb_keys_appearances_path.dart' as _i9;
 
@@ -36,8 +36,7 @@ abstract class Project implements _i1.SerializableModel {
     this.accountprojectbridge,
     required this.appContextText,
     this.localizatedContext,
-    required this.lastShaStampId,
-    this.lastShaStamp,
+    this.generateHistory,
     required this.codeBaseId,
     this.codeBase,
     required this.pathAppearancesPerKeyId,
@@ -60,8 +59,7 @@ abstract class Project implements _i1.SerializableModel {
     List<_i5.AccountProjectBridge>? accountprojectbridge,
     required String appContextText,
     List<_i6.LocalizatedContext>? localizatedContext,
-    required int lastShaStampId,
-    _i7.LastUpdateShaStamp? lastShaStamp,
+    List<_i7.GenerateHistory>? generateHistory,
     required int codeBaseId,
     _i8.ProjectCodeBase? codeBase,
     required int pathAppearancesPerKeyId,
@@ -103,11 +101,10 @@ abstract class Project implements _i1.SerializableModel {
           ?.map((e) =>
               _i6.LocalizatedContext.fromJson((e as Map<String, dynamic>)))
           .toList(),
-      lastShaStampId: jsonSerialization['lastShaStampId'] as int,
-      lastShaStamp: jsonSerialization['lastShaStamp'] == null
-          ? null
-          : _i7.LastUpdateShaStamp.fromJson(
-              (jsonSerialization['lastShaStamp'] as Map<String, dynamic>)),
+      generateHistory: (jsonSerialization['generateHistory'] as List?)
+          ?.map(
+              (e) => _i7.GenerateHistory.fromJson((e as Map<String, dynamic>)))
+          .toList(),
       codeBaseId: jsonSerialization['codeBaseId'] as int,
       codeBase: jsonSerialization['codeBase'] == null
           ? null
@@ -156,9 +153,7 @@ abstract class Project implements _i1.SerializableModel {
 
   List<_i6.LocalizatedContext>? localizatedContext;
 
-  int lastShaStampId;
-
-  _i7.LastUpdateShaStamp? lastShaStamp;
+  List<_i7.GenerateHistory>? generateHistory;
 
   int codeBaseId;
 
@@ -187,8 +182,7 @@ abstract class Project implements _i1.SerializableModel {
     List<_i5.AccountProjectBridge>? accountprojectbridge,
     String? appContextText,
     List<_i6.LocalizatedContext>? localizatedContext,
-    int? lastShaStampId,
-    _i7.LastUpdateShaStamp? lastShaStamp,
+    List<_i7.GenerateHistory>? generateHistory,
     int? codeBaseId,
     _i8.ProjectCodeBase? codeBase,
     int? pathAppearancesPerKeyId,
@@ -221,8 +215,9 @@ abstract class Project implements _i1.SerializableModel {
       if (localizatedContext != null)
         'localizatedContext':
             localizatedContext?.toJson(valueToJson: (v) => v.toJson()),
-      'lastShaStampId': lastShaStampId,
-      if (lastShaStamp != null) 'lastShaStamp': lastShaStamp?.toJson(),
+      if (generateHistory != null)
+        'generateHistory':
+            generateHistory?.toJson(valueToJson: (v) => v.toJson()),
       'codeBaseId': codeBaseId,
       if (codeBase != null) 'codeBase': codeBase?.toJson(),
       'pathAppearancesPerKeyId': pathAppearancesPerKeyId,
@@ -256,8 +251,7 @@ class _ProjectImpl extends Project {
     List<_i5.AccountProjectBridge>? accountprojectbridge,
     required String appContextText,
     List<_i6.LocalizatedContext>? localizatedContext,
-    required int lastShaStampId,
-    _i7.LastUpdateShaStamp? lastShaStamp,
+    List<_i7.GenerateHistory>? generateHistory,
     required int codeBaseId,
     _i8.ProjectCodeBase? codeBase,
     required int pathAppearancesPerKeyId,
@@ -278,8 +272,7 @@ class _ProjectImpl extends Project {
           accountprojectbridge: accountprojectbridge,
           appContextText: appContextText,
           localizatedContext: localizatedContext,
-          lastShaStampId: lastShaStampId,
-          lastShaStamp: lastShaStamp,
+          generateHistory: generateHistory,
           codeBaseId: codeBaseId,
           codeBase: codeBase,
           pathAppearancesPerKeyId: pathAppearancesPerKeyId,
@@ -306,8 +299,7 @@ class _ProjectImpl extends Project {
     Object? accountprojectbridge = _Undefined,
     String? appContextText,
     Object? localizatedContext = _Undefined,
-    int? lastShaStampId,
-    Object? lastShaStamp = _Undefined,
+    Object? generateHistory = _Undefined,
     int? codeBaseId,
     Object? codeBase = _Undefined,
     int? pathAppearancesPerKeyId,
@@ -342,10 +334,9 @@ class _ProjectImpl extends Project {
       localizatedContext: localizatedContext is List<_i6.LocalizatedContext>?
           ? localizatedContext
           : this.localizatedContext?.map((e0) => e0.copyWith()).toList(),
-      lastShaStampId: lastShaStampId ?? this.lastShaStampId,
-      lastShaStamp: lastShaStamp is _i7.LastUpdateShaStamp?
-          ? lastShaStamp
-          : this.lastShaStamp?.copyWith(),
+      generateHistory: generateHistory is List<_i7.GenerateHistory>?
+          ? generateHistory
+          : this.generateHistory?.map((e0) => e0.copyWith()).toList(),
       codeBaseId: codeBaseId ?? this.codeBaseId,
       codeBase: codeBase is _i8.ProjectCodeBase?
           ? codeBase

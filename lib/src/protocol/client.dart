@@ -17,15 +17,19 @@ import 'package:gobabel_client/src/protocol/account_related/localizated_context.
     as _i4;
 import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
     as _i5;
-import 'package:gobabel_client/src/protocol/project/project.dart' as _i6;
+import 'package:gobabel_client/src/protocol/project/generate_history.dart'
+    as _i6;
+import 'package:gobabel_client/src/protocol/project/project.dart' as _i7;
 import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
-    as _i7;
-import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
     as _i8;
-import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
     as _i9;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i10;
-import 'protocol.dart' as _i11;
+import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+    as _i10;
+import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i11;
+import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i12;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
+import 'protocol.dart' as _i14;
 
 /// {@category Endpoint}
 class EndpointPrivateAccount extends _i1.EndpointRef {
@@ -154,14 +158,81 @@ class EndpointPrivateContext extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointPrivateHistory extends _i1.EndpointRef {
+  EndpointPrivateHistory(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'privateHistory';
+
+  _i2.Future<
+      ({
+        bool isLastPage,
+        List<_i6.GenerateHistory> items,
+        int nextPage,
+        int totalAmount
+      })> getHistory({
+    required BigInt projectShaIdentifier,
+    required int page,
+  }) =>
+      caller.callServerEndpoint<
+          ({
+            bool isLastPage,
+            List<_i6.GenerateHistory> items,
+            int nextPage,
+            int totalAmount
+          })>(
+        'privateHistory',
+        'getHistory',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'page': page,
+        },
+      );
+}
+
+/// {@category Endpoint}
+class EndpointPrivateProjectApiKeys extends _i1.EndpointRef {
+  EndpointPrivateProjectApiKeys(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'privateProjectApiKeys';
+
+  _i2.Future<_i7.Project> removeApiKey({
+    required int apiKeyId,
+    required BigInt projectShaIdentifier,
+  }) =>
+      caller.callServerEndpoint<_i7.Project>(
+        'privateProjectApiKeys',
+        'removeApiKey',
+        {
+          'apiKeyId': apiKeyId,
+          'projectShaIdentifier': projectShaIdentifier,
+        },
+      );
+
+  _i2.Future<_i7.Project> addApiKey({
+    required String name,
+    required BigInt projectShaIdentifier,
+  }) =>
+      caller.callServerEndpoint<_i7.Project>(
+        'privateProjectApiKeys',
+        'addApiKey',
+        {
+          'name': name,
+          'projectShaIdentifier': projectShaIdentifier,
+        },
+      );
+}
+
+/// {@category Endpoint}
 class EndpointPrivateProject extends _i1.EndpointRef {
   EndpointPrivateProject(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'privateProject';
 
-  _i2.Future<List<_i6.Project>> getProjects() =>
-      caller.callServerEndpoint<List<_i6.Project>>(
+  _i2.Future<List<_i7.Project>> getProjects() =>
+      caller.callServerEndpoint<List<_i7.Project>>(
         'privateProject',
         'getProjects',
         {},
@@ -183,8 +254,8 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
       );
 
   _i2.Future<String> generateSubscriptionPaymentLink({
-    required _i7.PlanTier targetPlanTier,
-    required _i8.SubscriptionRecurrency targetSubscriptionRecurrency,
+    required _i8.PlanTier targetPlanTier,
+    required _i9.SubscriptionRecurrency targetSubscriptionRecurrency,
     required String userEmail,
   }) =>
       caller.callServerEndpoint<String>(
@@ -194,6 +265,41 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
           'targetPlanTier': targetPlanTier,
           'targetSubscriptionRecurrency': targetSubscriptionRecurrency,
           'userEmail': userEmail,
+        },
+      );
+}
+
+/// {@category Endpoint}
+class EndpointPrivateWorkspace extends _i1.EndpointRef {
+  EndpointPrivateWorkspace(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'privateWorkspace';
+
+  _i2.Future<_i7.Project> removeMemberFromWorkSpace({
+    required String targetUserEmail,
+    required BigInt projectShaIdentifier,
+  }) =>
+      caller.callServerEndpoint<_i7.Project>(
+        'privateWorkspace',
+        'removeMemberFromWorkSpace',
+        {
+          'targetUserEmail': targetUserEmail,
+          'projectShaIdentifier': projectShaIdentifier,
+        },
+      );
+
+  /// Returns the project with the user as owner
+  _i2.Future<_i7.Project> addNewMemberToWorkSpace({
+    required String targetUserEmail,
+    required BigInt projectShaIdentifier,
+  }) =>
+      caller.callServerEndpoint<_i7.Project>(
+        'privateWorkspace',
+        'addNewMemberToWorkSpace',
+        {
+          'targetUserEmail': targetUserEmail,
+          'projectShaIdentifier': projectShaIdentifier,
         },
       );
 }
@@ -232,15 +338,17 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
   @override
   String get name => 'publicGenerate';
 
-  _i2.Future<void> call({
+  _i2.Future<_i6.GenerateHistory> call({
     required String projectApiToken,
     required String currentCommitSha,
     required BigInt projectShaIdentifier,
     required Map<String, Map<String, Map<String, String>>> madeTranslations,
     required Set<String> projectCodeBaseFolders,
-    required _i9.ArbKeysAppearancesPath pathsOfKeys,
+    required _i10.ArbKeysAppearancesPath pathsOfKeys,
+    required _i11.GitCommit gitCommit,
+    required _i12.GitUser gitUser,
   }) =>
-      caller.callServerEndpoint<void>(
+      caller.callServerEndpoint<_i6.GenerateHistory>(
         'publicGenerate',
         'call',
         {
@@ -250,6 +358,8 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
           'madeTranslations': madeTranslations,
           'projectCodeBaseFolders': projectCodeBaseFolders,
           'pathsOfKeys': pathsOfKeys,
+          'gitCommit': gitCommit,
+          'gitUser': gitUser,
         },
       );
 }
@@ -278,6 +388,29 @@ class EndpointPublicSync extends _i1.EndpointRef {
           'name': name,
           'description': description,
           'projectCodeBaseFolders': projectCodeBaseFolders,
+        },
+      );
+}
+
+/// {@category Endpoint}
+class EndpointPublicHistory extends _i1.EndpointRef {
+  EndpointPublicHistory(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'publicHistory';
+
+  _i2.Future<void> setCommit({
+    required BigInt projectShaIdentifier,
+    required int generateHistoryId,
+    required _i11.GitCommit commit,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'publicHistory',
+        'setCommit',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'generateHistoryId': generateHistoryId,
+          'commit': commit,
         },
       );
 }
@@ -315,13 +448,13 @@ class EndpointPublicProject extends _i1.EndpointRef {
         {'projectShaIdentifier': projectShaIdentifier},
       );
 
-  _i2.Future<List<({String sha, DateTime updatedDate})>?> getLastUpdateSha({
+  _i2.Future<List<String>?> getLastShaKeys({
     required String projectApiToken,
     required BigInt projectShaIdentifier,
   }) =>
-      caller.callServerEndpoint<List<({String sha, DateTime updatedDate})>?>(
+      caller.callServerEndpoint<List<String>?>(
         'publicProject',
-        'getLastUpdateSha',
+        'getLastShaKeys',
         {
           'projectApiToken': projectApiToken,
           'projectShaIdentifier': projectShaIdentifier,
@@ -339,7 +472,7 @@ class EndpointPublicTier extends _i1.EndpointRef {
   _i2.Future<void> updatePlayerTier({
     required String email,
     required String tierManipulationKey,
-    required _i7.PlanTier planTier,
+    required _i8.PlanTier planTier,
   }) =>
       caller.callServerEndpoint<void>(
         'publicTier',
@@ -368,7 +501,7 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
     required String referenceLanguageCode,
     required String referenceCountryCode,
     required Map<String, String> referenceArb,
-    required _i9.ArbKeysAppearancesPath pathsOfKeys,
+    required _i10.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
         'publicTranslateArb',
@@ -388,10 +521,10 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i10.Caller(client);
+    auth = _i13.Caller(client);
   }
 
-  late final _i10.Caller auth;
+  late final _i13.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -410,7 +543,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i11.Protocol(),
+          _i14.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -423,11 +556,15 @@ class Client extends _i1.ServerpodClientShared {
     privateAccount = EndpointPrivateAccount(this);
     privateArb = EndpointPrivateArb(this);
     privateContext = EndpointPrivateContext(this);
+    privateHistory = EndpointPrivateHistory(this);
+    privateProjectApiKeys = EndpointPrivateProjectApiKeys(this);
     privateProject = EndpointPrivateProject(this);
     subscriptionsManagement = EndpointSubscriptionsManagement(this);
+    privateWorkspace = EndpointPrivateWorkspace(this);
     publicCreateProject = EndpointPublicCreateProject(this);
     publicGenerate = EndpointPublicGenerate(this);
     publicSync = EndpointPublicSync(this);
+    publicHistory = EndpointPublicHistory(this);
     publicProject = EndpointPublicProject(this);
     publicTier = EndpointPublicTier(this);
     publicTranslateArb = EndpointPublicTranslateArb(this);
@@ -440,15 +577,23 @@ class Client extends _i1.ServerpodClientShared {
 
   late final EndpointPrivateContext privateContext;
 
+  late final EndpointPrivateHistory privateHistory;
+
+  late final EndpointPrivateProjectApiKeys privateProjectApiKeys;
+
   late final EndpointPrivateProject privateProject;
 
   late final EndpointSubscriptionsManagement subscriptionsManagement;
+
+  late final EndpointPrivateWorkspace privateWorkspace;
 
   late final EndpointPublicCreateProject publicCreateProject;
 
   late final EndpointPublicGenerate publicGenerate;
 
   late final EndpointPublicSync publicSync;
+
+  late final EndpointPublicHistory publicHistory;
 
   late final EndpointPublicProject publicProject;
 
@@ -463,11 +608,15 @@ class Client extends _i1.ServerpodClientShared {
         'privateAccount': privateAccount,
         'privateArb': privateArb,
         'privateContext': privateContext,
+        'privateHistory': privateHistory,
+        'privateProjectApiKeys': privateProjectApiKeys,
         'privateProject': privateProject,
         'subscriptionsManagement': subscriptionsManagement,
+        'privateWorkspace': privateWorkspace,
         'publicCreateProject': publicCreateProject,
         'publicGenerate': publicGenerate,
         'publicSync': publicSync,
+        'publicHistory': publicHistory,
         'publicProject': publicProject,
         'publicTier': publicTier,
         'publicTranslateArb': publicTranslateArb,

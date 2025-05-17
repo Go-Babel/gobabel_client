@@ -17,6 +17,7 @@ abstract class ProjectApiKey implements _i1.SerializableModel {
     this.id,
     required this.projectId,
     this.project,
+    required this.name,
     required this.apiKey,
     required this.createdAt,
   });
@@ -25,6 +26,7 @@ abstract class ProjectApiKey implements _i1.SerializableModel {
     int? id,
     required int projectId,
     _i2.Project? project,
+    required String name,
     required String apiKey,
     required DateTime createdAt,
   }) = _ProjectApiKeyImpl;
@@ -37,6 +39,7 @@ abstract class ProjectApiKey implements _i1.SerializableModel {
           ? null
           : _i2.Project.fromJson(
               (jsonSerialization['project'] as Map<String, dynamic>)),
+      name: jsonSerialization['name'] as String,
       apiKey: jsonSerialization['apiKey'] as String,
       createdAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
@@ -52,6 +55,8 @@ abstract class ProjectApiKey implements _i1.SerializableModel {
 
   _i2.Project? project;
 
+  String name;
+
   String apiKey;
 
   DateTime createdAt;
@@ -63,6 +68,7 @@ abstract class ProjectApiKey implements _i1.SerializableModel {
     int? id,
     int? projectId,
     _i2.Project? project,
+    String? name,
     String? apiKey,
     DateTime? createdAt,
   });
@@ -72,6 +78,7 @@ abstract class ProjectApiKey implements _i1.SerializableModel {
       if (id != null) 'id': id,
       'projectId': projectId,
       if (project != null) 'project': project?.toJson(),
+      'name': name,
       'apiKey': apiKey,
       'createdAt': createdAt.toJson(),
     };
@@ -90,12 +97,14 @@ class _ProjectApiKeyImpl extends ProjectApiKey {
     int? id,
     required int projectId,
     _i2.Project? project,
+    required String name,
     required String apiKey,
     required DateTime createdAt,
   }) : super._(
           id: id,
           projectId: projectId,
           project: project,
+          name: name,
           apiKey: apiKey,
           createdAt: createdAt,
         );
@@ -108,6 +117,7 @@ class _ProjectApiKeyImpl extends ProjectApiKey {
     Object? id = _Undefined,
     int? projectId,
     Object? project = _Undefined,
+    String? name,
     String? apiKey,
     DateTime? createdAt,
   }) {
@@ -115,6 +125,7 @@ class _ProjectApiKeyImpl extends ProjectApiKey {
       id: id is int? ? id : this.id,
       projectId: projectId ?? this.projectId,
       project: project is _i2.Project? ? project : this.project?.copyWith(),
+      name: name ?? this.name,
       apiKey: apiKey ?? this.apiKey,
       createdAt: createdAt ?? this.createdAt,
     );

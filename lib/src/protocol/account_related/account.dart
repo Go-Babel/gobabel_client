@@ -10,14 +10,16 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../account_related/account_project_bridge.dart' as _i2;
-import '../account_related/plan_tier.dart' as _i3;
-import '../account_related/account_api_key.dart' as _i4;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i2;
+import '../account_related/account_project_bridge.dart' as _i3;
+import '../account_related/plan_tier.dart' as _i4;
+import '../account_related/account_api_key.dart' as _i5;
 
 abstract class AccountInfo implements _i1.SerializableModel {
   AccountInfo._({
     this.id,
     required this.userInfoId,
+    this.userInfo,
     this.accountprojectbridge,
     required this.planTier,
     required this.accountApiKeyId,
@@ -27,25 +29,30 @@ abstract class AccountInfo implements _i1.SerializableModel {
   factory AccountInfo({
     int? id,
     required int userInfoId,
-    List<_i2.AccountProjectBridge>? accountprojectbridge,
-    required _i3.PlanTier planTier,
+    _i2.UserInfo? userInfo,
+    List<_i3.AccountProjectBridge>? accountprojectbridge,
+    required _i4.PlanTier planTier,
     required int accountApiKeyId,
-    _i4.AccountApiKey? accountApiKey,
+    _i5.AccountApiKey? accountApiKey,
   }) = _AccountInfoImpl;
 
   factory AccountInfo.fromJson(Map<String, dynamic> jsonSerialization) {
     return AccountInfo(
       id: jsonSerialization['id'] as int?,
       userInfoId: jsonSerialization['userInfoId'] as int,
+      userInfo: jsonSerialization['userInfo'] == null
+          ? null
+          : _i2.UserInfo.fromJson(
+              (jsonSerialization['userInfo'] as Map<String, dynamic>)),
       accountprojectbridge: (jsonSerialization['accountprojectbridge'] as List?)
           ?.map((e) =>
-              _i2.AccountProjectBridge.fromJson((e as Map<String, dynamic>)))
+              _i3.AccountProjectBridge.fromJson((e as Map<String, dynamic>)))
           .toList(),
-      planTier: _i3.PlanTier.fromJson((jsonSerialization['planTier'] as int)),
+      planTier: _i4.PlanTier.fromJson((jsonSerialization['planTier'] as int)),
       accountApiKeyId: jsonSerialization['accountApiKeyId'] as int,
       accountApiKey: jsonSerialization['accountApiKey'] == null
           ? null
-          : _i4.AccountApiKey.fromJson(
+          : _i5.AccountApiKey.fromJson(
               (jsonSerialization['accountApiKey'] as Map<String, dynamic>)),
     );
   }
@@ -57,13 +64,15 @@ abstract class AccountInfo implements _i1.SerializableModel {
 
   int userInfoId;
 
-  List<_i2.AccountProjectBridge>? accountprojectbridge;
+  _i2.UserInfo? userInfo;
 
-  _i3.PlanTier planTier;
+  List<_i3.AccountProjectBridge>? accountprojectbridge;
+
+  _i4.PlanTier planTier;
 
   int accountApiKeyId;
 
-  _i4.AccountApiKey? accountApiKey;
+  _i5.AccountApiKey? accountApiKey;
 
   /// Returns a shallow copy of this [AccountInfo]
   /// with some or all fields replaced by the given arguments.
@@ -71,16 +80,18 @@ abstract class AccountInfo implements _i1.SerializableModel {
   AccountInfo copyWith({
     int? id,
     int? userInfoId,
-    List<_i2.AccountProjectBridge>? accountprojectbridge,
-    _i3.PlanTier? planTier,
+    _i2.UserInfo? userInfo,
+    List<_i3.AccountProjectBridge>? accountprojectbridge,
+    _i4.PlanTier? planTier,
     int? accountApiKeyId,
-    _i4.AccountApiKey? accountApiKey,
+    _i5.AccountApiKey? accountApiKey,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'userInfoId': userInfoId,
+      if (userInfo != null) 'userInfo': userInfo?.toJson(),
       if (accountprojectbridge != null)
         'accountprojectbridge':
             accountprojectbridge?.toJson(valueToJson: (v) => v.toJson()),
@@ -102,13 +113,15 @@ class _AccountInfoImpl extends AccountInfo {
   _AccountInfoImpl({
     int? id,
     required int userInfoId,
-    List<_i2.AccountProjectBridge>? accountprojectbridge,
-    required _i3.PlanTier planTier,
+    _i2.UserInfo? userInfo,
+    List<_i3.AccountProjectBridge>? accountprojectbridge,
+    required _i4.PlanTier planTier,
     required int accountApiKeyId,
-    _i4.AccountApiKey? accountApiKey,
+    _i5.AccountApiKey? accountApiKey,
   }) : super._(
           id: id,
           userInfoId: userInfoId,
+          userInfo: userInfo,
           accountprojectbridge: accountprojectbridge,
           planTier: planTier,
           accountApiKeyId: accountApiKeyId,
@@ -122,21 +135,24 @@ class _AccountInfoImpl extends AccountInfo {
   AccountInfo copyWith({
     Object? id = _Undefined,
     int? userInfoId,
+    Object? userInfo = _Undefined,
     Object? accountprojectbridge = _Undefined,
-    _i3.PlanTier? planTier,
+    _i4.PlanTier? planTier,
     int? accountApiKeyId,
     Object? accountApiKey = _Undefined,
   }) {
     return AccountInfo(
       id: id is int? ? id : this.id,
       userInfoId: userInfoId ?? this.userInfoId,
+      userInfo:
+          userInfo is _i2.UserInfo? ? userInfo : this.userInfo?.copyWith(),
       accountprojectbridge:
-          accountprojectbridge is List<_i2.AccountProjectBridge>?
+          accountprojectbridge is List<_i3.AccountProjectBridge>?
               ? accountprojectbridge
               : this.accountprojectbridge?.map((e0) => e0.copyWith()).toList(),
       planTier: planTier ?? this.planTier,
       accountApiKeyId: accountApiKeyId ?? this.accountApiKeyId,
-      accountApiKey: accountApiKey is _i4.AccountApiKey?
+      accountApiKey: accountApiKey is _i5.AccountApiKey?
           ? accountApiKey
           : this.accountApiKey?.copyWith(),
     );
