@@ -28,6 +28,7 @@ abstract class Project implements _i1.SerializableModel {
     required this.currentTranslationsKeysSha,
     required this.projectShaIdentifier,
     required this.description,
+    required this.gitOriginUrl,
     required this.projectReferenceName,
     this.activeTranslations,
     this.projectApiKeys,
@@ -51,6 +52,7 @@ abstract class Project implements _i1.SerializableModel {
     required String currentTranslationsKeysSha,
     required BigInt projectShaIdentifier,
     required String description,
+    required String gitOriginUrl,
     required String projectReferenceName,
     List<_i2.ActiveTranslations>? activeTranslations,
     List<_i3.ProjectApiKey>? projectApiKeys,
@@ -79,6 +81,7 @@ abstract class Project implements _i1.SerializableModel {
       projectShaIdentifier: _i1.BigIntJsonExtension.fromJson(
           jsonSerialization['projectShaIdentifier']),
       description: jsonSerialization['description'] as String,
+      gitOriginUrl: jsonSerialization['gitOriginUrl'] as String,
       projectReferenceName: jsonSerialization['projectReferenceName'] as String,
       activeTranslations: (jsonSerialization['activeTranslations'] as List?)
           ?.map((e) =>
@@ -137,6 +140,8 @@ abstract class Project implements _i1.SerializableModel {
 
   String description;
 
+  String gitOriginUrl;
+
   String projectReferenceName;
 
   List<_i2.ActiveTranslations>? activeTranslations;
@@ -174,6 +179,7 @@ abstract class Project implements _i1.SerializableModel {
     String? currentTranslationsKeysSha,
     BigInt? projectShaIdentifier,
     String? description,
+    String? gitOriginUrl,
     String? projectReferenceName,
     List<_i2.ActiveTranslations>? activeTranslations,
     List<_i3.ProjectApiKey>? projectApiKeys,
@@ -198,6 +204,7 @@ abstract class Project implements _i1.SerializableModel {
       'currentTranslationsKeysSha': currentTranslationsKeysSha,
       'projectShaIdentifier': projectShaIdentifier.toJson(),
       'description': description,
+      'gitOriginUrl': gitOriginUrl,
       'projectReferenceName': projectReferenceName,
       if (activeTranslations != null)
         'activeTranslations':
@@ -243,6 +250,7 @@ class _ProjectImpl extends Project {
     required String currentTranslationsKeysSha,
     required BigInt projectShaIdentifier,
     required String description,
+    required String gitOriginUrl,
     required String projectReferenceName,
     List<_i2.ActiveTranslations>? activeTranslations,
     List<_i3.ProjectApiKey>? projectApiKeys,
@@ -264,6 +272,7 @@ class _ProjectImpl extends Project {
           currentTranslationsKeysSha: currentTranslationsKeysSha,
           projectShaIdentifier: projectShaIdentifier,
           description: description,
+          gitOriginUrl: gitOriginUrl,
           projectReferenceName: projectReferenceName,
           activeTranslations: activeTranslations,
           projectApiKeys: projectApiKeys,
@@ -291,6 +300,7 @@ class _ProjectImpl extends Project {
     String? currentTranslationsKeysSha,
     BigInt? projectShaIdentifier,
     String? description,
+    String? gitOriginUrl,
     String? projectReferenceName,
     Object? activeTranslations = _Undefined,
     Object? projectApiKeys = _Undefined,
@@ -314,6 +324,7 @@ class _ProjectImpl extends Project {
           currentTranslationsKeysSha ?? this.currentTranslationsKeysSha,
       projectShaIdentifier: projectShaIdentifier ?? this.projectShaIdentifier,
       description: description ?? this.description,
+      gitOriginUrl: gitOriginUrl ?? this.gitOriginUrl,
       projectReferenceName: projectReferenceName ?? this.projectReferenceName,
       activeTranslations: activeTranslations is List<_i2.ActiveTranslations>?
           ? activeTranslations

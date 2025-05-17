@@ -316,6 +316,7 @@ class EndpointPublicCreateProject extends _i1.EndpointRef {
     required BigInt projectShaIdentifier,
     required String name,
     required String description,
+    required String originUrl,
     required Set<String> projectCodeBaseFolders,
   }) =>
       caller.callServerEndpoint<void>(
@@ -326,6 +327,7 @@ class EndpointPublicCreateProject extends _i1.EndpointRef {
           'projectShaIdentifier': projectShaIdentifier,
           'name': name,
           'description': description,
+          'originUrl': originUrl,
           'projectCodeBaseFolders': projectCodeBaseFolders,
         },
       );
@@ -342,6 +344,7 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
     required String projectApiToken,
     required String currentCommitSha,
     required BigInt projectShaIdentifier,
+    required String originUrl,
     required Map<String, Map<String, Map<String, String>>> madeTranslations,
     required Set<String> projectCodeBaseFolders,
     required _i10.ArbKeysAppearancesPath pathsOfKeys,
@@ -355,6 +358,7 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
           'projectApiToken': projectApiToken,
           'currentCommitSha': currentCommitSha,
           'projectShaIdentifier': projectShaIdentifier,
+          'originUrl': originUrl,
           'madeTranslations': madeTranslations,
           'projectCodeBaseFolders': projectCodeBaseFolders,
           'pathsOfKeys': pathsOfKeys,
@@ -377,6 +381,7 @@ class EndpointPublicSync extends _i1.EndpointRef {
     required BigInt projectShaIdentifier,
     required String name,
     required String description,
+    required String originUrl,
     required Set<String> projectCodeBaseFolders,
   }) =>
       caller.callServerEndpoint<void>(
@@ -387,6 +392,7 @@ class EndpointPublicSync extends _i1.EndpointRef {
           'projectShaIdentifier': projectShaIdentifier,
           'name': name,
           'description': description,
+          'originUrl': originUrl,
           'projectCodeBaseFolders': projectCodeBaseFolders,
         },
       );
