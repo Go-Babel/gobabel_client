@@ -436,6 +436,7 @@ class EndpointPublicProject extends _i1.EndpointRef {
               String downloadLink,
               String languageCode
             })> languages,
+        int maxLanguageCount,
         DateTime updatedAt
       })> getProjectLanguages(
           {required BigInt projectShaIdentifier}) =>
@@ -447,6 +448,7 @@ class EndpointPublicProject extends _i1.EndpointRef {
                   String downloadLink,
                   String languageCode
                 })> languages,
+            int maxLanguageCount,
             DateTime updatedAt
           })>(
         'publicProject',

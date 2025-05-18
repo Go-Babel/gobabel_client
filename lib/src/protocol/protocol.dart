@@ -294,6 +294,7 @@ class Protocol extends _i1.SerializationManager {
                     String downloadLink,
                     String languageCode
                   })> languages,
+              int maxLanguageCount,
               DateTime updatedAt
             })>()) {
       return (
@@ -304,6 +305,7 @@ class Protocol extends _i1.SerializationManager {
                   String downloadLink,
                   String languageCode
                 })>>(((data as Map)['n'] as Map)['languages']),
+        maxLanguageCount: deserialize<int>(data['n']['maxLanguageCount']),
         updatedAt: deserialize<DateTime>(data['n']['updatedAt']),
       ) as T;
     }
@@ -529,11 +531,13 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
           String downloadLink,
           String languageCode
         })> languages,
+    int maxLanguageCount,
     DateTime updatedAt
   })) {
     return {
       "n": {
         "languages": record.languages,
+        "maxLanguageCount": record.maxLanguageCount,
         "updatedAt": record.updatedAt,
       },
     };
