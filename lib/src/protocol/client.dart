@@ -398,6 +398,50 @@ class EndpointPublicSync extends _i1.EndpointRef {
       );
 }
 
+/// Endpoint for ARB file helper operations like generating keys and translating content
+/// {@category Endpoint}
+class EndpointPublicArbHelpers extends _i1.EndpointRef {
+  EndpointPublicArbHelpers(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'publicArbHelpers';
+
+  /// Analyzes a map of strings from Dart files to determine if they should be translated
+  /// Returns a map where the key is the original string and the value is a boolean indicating
+  /// if it should be translated (true) or not (false)
+  _i2.Future<Map<String, bool>> analyseIfStringIsADisplayableLabel({
+    required String projectApiToken,
+    required BigInt projectShaIdentifier,
+    required Map<String, String> extractedStrings,
+  }) =>
+      caller.callServerEndpoint<Map<String, bool>>(
+        'publicArbHelpers',
+        'analyseIfStringIsADisplayableLabel',
+        {
+          'projectApiToken': projectApiToken,
+          'projectShaIdentifier': projectShaIdentifier,
+          'extractedStrings': extractedStrings,
+        },
+      );
+
+  /// Generate coherent ARB keys for a map of translation content
+  /// Returns a map where the key is the generated ARB key and the value is the original content
+  _i2.Future<Map<String, String>> createArbKeyNames({
+    required String projectApiToken,
+    required BigInt projectShaIdentifier,
+    required Map<String, String> translationContents,
+  }) =>
+      caller.callServerEndpoint<Map<String, String>>(
+        'publicArbHelpers',
+        'createArbKeyNames',
+        {
+          'projectApiToken': projectApiToken,
+          'projectShaIdentifier': projectShaIdentifier,
+          'translationContents': translationContents,
+        },
+      );
+}
+
 /// {@category Endpoint}
 class EndpointPublicHistory extends _i1.EndpointRef {
   EndpointPublicHistory(_i1.EndpointCaller caller) : super(caller);
@@ -572,6 +616,7 @@ class Client extends _i1.ServerpodClientShared {
     publicCreateProject = EndpointPublicCreateProject(this);
     publicGenerate = EndpointPublicGenerate(this);
     publicSync = EndpointPublicSync(this);
+    publicArbHelpers = EndpointPublicArbHelpers(this);
     publicHistory = EndpointPublicHistory(this);
     publicProject = EndpointPublicProject(this);
     publicTier = EndpointPublicTier(this);
@@ -601,6 +646,8 @@ class Client extends _i1.ServerpodClientShared {
 
   late final EndpointPublicSync publicSync;
 
+  late final EndpointPublicArbHelpers publicArbHelpers;
+
   late final EndpointPublicHistory publicHistory;
 
   late final EndpointPublicProject publicProject;
@@ -624,6 +671,7 @@ class Client extends _i1.ServerpodClientShared {
         'publicCreateProject': publicCreateProject,
         'publicGenerate': publicGenerate,
         'publicSync': publicSync,
+        'publicArbHelpers': publicArbHelpers,
         'publicHistory': publicHistory,
         'publicProject': publicProject,
         'publicTier': publicTier,

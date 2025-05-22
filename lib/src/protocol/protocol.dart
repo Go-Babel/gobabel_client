@@ -285,6 +285,11 @@ class Protocol extends _i1.SerializationManager {
       return (data as Map).map((k, v) => MapEntry(
           deserialize<String>(k), deserialize<Map<String, String>>(v))) as T;
     }
+    if (t == Map<String, bool>) {
+      return (data as Map).map(
+              (k, v) => MapEntry(deserialize<String>(k), deserialize<bool>(v)))
+          as T;
+    }
     if (t ==
         _i1.getType<
             ({
