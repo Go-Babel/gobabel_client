@@ -47,6 +47,33 @@ class EndpointPrivateAccount extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointPrivateAddNewLanguage extends _i1.EndpointRef {
+  EndpointPrivateAddNewLanguage(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'privateAddNewLanguage';
+
+  _i2.Future<void> call({
+    required BigInt projectShaIdentifier,
+    required String toLanguageCode,
+    required String toCountryCode,
+    required String referenceLanguageCode,
+    required String referenceCountryCode,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'privateAddNewLanguage',
+        'call',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'toLanguageCode': toLanguageCode,
+          'toCountryCode': toCountryCode,
+          'referenceLanguageCode': referenceLanguageCode,
+          'referenceCountryCode': referenceCountryCode,
+        },
+      );
+}
+
+/// {@category Endpoint}
 class EndpointPrivateArb extends _i1.EndpointRef {
   EndpointPrivateArb(_i1.EndpointCaller caller) : super(caller);
 
@@ -606,6 +633,7 @@ class Client extends _i1.ServerpodClientShared {
               disconnectStreamsOnLostInternetConnection,
         ) {
     privateAccount = EndpointPrivateAccount(this);
+    privateAddNewLanguage = EndpointPrivateAddNewLanguage(this);
     privateArb = EndpointPrivateArb(this);
     privateContext = EndpointPrivateContext(this);
     privateHistory = EndpointPrivateHistory(this);
@@ -625,6 +653,8 @@ class Client extends _i1.ServerpodClientShared {
   }
 
   late final EndpointPrivateAccount privateAccount;
+
+  late final EndpointPrivateAddNewLanguage privateAddNewLanguage;
 
   late final EndpointPrivateArb privateArb;
 
@@ -661,6 +691,7 @@ class Client extends _i1.ServerpodClientShared {
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'privateAccount': privateAccount,
+        'privateAddNewLanguage': privateAddNewLanguage,
         'privateArb': privateArb,
         'privateContext': privateContext,
         'privateHistory': privateHistory,
