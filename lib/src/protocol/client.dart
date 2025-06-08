@@ -28,8 +28,10 @@ import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.da
     as _i10;
 import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i11;
 import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i12;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i13;
-import 'protocol.dart' as _i14;
+import 'package:gobabel_client/src/protocol/project/hardcoded_string_key_cache.dart'
+    as _i13;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
+import 'protocol.dart' as _i15;
 
 /// {@category Endpoint}
 class EndpointPrivateAccount extends _i1.EndpointRef {
@@ -377,6 +379,7 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
     required _i10.ArbKeysAppearancesPath pathsOfKeys,
     required _i11.GitCommit gitCommit,
     required _i12.GitUser gitUser,
+    required Map<String, String> hardcodedStringMap,
   }) =>
       caller.callServerEndpoint<_i6.GenerateHistory>(
         'publicGenerate',
@@ -391,6 +394,7 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
           'pathsOfKeys': pathsOfKeys,
           'gitCommit': gitCommit,
           'gitUser': gitUser,
+          'hardcodedStringMap': hardcodedStringMap,
         },
       );
 }
@@ -466,6 +470,23 @@ class EndpointPublicArbHelpers extends _i1.EndpointRef {
           'projectShaIdentifier': projectShaIdentifier,
           'translationContents': translationContents,
         },
+      );
+}
+
+/// {@category Endpoint}
+class EndpointPublicHardcodedStringKeyCache extends _i1.EndpointRef {
+  EndpointPublicHardcodedStringKeyCache(_i1.EndpointCaller caller)
+      : super(caller);
+
+  @override
+  String get name => 'publicHardcodedStringKeyCache';
+
+  _i2.Future<_i13.HardcodedStringKeyCache?> getByProjectId(
+          {required BigInt projectShaIdentifier}) =>
+      caller.callServerEndpoint<_i13.HardcodedStringKeyCache?>(
+        'publicHardcodedStringKeyCache',
+        'getByProjectId',
+        {'projectShaIdentifier': projectShaIdentifier},
       );
 }
 
@@ -600,10 +621,10 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i13.Caller(client);
+    auth = _i14.Caller(client);
   }
 
-  late final _i13.Caller auth;
+  late final _i14.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -622,7 +643,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i14.Protocol(),
+          _i15.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -645,6 +666,7 @@ class Client extends _i1.ServerpodClientShared {
     publicGenerate = EndpointPublicGenerate(this);
     publicSync = EndpointPublicSync(this);
     publicArbHelpers = EndpointPublicArbHelpers(this);
+    publicHardcodedStringKeyCache = EndpointPublicHardcodedStringKeyCache(this);
     publicHistory = EndpointPublicHistory(this);
     publicProject = EndpointPublicProject(this);
     publicTier = EndpointPublicTier(this);
@@ -678,6 +700,9 @@ class Client extends _i1.ServerpodClientShared {
 
   late final EndpointPublicArbHelpers publicArbHelpers;
 
+  late final EndpointPublicHardcodedStringKeyCache
+      publicHardcodedStringKeyCache;
+
   late final EndpointPublicHistory publicHistory;
 
   late final EndpointPublicProject publicProject;
@@ -703,6 +728,7 @@ class Client extends _i1.ServerpodClientShared {
         'publicGenerate': publicGenerate,
         'publicSync': publicSync,
         'publicArbHelpers': publicArbHelpers,
+        'publicHardcodedStringKeyCache': publicHardcodedStringKeyCache,
         'publicHistory': publicHistory,
         'publicProject': publicProject,
         'publicTier': publicTier,
