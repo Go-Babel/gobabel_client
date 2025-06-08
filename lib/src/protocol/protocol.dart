@@ -440,6 +440,9 @@ class Protocol extends _i1.SerializationManager {
     if (className != null) {
       return 'serverpod_auth.$className';
     }
+    if (data is Map<String, Map<String, Map<String, String>>>) {
+      return 'Map<String,Map<String,Map<String,String>>>';
+    }
     return null;
   }
 
@@ -506,6 +509,10 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
       return _i24.Protocol().deserializeByClassName(data);
+    }
+    if (dataClassName == 'Map<String,Map<String,Map<String,String>>>') {
+      return deserialize<Map<String, Map<String, Map<String, String>>>>(
+          data['data']);
     }
     return super.deserializeByClassName(data);
   }

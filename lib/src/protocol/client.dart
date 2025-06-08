@@ -374,14 +374,16 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
     required String currentCommitSha,
     required BigInt projectShaIdentifier,
     required String originUrl,
-    required Map<String, Map<String, Map<String, String>>> madeTranslations,
+    required _i2.Stream<Map<String, Map<String, Map<String, String>>>>
+        madeTranslations,
     required Set<String> projectCodeBaseFolders,
     required _i10.ArbKeysAppearancesPath pathsOfKeys,
     required _i11.GitCommit gitCommit,
     required _i12.GitUser gitUser,
     required Map<String, String> hardcodedStringMap,
   }) =>
-      caller.callServerEndpoint<_i6.GenerateHistory>(
+      caller.callStreamingServerEndpoint<_i2.Future<_i6.GenerateHistory>,
+          _i6.GenerateHistory>(
         'publicGenerate',
         'call',
         {
@@ -389,13 +391,13 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
           'currentCommitSha': currentCommitSha,
           'projectShaIdentifier': projectShaIdentifier,
           'originUrl': originUrl,
-          'madeTranslations': madeTranslations,
           'projectCodeBaseFolders': projectCodeBaseFolders,
           'pathsOfKeys': pathsOfKeys,
           'gitCommit': gitCommit,
           'gitUser': gitUser,
           'hardcodedStringMap': hardcodedStringMap,
         },
+        {'madeTranslations': madeTranslations},
       );
 }
 
