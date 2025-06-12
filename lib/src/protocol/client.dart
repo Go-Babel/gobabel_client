@@ -30,8 +30,10 @@ import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i11;
 import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i12;
 import 'package:gobabel_client/src/protocol/project/hardcoded_string_key_cache.dart'
     as _i13;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i14;
-import 'protocol.dart' as _i15;
+import 'package:gobabel_client/src/protocol/response_input/language_data_payload.dart'
+    as _i14;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i15;
+import 'protocol.dart' as _i16;
 
 /// {@category Endpoint}
 class EndpointPrivateAccount extends _i1.EndpointRef {
@@ -483,12 +485,17 @@ class EndpointPublicHardcodedStringKeyCache extends _i1.EndpointRef {
   @override
   String get name => 'publicHardcodedStringKeyCache';
 
-  _i2.Future<_i13.HardcodedStringKeyCache?> getByProjectId(
-          {required BigInt projectShaIdentifier}) =>
-      caller.callServerEndpoint<_i13.HardcodedStringKeyCache?>(
+  _i2.Future<_i13.HardcodedStringKeyCache> getByProjectId({
+    required String projectApiToken,
+    required BigInt projectShaIdentifier,
+  }) =>
+      caller.callServerEndpoint<_i13.HardcodedStringKeyCache>(
         'publicHardcodedStringKeyCache',
         'getByProjectId',
-        {'projectShaIdentifier': projectShaIdentifier},
+        {
+          'projectApiToken': projectApiToken,
+          'projectShaIdentifier': projectShaIdentifier,
+        },
       );
 }
 
@@ -524,24 +531,14 @@ class EndpointPublicProject extends _i1.EndpointRef {
 
   _i2.Future<
       ({
-        List<
-            ({
-              String countryCode,
-              String downloadLink,
-              String languageCode
-            })> languages,
+        List<_i14.LanguageDataPayload> languages,
         int maxLanguageCount,
         DateTime updatedAt
       })> getProjectLanguages(
           {required BigInt projectShaIdentifier}) =>
       caller.callServerEndpoint<
           ({
-            List<
-                ({
-                  String countryCode,
-                  String downloadLink,
-                  String languageCode
-                })> languages,
+            List<_i14.LanguageDataPayload> languages,
             int maxLanguageCount,
             DateTime updatedAt
           })>(
@@ -623,10 +620,10 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i14.Caller(client);
+    auth = _i15.Caller(client);
   }
 
-  late final _i14.Caller auth;
+  late final _i15.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -645,7 +642,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i15.Protocol(),
+          _i16.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

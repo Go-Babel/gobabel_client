@@ -28,14 +28,17 @@ import 'project/label_locale.dart' as _i16;
 import 'project/project.dart' as _i17;
 import 'project/project_api_key.dart' as _i18;
 import 'project/project_arb_keys_appearances_path.dart' as _i19;
+import 'response_input/language_data_payload.dart' as _i20;
 import 'package:gobabel_client/src/protocol/account_related/localizated_context.dart'
-    as _i20;
-import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
     as _i21;
-import 'package:gobabel_client/src/protocol/project/generate_history.dart'
+import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
     as _i22;
-import 'package:gobabel_client/src/protocol/project/project.dart' as _i23;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i24;
+import 'package:gobabel_client/src/protocol/project/generate_history.dart'
+    as _i23;
+import 'package:gobabel_client/src/protocol/project/project.dart' as _i24;
+import 'package:gobabel_client/src/protocol/response_input/language_data_payload.dart'
+    as _i25;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i26;
 export 'account_related/account.dart';
 export 'account_related/account_api_key.dart';
 export 'account_related/account_project_bridge.dart';
@@ -54,6 +57,7 @@ export 'project/label_locale.dart';
 export 'project/project.dart';
 export 'project/project_api_key.dart';
 export 'project/project_arb_keys_appearances_path.dart';
+export 'response_input/language_data_payload.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -123,6 +127,9 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i19.ProjectArbKeysAppearancesPath) {
       return _i19.ProjectArbKeysAppearancesPath.fromJson(data) as T;
     }
+    if (t == _i20.LanguageDataPayload) {
+      return _i20.LanguageDataPayload.fromJson(data) as T;
+    }
     if (t == _i1.getType<_i2.AccountInfo?>()) {
       return (data != null ? _i2.AccountInfo.fromJson(data) : null) as T;
     }
@@ -182,6 +189,10 @@ class Protocol extends _i1.SerializationManager {
       return (data != null
           ? _i19.ProjectArbKeysAppearancesPath.fromJson(data)
           : null) as T;
+    }
+    if (t == _i1.getType<_i20.LanguageDataPayload?>()) {
+      return (data != null ? _i20.LanguageDataPayload.fromJson(data) : null)
+          as T;
     }
     if (t == _i1.getType<List<_i4.AccountProjectBridge>?>()) {
       return (data != null
@@ -244,47 +255,47 @@ class Protocol extends _i1.SerializationManager {
         _i1.getType<
             ({
               String appContextText,
-              List<_i20.LocalizatedContext> localizedContexts,
-              _i21.ProjectCodeBase? projectCodeBase
+              List<_i21.LocalizatedContext> localizedContexts,
+              _i22.ProjectCodeBase? projectCodeBase
             })>()) {
       return (
         appContextText:
             deserialize<String>(((data as Map)['n'] as Map)['appContextText']),
-        localizedContexts: deserialize<List<_i20.LocalizatedContext>>(
+        localizedContexts: deserialize<List<_i21.LocalizatedContext>>(
             data['n']['localizedContexts']),
         projectCodeBase: ((data)['n'] as Map)['projectCodeBase'] == null
             ? null
-            : deserialize<_i21.ProjectCodeBase>(data['n']['projectCodeBase']),
+            : deserialize<_i22.ProjectCodeBase>(data['n']['projectCodeBase']),
       ) as T;
     }
-    if (t == List<_i20.LocalizatedContext>) {
+    if (t == List<_i21.LocalizatedContext>) {
       return (data as List)
-          .map((e) => deserialize<_i20.LocalizatedContext>(e))
+          .map((e) => deserialize<_i21.LocalizatedContext>(e))
           .toList() as T;
     }
     if (t ==
         _i1.getType<
             ({
               bool isLastPage,
-              List<_i22.GenerateHistory> items,
+              List<_i23.GenerateHistory> items,
               int nextPage,
               int totalAmount
             })>()) {
       return (
         isLastPage:
             deserialize<bool>(((data as Map)['n'] as Map)['isLastPage']),
-        items: deserialize<List<_i22.GenerateHistory>>(data['n']['items']),
+        items: deserialize<List<_i23.GenerateHistory>>(data['n']['items']),
         nextPage: deserialize<int>(data['n']['nextPage']),
         totalAmount: deserialize<int>(data['n']['totalAmount']),
       ) as T;
     }
-    if (t == List<_i22.GenerateHistory>) {
+    if (t == List<_i23.GenerateHistory>) {
       return (data as List)
-          .map((e) => deserialize<_i22.GenerateHistory>(e))
+          .map((e) => deserialize<_i23.GenerateHistory>(e))
           .toList() as T;
     }
-    if (t == List<_i23.Project>) {
-      return (data as List).map((e) => deserialize<_i23.Project>(e)).toList()
+    if (t == List<_i24.Project>) {
+      return (data as List).map((e) => deserialize<_i24.Project>(e)).toList()
           as T;
     }
     if (t == Set<String>) {
@@ -306,66 +317,21 @@ class Protocol extends _i1.SerializationManager {
     if (t ==
         _i1.getType<
             ({
-              List<
-                  ({
-                    String countryCode,
-                    String downloadLink,
-                    String languageCode
-                  })> languages,
+              List<_i25.LanguageDataPayload> languages,
               int maxLanguageCount,
               DateTime updatedAt
             })>()) {
       return (
-        languages: deserialize<
-            List<
-                ({
-                  String countryCode,
-                  String downloadLink,
-                  String languageCode
-                })>>(((data as Map)['n'] as Map)['languages']),
+        languages: deserialize<List<_i25.LanguageDataPayload>>(
+            ((data as Map)['n'] as Map)['languages']),
         maxLanguageCount: deserialize<int>(data['n']['maxLanguageCount']),
         updatedAt: deserialize<DateTime>(data['n']['updatedAt']),
       ) as T;
     }
-    if (t ==
-        List<
-            ({String countryCode, String downloadLink, String languageCode})>) {
+    if (t == List<_i25.LanguageDataPayload>) {
       return (data as List)
-          .map((e) => deserialize<
-              ({
-                String countryCode,
-                String downloadLink,
-                String languageCode
-              })>(e))
+          .map((e) => deserialize<_i25.LanguageDataPayload>(e))
           .toList() as T;
-    }
-    if (t ==
-        _i1.getType<
-            ({
-              String countryCode,
-              String downloadLink,
-              String languageCode
-            })>()) {
-      return (
-        countryCode:
-            deserialize<String>(((data as Map)['n'] as Map)['countryCode']),
-        downloadLink: deserialize<String>(data['n']['downloadLink']),
-        languageCode: deserialize<String>(data['n']['languageCode']),
-      ) as T;
-    }
-    if (t ==
-        _i1.getType<
-            ({
-              String countryCode,
-              String downloadLink,
-              String languageCode
-            })>()) {
-      return (
-        countryCode:
-            deserialize<String>(((data as Map)['n'] as Map)['countryCode']),
-        downloadLink: deserialize<String>(data['n']['downloadLink']),
-        languageCode: deserialize<String>(data['n']['languageCode']),
-      ) as T;
     }
     if (t == _i1.getType<List<String>?>()) {
       return (data != null
@@ -373,7 +339,7 @@ class Protocol extends _i1.SerializationManager {
           : null) as T;
     }
     try {
-      return _i24.Protocol().deserialize<T>(data, t);
+      return _i26.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -436,7 +402,10 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i19.ProjectArbKeysAppearancesPath) {
       return 'ProjectArbKeysAppearancesPath';
     }
-    className = _i24.Protocol().getClassNameForObject(data);
+    if (data is _i20.LanguageDataPayload) {
+      return 'LanguageDataPayload';
+    }
+    className = _i26.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -506,9 +475,12 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'ProjectArbKeysAppearancesPath') {
       return deserialize<_i19.ProjectArbKeysAppearancesPath>(data['data']);
     }
+    if (dataClassName == 'LanguageDataPayload') {
+      return deserialize<_i20.LanguageDataPayload>(data['data']);
+    }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i24.Protocol().deserializeByClassName(data);
+      return _i26.Protocol().deserializeByClassName(data);
     }
     if (dataClassName == 'Map<String,Map<String,Map<String,String>>>') {
       return deserialize<Map<String, Map<String, Map<String, String>>>>(
@@ -529,8 +501,8 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
   }
   if (record is ({
     String appContextText,
-    List<_i20.LocalizatedContext> localizedContexts,
-    _i21.ProjectCodeBase? projectCodeBase
+    List<_i21.LocalizatedContext> localizedContexts,
+    _i22.ProjectCodeBase? projectCodeBase
   })) {
     return {
       "n": {
@@ -542,7 +514,7 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
   }
   if (record is ({
     bool isLastPage,
-    List<_i22.GenerateHistory> items,
+    List<_i23.GenerateHistory> items,
     int nextPage,
     int totalAmount
   })) {
@@ -556,12 +528,7 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
     };
   }
   if (record is ({
-    List<
-        ({
-          String countryCode,
-          String downloadLink,
-          String languageCode
-        })> languages,
+    List<_i25.LanguageDataPayload> languages,
     int maxLanguageCount,
     DateTime updatedAt
   })) {
@@ -570,19 +537,6 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
         "languages": record.languages,
         "maxLanguageCount": record.maxLanguageCount,
         "updatedAt": record.updatedAt,
-      },
-    };
-  }
-  if (record is ({
-    String countryCode,
-    String downloadLink,
-    String languageCode
-  })) {
-    return {
-      "n": {
-        "countryCode": record.countryCode,
-        "downloadLink": record.downloadLink,
-        "languageCode": record.languageCode,
       },
     };
   }
