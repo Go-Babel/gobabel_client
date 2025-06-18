@@ -28,7 +28,7 @@ import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.da
     as _i10;
 import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i11;
 import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i12;
-import 'package:gobabel_client/src/protocol/project/hardcoded_string_key_cache.dart'
+import 'package:gobabel_client/src/protocol/project/project_cache_map.dart'
     as _i13;
 import 'package:gobabel_client/src/protocol/response_input/language_data_payload.dart'
     as _i14;
@@ -382,7 +382,9 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
     required _i10.ArbKeysAppearancesPath pathsOfKeys,
     required _i11.GitCommit gitCommit,
     required _i12.GitUser gitUser,
-    required Map<String, String> hardcodedStringMap,
+    required Map<String, String> hardcodedStringToKeyCache,
+    required Map<String, String> keyToDeclaration,
+    required Map<String, String> keyToImplementation,
   }) =>
       caller.callStreamingServerEndpoint<_i2.Future<_i6.GenerateHistory>,
           _i6.GenerateHistory>(
@@ -397,7 +399,9 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
           'pathsOfKeys': pathsOfKeys,
           'gitCommit': gitCommit,
           'gitUser': gitUser,
-          'hardcodedStringMap': hardcodedStringMap,
+          'hardcodedStringToKeyCache': hardcodedStringToKeyCache,
+          'keyToDeclaration': keyToDeclaration,
+          'keyToImplementation': keyToImplementation,
         },
         {'madeTranslations': madeTranslations},
       );
@@ -485,11 +489,11 @@ class EndpointPublicHardcodedStringKeyCache extends _i1.EndpointRef {
   @override
   String get name => 'publicHardcodedStringKeyCache';
 
-  _i2.Future<_i13.HardcodedStringKeyCache> getByProjectId({
+  _i2.Future<_i13.ProjectCacheMap> getByProjectId({
     required String projectApiToken,
     required BigInt projectShaIdentifier,
   }) =>
-      caller.callServerEndpoint<_i13.HardcodedStringKeyCache>(
+      caller.callServerEndpoint<_i13.ProjectCacheMap>(
         'publicHardcodedStringKeyCache',
         'getByProjectId',
         {

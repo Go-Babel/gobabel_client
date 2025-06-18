@@ -18,7 +18,7 @@ import '../account_related/localizated_context.dart' as _i6;
 import '../project/generate_history.dart' as _i7;
 import '../account_related/project_code_base.dart' as _i8;
 import '../project/project_arb_keys_appearances_path.dart' as _i9;
-import '../project/hardcoded_string_key_cache.dart' as _i10;
+import '../project/project_cache_map.dart' as _i10;
 
 abstract class Project implements _i1.SerializableModel {
   Project._({
@@ -43,8 +43,8 @@ abstract class Project implements _i1.SerializableModel {
     this.codeBase,
     required this.pathAppearancesPerKeyId,
     this.pathAppearancesPerKey,
-    required this.hardcodedStringKeyCacheId,
-    this.hardcodedStringKeyCache,
+    required this.projectCacheMapId,
+    this.projectCacheMap,
   });
 
   factory Project({
@@ -69,8 +69,8 @@ abstract class Project implements _i1.SerializableModel {
     _i8.ProjectCodeBase? codeBase,
     required int pathAppearancesPerKeyId,
     _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
-    required int hardcodedStringKeyCacheId,
-    _i10.HardcodedStringKeyCache? hardcodedStringKeyCache,
+    required int projectCacheMapId,
+    _i10.ProjectCacheMap? projectCacheMap,
   }) = _ProjectImpl;
 
   factory Project.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -125,14 +125,11 @@ abstract class Project implements _i1.SerializableModel {
           : _i9.ProjectArbKeysAppearancesPath.fromJson(
               (jsonSerialization['pathAppearancesPerKey']
                   as Map<String, dynamic>)),
-      hardcodedStringKeyCacheId:
-          jsonSerialization['hardcodedStringKeyCacheId'] as int,
-      hardcodedStringKeyCache:
-          jsonSerialization['hardcodedStringKeyCache'] == null
-              ? null
-              : _i10.HardcodedStringKeyCache.fromJson(
-                  (jsonSerialization['hardcodedStringKeyCache']
-                      as Map<String, dynamic>)),
+      projectCacheMapId: jsonSerialization['projectCacheMapId'] as int,
+      projectCacheMap: jsonSerialization['projectCacheMap'] == null
+          ? null
+          : _i10.ProjectCacheMap.fromJson(
+              (jsonSerialization['projectCacheMap'] as Map<String, dynamic>)),
     );
   }
 
@@ -181,9 +178,9 @@ abstract class Project implements _i1.SerializableModel {
 
   _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey;
 
-  int hardcodedStringKeyCacheId;
+  int projectCacheMapId;
 
-  _i10.HardcodedStringKeyCache? hardcodedStringKeyCache;
+  _i10.ProjectCacheMap? projectCacheMap;
 
   /// Returns a shallow copy of this [Project]
   /// with some or all fields replaced by the given arguments.
@@ -210,8 +207,8 @@ abstract class Project implements _i1.SerializableModel {
     _i8.ProjectCodeBase? codeBase,
     int? pathAppearancesPerKeyId,
     _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
-    int? hardcodedStringKeyCacheId,
-    _i10.HardcodedStringKeyCache? hardcodedStringKeyCache,
+    int? projectCacheMapId,
+    _i10.ProjectCacheMap? projectCacheMap,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -249,9 +246,8 @@ abstract class Project implements _i1.SerializableModel {
       'pathAppearancesPerKeyId': pathAppearancesPerKeyId,
       if (pathAppearancesPerKey != null)
         'pathAppearancesPerKey': pathAppearancesPerKey?.toJson(),
-      'hardcodedStringKeyCacheId': hardcodedStringKeyCacheId,
-      if (hardcodedStringKeyCache != null)
-        'hardcodedStringKeyCache': hardcodedStringKeyCache?.toJson(),
+      'projectCacheMapId': projectCacheMapId,
+      if (projectCacheMap != null) 'projectCacheMap': projectCacheMap?.toJson(),
     };
   }
 
@@ -286,8 +282,8 @@ class _ProjectImpl extends Project {
     _i8.ProjectCodeBase? codeBase,
     required int pathAppearancesPerKeyId,
     _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
-    required int hardcodedStringKeyCacheId,
-    _i10.HardcodedStringKeyCache? hardcodedStringKeyCache,
+    required int projectCacheMapId,
+    _i10.ProjectCacheMap? projectCacheMap,
   }) : super._(
           id: id,
           name: name,
@@ -310,8 +306,8 @@ class _ProjectImpl extends Project {
           codeBase: codeBase,
           pathAppearancesPerKeyId: pathAppearancesPerKeyId,
           pathAppearancesPerKey: pathAppearancesPerKey,
-          hardcodedStringKeyCacheId: hardcodedStringKeyCacheId,
-          hardcodedStringKeyCache: hardcodedStringKeyCache,
+          projectCacheMapId: projectCacheMapId,
+          projectCacheMap: projectCacheMap,
         );
 
   /// Returns a shallow copy of this [Project]
@@ -340,8 +336,8 @@ class _ProjectImpl extends Project {
     Object? codeBase = _Undefined,
     int? pathAppearancesPerKeyId,
     Object? pathAppearancesPerKey = _Undefined,
-    int? hardcodedStringKeyCacheId,
-    Object? hardcodedStringKeyCache = _Undefined,
+    int? projectCacheMapId,
+    Object? projectCacheMap = _Undefined,
   }) {
     return Project(
       id: id is int? ? id : this.id,
@@ -386,12 +382,10 @@ class _ProjectImpl extends Project {
           pathAppearancesPerKey is _i9.ProjectArbKeysAppearancesPath?
               ? pathAppearancesPerKey
               : this.pathAppearancesPerKey?.copyWith(),
-      hardcodedStringKeyCacheId:
-          hardcodedStringKeyCacheId ?? this.hardcodedStringKeyCacheId,
-      hardcodedStringKeyCache:
-          hardcodedStringKeyCache is _i10.HardcodedStringKeyCache?
-              ? hardcodedStringKeyCache
-              : this.hardcodedStringKeyCache?.copyWith(),
+      projectCacheMapId: projectCacheMapId ?? this.projectCacheMapId,
+      projectCacheMap: projectCacheMap is _i10.ProjectCacheMap?
+          ? projectCacheMap
+          : this.projectCacheMap?.copyWith(),
     );
   }
 }

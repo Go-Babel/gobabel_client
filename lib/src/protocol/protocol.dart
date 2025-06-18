@@ -23,11 +23,11 @@ import 'project/arb_keys_appearances_path.dart' as _i11;
 import 'project/generate_history.dart' as _i12;
 import 'project/git_commit.dart' as _i13;
 import 'project/git_user.dart' as _i14;
-import 'project/hardcoded_string_key_cache.dart' as _i15;
-import 'project/label_locale.dart' as _i16;
-import 'project/project.dart' as _i17;
-import 'project/project_api_key.dart' as _i18;
-import 'project/project_arb_keys_appearances_path.dart' as _i19;
+import 'project/label_locale.dart' as _i15;
+import 'project/project.dart' as _i16;
+import 'project/project_api_key.dart' as _i17;
+import 'project/project_arb_keys_appearances_path.dart' as _i18;
+import 'project/project_cache_map.dart' as _i19;
 import 'response_input/language_data_payload.dart' as _i20;
 import 'package:gobabel_client/src/protocol/account_related/localizated_context.dart'
     as _i21;
@@ -52,11 +52,11 @@ export 'project/arb_keys_appearances_path.dart';
 export 'project/generate_history.dart';
 export 'project/git_commit.dart';
 export 'project/git_user.dart';
-export 'project/hardcoded_string_key_cache.dart';
 export 'project/label_locale.dart';
 export 'project/project.dart';
 export 'project/project_api_key.dart';
 export 'project/project_arb_keys_appearances_path.dart';
+export 'project/project_cache_map.dart';
 export 'response_input/language_data_payload.dart';
 export 'client.dart';
 
@@ -112,20 +112,20 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i14.GitUser) {
       return _i14.GitUser.fromJson(data) as T;
     }
-    if (t == _i15.HardcodedStringKeyCache) {
-      return _i15.HardcodedStringKeyCache.fromJson(data) as T;
+    if (t == _i15.LabelLocale) {
+      return _i15.LabelLocale.fromJson(data) as T;
     }
-    if (t == _i16.LabelLocale) {
-      return _i16.LabelLocale.fromJson(data) as T;
+    if (t == _i16.Project) {
+      return _i16.Project.fromJson(data) as T;
     }
-    if (t == _i17.Project) {
-      return _i17.Project.fromJson(data) as T;
+    if (t == _i17.ProjectApiKey) {
+      return _i17.ProjectApiKey.fromJson(data) as T;
     }
-    if (t == _i18.ProjectApiKey) {
-      return _i18.ProjectApiKey.fromJson(data) as T;
+    if (t == _i18.ProjectArbKeysAppearancesPath) {
+      return _i18.ProjectArbKeysAppearancesPath.fromJson(data) as T;
     }
-    if (t == _i19.ProjectArbKeysAppearancesPath) {
-      return _i19.ProjectArbKeysAppearancesPath.fromJson(data) as T;
+    if (t == _i19.ProjectCacheMap) {
+      return _i19.ProjectCacheMap.fromJson(data) as T;
     }
     if (t == _i20.LanguageDataPayload) {
       return _i20.LanguageDataPayload.fromJson(data) as T;
@@ -172,23 +172,22 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i14.GitUser?>()) {
       return (data != null ? _i14.GitUser.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i15.HardcodedStringKeyCache?>()) {
-      return (data != null ? _i15.HardcodedStringKeyCache.fromJson(data) : null)
-          as T;
+    if (t == _i1.getType<_i15.LabelLocale?>()) {
+      return (data != null ? _i15.LabelLocale.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i16.LabelLocale?>()) {
-      return (data != null ? _i16.LabelLocale.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i16.Project?>()) {
+      return (data != null ? _i16.Project.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i17.Project?>()) {
-      return (data != null ? _i17.Project.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i17.ProjectApiKey?>()) {
+      return (data != null ? _i17.ProjectApiKey.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i18.ProjectApiKey?>()) {
-      return (data != null ? _i18.ProjectApiKey.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i19.ProjectArbKeysAppearancesPath?>()) {
+    if (t == _i1.getType<_i18.ProjectArbKeysAppearancesPath?>()) {
       return (data != null
-          ? _i19.ProjectArbKeysAppearancesPath.fromJson(data)
+          ? _i18.ProjectArbKeysAppearancesPath.fromJson(data)
           : null) as T;
+    }
+    if (t == _i1.getType<_i19.ProjectCacheMap?>()) {
+      return (data != null ? _i19.ProjectCacheMap.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<_i20.LanguageDataPayload?>()) {
       return (data != null ? _i20.LanguageDataPayload.fromJson(data) : null)
@@ -208,10 +207,6 @@ class Protocol extends _i1.SerializationManager {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<Set<String>>(v))) as T;
     }
-    if (t == Map<String, String>) {
-      return (data as Map).map((k, v) =>
-          MapEntry(deserialize<String>(k), deserialize<String>(v))) as T;
-    }
     if (t == _i1.getType<List<_i5.ActiveTranslations>?>()) {
       return (data != null
           ? (data as List)
@@ -219,10 +214,10 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           : null) as T;
     }
-    if (t == _i1.getType<List<_i18.ProjectApiKey>?>()) {
+    if (t == _i1.getType<List<_i17.ProjectApiKey>?>()) {
       return (data != null
           ? (data as List)
-              .map((e) => deserialize<_i18.ProjectApiKey>(e))
+              .map((e) => deserialize<_i17.ProjectApiKey>(e))
               .toList()
           : null) as T;
     }
@@ -246,6 +241,10 @@ class Protocol extends _i1.SerializationManager {
               .map((e) => deserialize<_i12.GenerateHistory>(e))
               .toList()
           : null) as T;
+    }
+    if (t == Map<String, String>) {
+      return (data as Map).map((k, v) =>
+          MapEntry(deserialize<String>(k), deserialize<String>(v))) as T;
     }
     if (t == Map<String, String>) {
       return (data as Map).map((k, v) =>
@@ -387,20 +386,20 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i14.GitUser) {
       return 'GitUser';
     }
-    if (data is _i15.HardcodedStringKeyCache) {
-      return 'HardcodedStringKeyCache';
-    }
-    if (data is _i16.LabelLocale) {
+    if (data is _i15.LabelLocale) {
       return 'LabelLocale';
     }
-    if (data is _i17.Project) {
+    if (data is _i16.Project) {
       return 'Project';
     }
-    if (data is _i18.ProjectApiKey) {
+    if (data is _i17.ProjectApiKey) {
       return 'ProjectApiKey';
     }
-    if (data is _i19.ProjectArbKeysAppearancesPath) {
+    if (data is _i18.ProjectArbKeysAppearancesPath) {
       return 'ProjectArbKeysAppearancesPath';
+    }
+    if (data is _i19.ProjectCacheMap) {
+      return 'ProjectCacheMap';
     }
     if (data is _i20.LanguageDataPayload) {
       return 'LanguageDataPayload';
@@ -460,20 +459,20 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'GitUser') {
       return deserialize<_i14.GitUser>(data['data']);
     }
-    if (dataClassName == 'HardcodedStringKeyCache') {
-      return deserialize<_i15.HardcodedStringKeyCache>(data['data']);
-    }
     if (dataClassName == 'LabelLocale') {
-      return deserialize<_i16.LabelLocale>(data['data']);
+      return deserialize<_i15.LabelLocale>(data['data']);
     }
     if (dataClassName == 'Project') {
-      return deserialize<_i17.Project>(data['data']);
+      return deserialize<_i16.Project>(data['data']);
     }
     if (dataClassName == 'ProjectApiKey') {
-      return deserialize<_i18.ProjectApiKey>(data['data']);
+      return deserialize<_i17.ProjectApiKey>(data['data']);
     }
     if (dataClassName == 'ProjectArbKeysAppearancesPath') {
-      return deserialize<_i19.ProjectArbKeysAppearancesPath>(data['data']);
+      return deserialize<_i18.ProjectArbKeysAppearancesPath>(data['data']);
+    }
+    if (dataClassName == 'ProjectCacheMap') {
+      return deserialize<_i19.ProjectCacheMap>(data['data']);
     }
     if (dataClassName == 'LanguageDataPayload') {
       return deserialize<_i20.LanguageDataPayload>(data['data']);
