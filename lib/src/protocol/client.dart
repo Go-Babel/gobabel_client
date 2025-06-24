@@ -20,16 +20,16 @@ import 'package:gobabel_client/src/protocol/account_related/project_code_base.da
 import 'package:gobabel_client/src/protocol/project/generate_history.dart'
     as _i6;
 import 'package:gobabel_client/src/protocol/project/project.dart' as _i7;
-import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
-    as _i8;
-import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
-    as _i9;
-import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
-    as _i10;
-import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i11;
-import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i12;
 import 'package:gobabel_client/src/protocol/project/project_cache_map.dart'
-    as _i13;
+    as _i8;
+import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
+    as _i9;
+import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
+    as _i10;
+import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+    as _i11;
+import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i12;
+import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i13;
 import 'package:gobabel_client/src/protocol/response_input/language_data_payload.dart'
     as _i14;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i15;
@@ -256,6 +256,22 @@ class EndpointPrivateProjectApiKeys extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointPrivateProjectCache extends _i1.EndpointRef {
+  EndpointPrivateProjectCache(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'privateProjectCache';
+
+  _i2.Future<_i8.ProjectCacheMap> getProjectCacheMap(
+          {required BigInt projectShaIdentifier}) =>
+      caller.callServerEndpoint<_i8.ProjectCacheMap>(
+        'privateProjectCache',
+        'getProjectCacheMap',
+        {'projectShaIdentifier': projectShaIdentifier},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointPrivateProject extends _i1.EndpointRef {
   EndpointPrivateProject(_i1.EndpointCaller caller) : super(caller);
 
@@ -285,8 +301,8 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
       );
 
   _i2.Future<String> generateSubscriptionPaymentLink({
-    required _i8.PlanTier targetPlanTier,
-    required _i9.SubscriptionRecurrency targetSubscriptionRecurrency,
+    required _i9.PlanTier targetPlanTier,
+    required _i10.SubscriptionRecurrency targetSubscriptionRecurrency,
     required String userEmail,
   }) =>
       caller.callServerEndpoint<String>(
@@ -379,9 +395,9 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
     required _i2.Stream<Map<String, Map<String, Map<String, String>>>>
         madeTranslations,
     required Set<String> projectCodeBaseFolders,
-    required _i10.ArbKeysAppearancesPath pathsOfKeys,
-    required _i11.GitCommit gitCommit,
-    required _i12.GitUser gitUser,
+    required _i11.ArbKeysAppearancesPath pathsOfKeys,
+    required _i12.GitCommit gitCommit,
+    required _i13.GitUser gitUser,
     required Map<String, String> hardcodedStringToKeyCache,
     required Map<String, String> keyToDeclaration,
     required Map<String, String> keyToImplementation,
@@ -489,11 +505,11 @@ class EndpointPublicHardcodedStringKeyCache extends _i1.EndpointRef {
   @override
   String get name => 'publicHardcodedStringKeyCache';
 
-  _i2.Future<_i13.ProjectCacheMap> getByProjectId({
+  _i2.Future<_i8.ProjectCacheMap> getByProjectId({
     required String projectApiToken,
     required BigInt projectShaIdentifier,
   }) =>
-      caller.callServerEndpoint<_i13.ProjectCacheMap>(
+      caller.callServerEndpoint<_i8.ProjectCacheMap>(
         'publicHardcodedStringKeyCache',
         'getByProjectId',
         {
@@ -513,7 +529,7 @@ class EndpointPublicHistory extends _i1.EndpointRef {
   _i2.Future<void> setCommit({
     required BigInt projectShaIdentifier,
     required int generateHistoryId,
-    required _i11.GitCommit commit,
+    required _i12.GitCommit commit,
   }) =>
       caller.callServerEndpoint<void>(
         'publicHistory',
@@ -575,7 +591,7 @@ class EndpointPublicTier extends _i1.EndpointRef {
   _i2.Future<void> updatePlayerTier({
     required String email,
     required String tierManipulationKey,
-    required _i8.PlanTier planTier,
+    required _i9.PlanTier planTier,
   }) =>
       caller.callServerEndpoint<void>(
         'publicTier',
@@ -604,7 +620,7 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
     required String referenceLanguageCode,
     required String referenceCountryCode,
     required Map<String, String> referenceArb,
-    required _i10.ArbKeysAppearancesPath pathsOfKeys,
+    required _i11.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
         'publicTranslateArb',
@@ -662,6 +678,7 @@ class Client extends _i1.ServerpodClientShared {
     privateContext = EndpointPrivateContext(this);
     privateHistory = EndpointPrivateHistory(this);
     privateProjectApiKeys = EndpointPrivateProjectApiKeys(this);
+    privateProjectCache = EndpointPrivateProjectCache(this);
     privateProject = EndpointPrivateProject(this);
     subscriptionsManagement = EndpointSubscriptionsManagement(this);
     privateWorkspace = EndpointPrivateWorkspace(this);
@@ -688,6 +705,8 @@ class Client extends _i1.ServerpodClientShared {
   late final EndpointPrivateHistory privateHistory;
 
   late final EndpointPrivateProjectApiKeys privateProjectApiKeys;
+
+  late final EndpointPrivateProjectCache privateProjectCache;
 
   late final EndpointPrivateProject privateProject;
 
@@ -724,6 +743,7 @@ class Client extends _i1.ServerpodClientShared {
         'privateContext': privateContext,
         'privateHistory': privateHistory,
         'privateProjectApiKeys': privateProjectApiKeys,
+        'privateProjectCache': privateProjectCache,
         'privateProject': privateProject,
         'subscriptionsManagement': subscriptionsManagement,
         'privateWorkspace': privateWorkspace,
