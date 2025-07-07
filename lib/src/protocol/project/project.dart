@@ -19,6 +19,8 @@ import '../project/generate_history.dart' as _i7;
 import '../account_related/project_code_base.dart' as _i8;
 import '../project/project_arb_keys_appearances_path.dart' as _i9;
 import '../project/project_cache_map.dart' as _i10;
+import '../translation/label_key.dart' as _i11;
+import '../translation/label_value.dart' as _i12;
 
 abstract class Project implements _i1.SerializableModel {
   Project._({
@@ -45,6 +47,8 @@ abstract class Project implements _i1.SerializableModel {
     this.pathAppearancesPerKey,
     required this.projectCacheMapId,
     this.projectCacheMap,
+    this.labelKeys,
+    this.labelValues,
   });
 
   factory Project({
@@ -71,6 +75,8 @@ abstract class Project implements _i1.SerializableModel {
     _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
     required int projectCacheMapId,
     _i10.ProjectCacheMap? projectCacheMap,
+    List<_i11.LabelKey>? labelKeys,
+    List<_i12.LabelValue>? labelValues,
   }) = _ProjectImpl;
 
   factory Project.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -130,6 +136,12 @@ abstract class Project implements _i1.SerializableModel {
           ? null
           : _i10.ProjectCacheMap.fromJson(
               (jsonSerialization['projectCacheMap'] as Map<String, dynamic>)),
+      labelKeys: (jsonSerialization['labelKeys'] as List?)
+          ?.map((e) => _i11.LabelKey.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      labelValues: (jsonSerialization['labelValues'] as List?)
+          ?.map((e) => _i12.LabelValue.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -182,6 +194,10 @@ abstract class Project implements _i1.SerializableModel {
 
   _i10.ProjectCacheMap? projectCacheMap;
 
+  List<_i11.LabelKey>? labelKeys;
+
+  List<_i12.LabelValue>? labelValues;
+
   /// Returns a shallow copy of this [Project]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
@@ -209,6 +225,8 @@ abstract class Project implements _i1.SerializableModel {
     _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
     int? projectCacheMapId,
     _i10.ProjectCacheMap? projectCacheMap,
+    List<_i11.LabelKey>? labelKeys,
+    List<_i12.LabelValue>? labelValues,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -248,6 +266,10 @@ abstract class Project implements _i1.SerializableModel {
         'pathAppearancesPerKey': pathAppearancesPerKey?.toJson(),
       'projectCacheMapId': projectCacheMapId,
       if (projectCacheMap != null) 'projectCacheMap': projectCacheMap?.toJson(),
+      if (labelKeys != null)
+        'labelKeys': labelKeys?.toJson(valueToJson: (v) => v.toJson()),
+      if (labelValues != null)
+        'labelValues': labelValues?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 
@@ -284,6 +306,8 @@ class _ProjectImpl extends Project {
     _i9.ProjectArbKeysAppearancesPath? pathAppearancesPerKey,
     required int projectCacheMapId,
     _i10.ProjectCacheMap? projectCacheMap,
+    List<_i11.LabelKey>? labelKeys,
+    List<_i12.LabelValue>? labelValues,
   }) : super._(
           id: id,
           name: name,
@@ -308,6 +332,8 @@ class _ProjectImpl extends Project {
           pathAppearancesPerKey: pathAppearancesPerKey,
           projectCacheMapId: projectCacheMapId,
           projectCacheMap: projectCacheMap,
+          labelKeys: labelKeys,
+          labelValues: labelValues,
         );
 
   /// Returns a shallow copy of this [Project]
@@ -338,6 +364,8 @@ class _ProjectImpl extends Project {
     Object? pathAppearancesPerKey = _Undefined,
     int? projectCacheMapId,
     Object? projectCacheMap = _Undefined,
+    Object? labelKeys = _Undefined,
+    Object? labelValues = _Undefined,
   }) {
     return Project(
       id: id is int? ? id : this.id,
@@ -386,6 +414,12 @@ class _ProjectImpl extends Project {
       projectCacheMap: projectCacheMap is _i10.ProjectCacheMap?
           ? projectCacheMap
           : this.projectCacheMap?.copyWith(),
+      labelKeys: labelKeys is List<_i11.LabelKey>?
+          ? labelKeys
+          : this.labelKeys?.map((e0) => e0.copyWith()).toList(),
+      labelValues: labelValues is List<_i12.LabelValue>?
+          ? labelValues
+          : this.labelValues?.map((e0) => e0.copyWith()).toList(),
     );
   }
 }

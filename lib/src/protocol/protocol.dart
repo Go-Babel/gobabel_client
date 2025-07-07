@@ -23,22 +23,29 @@ import 'project/arb_keys_appearances_path.dart' as _i11;
 import 'project/generate_history.dart' as _i12;
 import 'project/git_commit.dart' as _i13;
 import 'project/git_user.dart' as _i14;
-import 'project/label_locale.dart' as _i15;
-import 'project/project.dart' as _i16;
-import 'project/project_api_key.dart' as _i17;
-import 'project/project_arb_keys_appearances_path.dart' as _i18;
-import 'project/project_cache_map.dart' as _i19;
-import 'response_input/language_data_payload.dart' as _i20;
+import 'project/project.dart' as _i15;
+import 'project/project_api_key.dart' as _i16;
+import 'project/project_arb_keys_appearances_path.dart' as _i17;
+import 'project/project_cache_map.dart' as _i18;
+import 'response/paginated_label_response.dart' as _i19;
+import 'response/pagination_metadata.dart' as _i20;
+import 'response_input/create_label_item.dart' as _i21;
+import 'response_input/language_data_payload.dart' as _i22;
+import 'translation/label_key.dart' as _i23;
+import 'translation/label_locale.dart' as _i24;
+import 'translation/label_value.dart' as _i25;
 import 'package:gobabel_client/src/protocol/account_related/localizated_context.dart'
-    as _i21;
+    as _i26;
 import 'package:gobabel_client/src/protocol/account_related/project_code_base.dart'
-    as _i22;
+    as _i27;
 import 'package:gobabel_client/src/protocol/project/generate_history.dart'
-    as _i23;
-import 'package:gobabel_client/src/protocol/project/project.dart' as _i24;
+    as _i28;
+import 'package:gobabel_client/src/protocol/response_input/create_label_item.dart'
+    as _i29;
+import 'package:gobabel_client/src/protocol/project/project.dart' as _i30;
 import 'package:gobabel_client/src/protocol/response_input/language_data_payload.dart'
-    as _i25;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i26;
+    as _i31;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i32;
 export 'account_related/account.dart';
 export 'account_related/account_api_key.dart';
 export 'account_related/account_project_bridge.dart';
@@ -52,12 +59,17 @@ export 'project/arb_keys_appearances_path.dart';
 export 'project/generate_history.dart';
 export 'project/git_commit.dart';
 export 'project/git_user.dart';
-export 'project/label_locale.dart';
 export 'project/project.dart';
 export 'project/project_api_key.dart';
 export 'project/project_arb_keys_appearances_path.dart';
 export 'project/project_cache_map.dart';
+export 'response/paginated_label_response.dart';
+export 'response/pagination_metadata.dart';
+export 'response_input/create_label_item.dart';
 export 'response_input/language_data_payload.dart';
+export 'translation/label_key.dart';
+export 'translation/label_locale.dart';
+export 'translation/label_value.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -112,23 +124,38 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i14.GitUser) {
       return _i14.GitUser.fromJson(data) as T;
     }
-    if (t == _i15.LabelLocale) {
-      return _i15.LabelLocale.fromJson(data) as T;
+    if (t == _i15.Project) {
+      return _i15.Project.fromJson(data) as T;
     }
-    if (t == _i16.Project) {
-      return _i16.Project.fromJson(data) as T;
+    if (t == _i16.ProjectApiKey) {
+      return _i16.ProjectApiKey.fromJson(data) as T;
     }
-    if (t == _i17.ProjectApiKey) {
-      return _i17.ProjectApiKey.fromJson(data) as T;
+    if (t == _i17.ProjectArbKeysAppearancesPath) {
+      return _i17.ProjectArbKeysAppearancesPath.fromJson(data) as T;
     }
-    if (t == _i18.ProjectArbKeysAppearancesPath) {
-      return _i18.ProjectArbKeysAppearancesPath.fromJson(data) as T;
+    if (t == _i18.ProjectCacheMap) {
+      return _i18.ProjectCacheMap.fromJson(data) as T;
     }
-    if (t == _i19.ProjectCacheMap) {
-      return _i19.ProjectCacheMap.fromJson(data) as T;
+    if (t == _i19.PaginatedLabelResponse) {
+      return _i19.PaginatedLabelResponse.fromJson(data) as T;
     }
-    if (t == _i20.LanguageDataPayload) {
-      return _i20.LanguageDataPayload.fromJson(data) as T;
+    if (t == _i20.PaginationMetadata) {
+      return _i20.PaginationMetadata.fromJson(data) as T;
+    }
+    if (t == _i21.CreateLabelItem) {
+      return _i21.CreateLabelItem.fromJson(data) as T;
+    }
+    if (t == _i22.LanguageDataPayload) {
+      return _i22.LanguageDataPayload.fromJson(data) as T;
+    }
+    if (t == _i23.LabelKey) {
+      return _i23.LabelKey.fromJson(data) as T;
+    }
+    if (t == _i24.LabelLocale) {
+      return _i24.LabelLocale.fromJson(data) as T;
+    }
+    if (t == _i25.LabelValue) {
+      return _i25.LabelValue.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.AccountInfo?>()) {
       return (data != null ? _i2.AccountInfo.fromJson(data) : null) as T;
@@ -172,26 +199,43 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i14.GitUser?>()) {
       return (data != null ? _i14.GitUser.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i15.LabelLocale?>()) {
-      return (data != null ? _i15.LabelLocale.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i15.Project?>()) {
+      return (data != null ? _i15.Project.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i16.Project?>()) {
-      return (data != null ? _i16.Project.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i16.ProjectApiKey?>()) {
+      return (data != null ? _i16.ProjectApiKey.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i17.ProjectApiKey?>()) {
-      return (data != null ? _i17.ProjectApiKey.fromJson(data) : null) as T;
-    }
-    if (t == _i1.getType<_i18.ProjectArbKeysAppearancesPath?>()) {
+    if (t == _i1.getType<_i17.ProjectArbKeysAppearancesPath?>()) {
       return (data != null
-          ? _i18.ProjectArbKeysAppearancesPath.fromJson(data)
+          ? _i17.ProjectArbKeysAppearancesPath.fromJson(data)
           : null) as T;
     }
-    if (t == _i1.getType<_i19.ProjectCacheMap?>()) {
-      return (data != null ? _i19.ProjectCacheMap.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i18.ProjectCacheMap?>()) {
+      return (data != null ? _i18.ProjectCacheMap.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i20.LanguageDataPayload?>()) {
-      return (data != null ? _i20.LanguageDataPayload.fromJson(data) : null)
+    if (t == _i1.getType<_i19.PaginatedLabelResponse?>()) {
+      return (data != null ? _i19.PaginatedLabelResponse.fromJson(data) : null)
           as T;
+    }
+    if (t == _i1.getType<_i20.PaginationMetadata?>()) {
+      return (data != null ? _i20.PaginationMetadata.fromJson(data) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i21.CreateLabelItem?>()) {
+      return (data != null ? _i21.CreateLabelItem.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i22.LanguageDataPayload?>()) {
+      return (data != null ? _i22.LanguageDataPayload.fromJson(data) : null)
+          as T;
+    }
+    if (t == _i1.getType<_i23.LabelKey?>()) {
+      return (data != null ? _i23.LabelKey.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i24.LabelLocale?>()) {
+      return (data != null ? _i24.LabelLocale.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i25.LabelValue?>()) {
+      return (data != null ? _i25.LabelValue.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<List<_i4.AccountProjectBridge>?>()) {
       return (data != null
@@ -214,10 +258,10 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           : null) as T;
     }
-    if (t == _i1.getType<List<_i17.ProjectApiKey>?>()) {
+    if (t == _i1.getType<List<_i16.ProjectApiKey>?>()) {
       return (data != null
           ? (data as List)
-              .map((e) => deserialize<_i17.ProjectApiKey>(e))
+              .map((e) => deserialize<_i16.ProjectApiKey>(e))
               .toList()
           : null) as T;
     }
@@ -242,9 +286,28 @@ class Protocol extends _i1.SerializationManager {
               .toList()
           : null) as T;
     }
+    if (t == _i1.getType<List<_i23.LabelKey>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i23.LabelKey>(e)).toList()
+          : null) as T;
+    }
+    if (t == _i1.getType<List<_i25.LabelValue>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i25.LabelValue>(e)).toList()
+          : null) as T;
+    }
     if (t == Map<String, String>) {
       return (data as Map).map((k, v) =>
           MapEntry(deserialize<String>(k), deserialize<String>(v))) as T;
+    }
+    if (t == List<_i25.LabelValue>) {
+      return (data as List).map((e) => deserialize<_i25.LabelValue>(e)).toList()
+          as T;
+    }
+    if (t == _i1.getType<List<_i25.LabelValue>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i25.LabelValue>(e)).toList()
+          : null) as T;
     }
     if (t == Map<String, String>) {
       return (data as Map).map((k, v) =>
@@ -254,47 +317,52 @@ class Protocol extends _i1.SerializationManager {
         _i1.getType<
             ({
               String appContextText,
-              List<_i21.LocalizatedContext> localizedContexts,
-              _i22.ProjectCodeBase? projectCodeBase
+              List<_i26.LocalizatedContext> localizedContexts,
+              _i27.ProjectCodeBase? projectCodeBase
             })>()) {
       return (
         appContextText:
             deserialize<String>(((data as Map)['n'] as Map)['appContextText']),
-        localizedContexts: deserialize<List<_i21.LocalizatedContext>>(
+        localizedContexts: deserialize<List<_i26.LocalizatedContext>>(
             data['n']['localizedContexts']),
         projectCodeBase: ((data)['n'] as Map)['projectCodeBase'] == null
             ? null
-            : deserialize<_i22.ProjectCodeBase>(data['n']['projectCodeBase']),
+            : deserialize<_i27.ProjectCodeBase>(data['n']['projectCodeBase']),
       ) as T;
     }
-    if (t == List<_i21.LocalizatedContext>) {
+    if (t == List<_i26.LocalizatedContext>) {
       return (data as List)
-          .map((e) => deserialize<_i21.LocalizatedContext>(e))
+          .map((e) => deserialize<_i26.LocalizatedContext>(e))
           .toList() as T;
     }
     if (t ==
         _i1.getType<
             ({
               bool isLastPage,
-              List<_i23.GenerateHistory> items,
+              List<_i28.GenerateHistory> items,
               int nextPage,
               int totalAmount
             })>()) {
       return (
         isLastPage:
             deserialize<bool>(((data as Map)['n'] as Map)['isLastPage']),
-        items: deserialize<List<_i23.GenerateHistory>>(data['n']['items']),
+        items: deserialize<List<_i28.GenerateHistory>>(data['n']['items']),
         nextPage: deserialize<int>(data['n']['nextPage']),
         totalAmount: deserialize<int>(data['n']['totalAmount']),
       ) as T;
     }
-    if (t == List<_i23.GenerateHistory>) {
+    if (t == List<_i28.GenerateHistory>) {
       return (data as List)
-          .map((e) => deserialize<_i23.GenerateHistory>(e))
+          .map((e) => deserialize<_i28.GenerateHistory>(e))
           .toList() as T;
     }
-    if (t == List<_i24.Project>) {
-      return (data as List).map((e) => deserialize<_i24.Project>(e)).toList()
+    if (t == List<_i29.CreateLabelItem>) {
+      return (data as List)
+          .map((e) => deserialize<_i29.CreateLabelItem>(e))
+          .toList() as T;
+    }
+    if (t == List<_i30.Project>) {
+      return (data as List).map((e) => deserialize<_i30.Project>(e)).toList()
           as T;
     }
     if (t == Set<String>) {
@@ -316,20 +384,20 @@ class Protocol extends _i1.SerializationManager {
     if (t ==
         _i1.getType<
             ({
-              List<_i25.LanguageDataPayload> languages,
+              List<_i31.LanguageDataPayload> languages,
               int maxLanguageCount,
               DateTime updatedAt
             })>()) {
       return (
-        languages: deserialize<List<_i25.LanguageDataPayload>>(
+        languages: deserialize<List<_i31.LanguageDataPayload>>(
             ((data as Map)['n'] as Map)['languages']),
         maxLanguageCount: deserialize<int>(data['n']['maxLanguageCount']),
         updatedAt: deserialize<DateTime>(data['n']['updatedAt']),
       ) as T;
     }
-    if (t == List<_i25.LanguageDataPayload>) {
+    if (t == List<_i31.LanguageDataPayload>) {
       return (data as List)
-          .map((e) => deserialize<_i25.LanguageDataPayload>(e))
+          .map((e) => deserialize<_i31.LanguageDataPayload>(e))
           .toList() as T;
     }
     if (t == _i1.getType<List<String>?>()) {
@@ -338,7 +406,7 @@ class Protocol extends _i1.SerializationManager {
           : null) as T;
     }
     try {
-      return _i26.Protocol().deserialize<T>(data, t);
+      return _i32.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -386,25 +454,40 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i14.GitUser) {
       return 'GitUser';
     }
-    if (data is _i15.LabelLocale) {
-      return 'LabelLocale';
-    }
-    if (data is _i16.Project) {
+    if (data is _i15.Project) {
       return 'Project';
     }
-    if (data is _i17.ProjectApiKey) {
+    if (data is _i16.ProjectApiKey) {
       return 'ProjectApiKey';
     }
-    if (data is _i18.ProjectArbKeysAppearancesPath) {
+    if (data is _i17.ProjectArbKeysAppearancesPath) {
       return 'ProjectArbKeysAppearancesPath';
     }
-    if (data is _i19.ProjectCacheMap) {
+    if (data is _i18.ProjectCacheMap) {
       return 'ProjectCacheMap';
     }
-    if (data is _i20.LanguageDataPayload) {
+    if (data is _i19.PaginatedLabelResponse) {
+      return 'PaginatedLabelResponse';
+    }
+    if (data is _i20.PaginationMetadata) {
+      return 'PaginationMetadata';
+    }
+    if (data is _i21.CreateLabelItem) {
+      return 'CreateLabelItem';
+    }
+    if (data is _i22.LanguageDataPayload) {
       return 'LanguageDataPayload';
     }
-    className = _i26.Protocol().getClassNameForObject(data);
+    if (data is _i23.LabelKey) {
+      return 'LabelKey';
+    }
+    if (data is _i24.LabelLocale) {
+      return 'LabelLocale';
+    }
+    if (data is _i25.LabelValue) {
+      return 'LabelValue';
+    }
+    className = _i32.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -459,27 +542,42 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'GitUser') {
       return deserialize<_i14.GitUser>(data['data']);
     }
-    if (dataClassName == 'LabelLocale') {
-      return deserialize<_i15.LabelLocale>(data['data']);
-    }
     if (dataClassName == 'Project') {
-      return deserialize<_i16.Project>(data['data']);
+      return deserialize<_i15.Project>(data['data']);
     }
     if (dataClassName == 'ProjectApiKey') {
-      return deserialize<_i17.ProjectApiKey>(data['data']);
+      return deserialize<_i16.ProjectApiKey>(data['data']);
     }
     if (dataClassName == 'ProjectArbKeysAppearancesPath') {
-      return deserialize<_i18.ProjectArbKeysAppearancesPath>(data['data']);
+      return deserialize<_i17.ProjectArbKeysAppearancesPath>(data['data']);
     }
     if (dataClassName == 'ProjectCacheMap') {
-      return deserialize<_i19.ProjectCacheMap>(data['data']);
+      return deserialize<_i18.ProjectCacheMap>(data['data']);
+    }
+    if (dataClassName == 'PaginatedLabelResponse') {
+      return deserialize<_i19.PaginatedLabelResponse>(data['data']);
+    }
+    if (dataClassName == 'PaginationMetadata') {
+      return deserialize<_i20.PaginationMetadata>(data['data']);
+    }
+    if (dataClassName == 'CreateLabelItem') {
+      return deserialize<_i21.CreateLabelItem>(data['data']);
     }
     if (dataClassName == 'LanguageDataPayload') {
-      return deserialize<_i20.LanguageDataPayload>(data['data']);
+      return deserialize<_i22.LanguageDataPayload>(data['data']);
+    }
+    if (dataClassName == 'LabelKey') {
+      return deserialize<_i23.LabelKey>(data['data']);
+    }
+    if (dataClassName == 'LabelLocale') {
+      return deserialize<_i24.LabelLocale>(data['data']);
+    }
+    if (dataClassName == 'LabelValue') {
+      return deserialize<_i25.LabelValue>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i26.Protocol().deserializeByClassName(data);
+      return _i32.Protocol().deserializeByClassName(data);
     }
     if (dataClassName == 'Map<String,Map<String,Map<String,String>>>') {
       return deserialize<Map<String, Map<String, Map<String, String>>>>(
@@ -500,8 +598,8 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
   }
   if (record is ({
     String appContextText,
-    List<_i21.LocalizatedContext> localizedContexts,
-    _i22.ProjectCodeBase? projectCodeBase
+    List<_i26.LocalizatedContext> localizedContexts,
+    _i27.ProjectCodeBase? projectCodeBase
   })) {
     return {
       "n": {
@@ -513,7 +611,7 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
   }
   if (record is ({
     bool isLastPage,
-    List<_i23.GenerateHistory> items,
+    List<_i28.GenerateHistory> items,
     int nextPage,
     int totalAmount
   })) {
@@ -527,7 +625,7 @@ Map<String, dynamic>? mapRecordToJson(Record? record) {
     };
   }
   if (record is ({
-    List<_i25.LanguageDataPayload> languages,
+    List<_i31.LanguageDataPayload> languages,
     int maxLanguageCount,
     DateTime updatedAt
   })) {

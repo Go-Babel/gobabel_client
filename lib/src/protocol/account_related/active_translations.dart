@@ -10,7 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import '../project/label_locale.dart' as _i2;
+import '../translation/label_locale.dart' as _i2;
 
 abstract class ActiveTranslations implements _i1.SerializableModel {
   ActiveTranslations._({

@@ -19,21 +19,28 @@ import 'package:gobabel_client/src/protocol/account_related/project_code_base.da
     as _i5;
 import 'package:gobabel_client/src/protocol/project/generate_history.dart'
     as _i6;
-import 'package:gobabel_client/src/protocol/project/project.dart' as _i7;
-import 'package:gobabel_client/src/protocol/project/project_cache_map.dart'
+import 'package:gobabel_client/src/protocol/translation/label_key.dart' as _i7;
+import 'package:gobabel_client/src/protocol/response_input/create_label_item.dart'
     as _i8;
-import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
+import 'package:gobabel_client/src/protocol/translation/label_value.dart'
     as _i9;
-import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
+import 'package:gobabel_client/src/protocol/response/paginated_label_response.dart'
     as _i10;
-import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
-    as _i11;
-import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i12;
-import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i13;
-import 'package:gobabel_client/src/protocol/response_input/language_data_payload.dart'
+import 'package:gobabel_client/src/protocol/project/project.dart' as _i11;
+import 'package:gobabel_client/src/protocol/project/project_cache_map.dart'
+    as _i12;
+import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
+    as _i13;
+import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
     as _i14;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i15;
-import 'protocol.dart' as _i16;
+import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+    as _i15;
+import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i16;
+import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i17;
+import 'package:gobabel_client/src/protocol/response_input/language_data_payload.dart'
+    as _i18;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i19;
+import 'protocol.dart' as _i20;
 
 /// {@category Endpoint}
 class EndpointPrivateAccount extends _i1.EndpointRef {
@@ -222,17 +229,90 @@ class EndpointPrivateHistory extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointPrivateLabels extends _i1.EndpointRef {
+  EndpointPrivateLabels(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'privateLabels';
+
+  _i2.Future<_i7.LabelKey> createLabel({
+    required String key,
+    required List<_i8.CreateLabelItem> values,
+    required BigInt projectShaIdentifier,
+  }) =>
+      caller.callServerEndpoint<_i7.LabelKey>(
+        'privateLabels',
+        'createLabel',
+        {
+          'key': key,
+          'values': values,
+          'projectShaIdentifier': projectShaIdentifier,
+        },
+      );
+
+  _i2.Future<_i9.LabelValue> updateLabelValue(_i9.LabelValue value) =>
+      caller.callServerEndpoint<_i9.LabelValue>(
+        'privateLabels',
+        'updateLabelValue',
+        {'value': value},
+      );
+
+  _i2.Future<_i7.LabelKey> getLabelKey(_i9.LabelValue value) =>
+      caller.callServerEndpoint<_i7.LabelKey>(
+        'privateLabels',
+        'getLabelKey',
+        {'value': value},
+      );
+
+  _i2.Future<_i10.PaginatedLabelResponse> getPaginated({
+    required BigInt projectShaIdentifier,
+    required int page,
+    required int pageSize,
+    String? searchQuery,
+    String? languageCode,
+    String? countryCode,
+  }) =>
+      caller.callServerEndpoint<_i10.PaginatedLabelResponse>(
+        'privateLabels',
+        'getPaginated',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'page': page,
+          'pageSize': pageSize,
+          'searchQuery': searchQuery,
+          'languageCode': languageCode,
+          'countryCode': countryCode,
+        },
+      );
+
+  _i2.Future<void> updateLabel({
+    required BigInt projectShaIdentifier,
+    required int labelValueId,
+    required String newContent,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'privateLabels',
+        'updateLabel',
+        {
+          'projectShaIdentifier': projectShaIdentifier,
+          'labelValueId': labelValueId,
+          'newContent': newContent,
+        },
+      );
+}
+
+/// {@category Endpoint}
 class EndpointPrivateProjectApiKeys extends _i1.EndpointRef {
   EndpointPrivateProjectApiKeys(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'privateProjectApiKeys';
 
-  _i2.Future<_i7.Project> removeApiKey({
+  _i2.Future<_i11.Project> removeApiKey({
     required int apiKeyId,
     required BigInt projectShaIdentifier,
   }) =>
-      caller.callServerEndpoint<_i7.Project>(
+      caller.callServerEndpoint<_i11.Project>(
         'privateProjectApiKeys',
         'removeApiKey',
         {
@@ -241,11 +321,11 @@ class EndpointPrivateProjectApiKeys extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<_i7.Project> addApiKey({
+  _i2.Future<_i11.Project> addApiKey({
     required String name,
     required BigInt projectShaIdentifier,
   }) =>
-      caller.callServerEndpoint<_i7.Project>(
+      caller.callServerEndpoint<_i11.Project>(
         'privateProjectApiKeys',
         'addApiKey',
         {
@@ -262,9 +342,9 @@ class EndpointPrivateProjectCache extends _i1.EndpointRef {
   @override
   String get name => 'privateProjectCache';
 
-  _i2.Future<_i8.ProjectCacheMap> getProjectCacheMap(
+  _i2.Future<_i12.ProjectCacheMap> getProjectCacheMap(
           {required BigInt projectShaIdentifier}) =>
-      caller.callServerEndpoint<_i8.ProjectCacheMap>(
+      caller.callServerEndpoint<_i12.ProjectCacheMap>(
         'privateProjectCache',
         'getProjectCacheMap',
         {'projectShaIdentifier': projectShaIdentifier},
@@ -278,8 +358,16 @@ class EndpointPrivateProject extends _i1.EndpointRef {
   @override
   String get name => 'privateProject';
 
-  _i2.Future<List<_i7.Project>> getProjects() =>
-      caller.callServerEndpoint<List<_i7.Project>>(
+  _i2.Future<_i12.ProjectCacheMap> getProjectData(
+          {required BigInt projectShaIdentifier}) =>
+      caller.callServerEndpoint<_i12.ProjectCacheMap>(
+        'privateProject',
+        'getProjectData',
+        {'projectShaIdentifier': projectShaIdentifier},
+      );
+
+  _i2.Future<List<_i11.Project>> getProjects() =>
+      caller.callServerEndpoint<List<_i11.Project>>(
         'privateProject',
         'getProjects',
         {},
@@ -301,8 +389,8 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
       );
 
   _i2.Future<String> generateSubscriptionPaymentLink({
-    required _i9.PlanTier targetPlanTier,
-    required _i10.SubscriptionRecurrency targetSubscriptionRecurrency,
+    required _i13.PlanTier targetPlanTier,
+    required _i14.SubscriptionRecurrency targetSubscriptionRecurrency,
     required String userEmail,
   }) =>
       caller.callServerEndpoint<String>(
@@ -323,11 +411,11 @@ class EndpointPrivateWorkspace extends _i1.EndpointRef {
   @override
   String get name => 'privateWorkspace';
 
-  _i2.Future<_i7.Project> removeMemberFromWorkSpace({
+  _i2.Future<_i11.Project> removeMemberFromWorkSpace({
     required String targetUserEmail,
     required BigInt projectShaIdentifier,
   }) =>
-      caller.callServerEndpoint<_i7.Project>(
+      caller.callServerEndpoint<_i11.Project>(
         'privateWorkspace',
         'removeMemberFromWorkSpace',
         {
@@ -337,11 +425,11 @@ class EndpointPrivateWorkspace extends _i1.EndpointRef {
       );
 
   /// Returns the project with the user as owner
-  _i2.Future<_i7.Project> addNewMemberToWorkSpace({
+  _i2.Future<_i11.Project> addNewMemberToWorkSpace({
     required String targetUserEmail,
     required BigInt projectShaIdentifier,
   }) =>
-      caller.callServerEndpoint<_i7.Project>(
+      caller.callServerEndpoint<_i11.Project>(
         'privateWorkspace',
         'addNewMemberToWorkSpace',
         {
@@ -395,9 +483,9 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
     required _i2.Stream<Map<String, Map<String, Map<String, String>>>>
         madeTranslations,
     required Set<String> projectCodeBaseFolders,
-    required _i11.ArbKeysAppearancesPath pathsOfKeys,
-    required _i12.GitCommit gitCommit,
-    required _i13.GitUser gitUser,
+    required _i15.ArbKeysAppearancesPath pathsOfKeys,
+    required _i16.GitCommit gitCommit,
+    required _i17.GitUser gitUser,
     required Map<String, String> hardcodedStringToKeyCache,
     required Map<String, String> keyToDeclaration,
     required Map<String, String> keyToImplementation,
@@ -505,11 +593,11 @@ class EndpointPublicHardcodedStringKeyCache extends _i1.EndpointRef {
   @override
   String get name => 'publicHardcodedStringKeyCache';
 
-  _i2.Future<_i8.ProjectCacheMap> getByProjectId({
+  _i2.Future<_i12.ProjectCacheMap> getByProjectId({
     required String projectApiToken,
     required BigInt projectShaIdentifier,
   }) =>
-      caller.callServerEndpoint<_i8.ProjectCacheMap>(
+      caller.callServerEndpoint<_i12.ProjectCacheMap>(
         'publicHardcodedStringKeyCache',
         'getByProjectId',
         {
@@ -529,7 +617,7 @@ class EndpointPublicHistory extends _i1.EndpointRef {
   _i2.Future<void> setCommit({
     required BigInt projectShaIdentifier,
     required int generateHistoryId,
-    required _i12.GitCommit commit,
+    required _i16.GitCommit commit,
   }) =>
       caller.callServerEndpoint<void>(
         'publicHistory',
@@ -551,14 +639,14 @@ class EndpointPublicProject extends _i1.EndpointRef {
 
   _i2.Future<
       ({
-        List<_i14.LanguageDataPayload> languages,
+        List<_i18.LanguageDataPayload> languages,
         int maxLanguageCount,
         DateTime updatedAt
       })> getProjectLanguages(
           {required BigInt projectShaIdentifier}) =>
       caller.callServerEndpoint<
           ({
-            List<_i14.LanguageDataPayload> languages,
+            List<_i18.LanguageDataPayload> languages,
             int maxLanguageCount,
             DateTime updatedAt
           })>(
@@ -591,7 +679,7 @@ class EndpointPublicTier extends _i1.EndpointRef {
   _i2.Future<void> updatePlayerTier({
     required String email,
     required String tierManipulationKey,
-    required _i9.PlanTier planTier,
+    required _i13.PlanTier planTier,
   }) =>
       caller.callServerEndpoint<void>(
         'publicTier',
@@ -620,7 +708,7 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
     required String referenceLanguageCode,
     required String referenceCountryCode,
     required Map<String, String> referenceArb,
-    required _i11.ArbKeysAppearancesPath pathsOfKeys,
+    required _i15.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
         'publicTranslateArb',
@@ -640,10 +728,10 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i15.Caller(client);
+    auth = _i19.Caller(client);
   }
 
-  late final _i15.Caller auth;
+  late final _i19.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -662,7 +750,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i16.Protocol(),
+          _i20.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -677,6 +765,7 @@ class Client extends _i1.ServerpodClientShared {
     privateArb = EndpointPrivateArb(this);
     privateContext = EndpointPrivateContext(this);
     privateHistory = EndpointPrivateHistory(this);
+    privateLabels = EndpointPrivateLabels(this);
     privateProjectApiKeys = EndpointPrivateProjectApiKeys(this);
     privateProjectCache = EndpointPrivateProjectCache(this);
     privateProject = EndpointPrivateProject(this);
@@ -703,6 +792,8 @@ class Client extends _i1.ServerpodClientShared {
   late final EndpointPrivateContext privateContext;
 
   late final EndpointPrivateHistory privateHistory;
+
+  late final EndpointPrivateLabels privateLabels;
 
   late final EndpointPrivateProjectApiKeys privateProjectApiKeys;
 
@@ -742,6 +833,7 @@ class Client extends _i1.ServerpodClientShared {
         'privateArb': privateArb,
         'privateContext': privateContext,
         'privateHistory': privateHistory,
+        'privateLabels': privateLabels,
         'privateProjectApiKeys': privateProjectApiKeys,
         'privateProjectCache': privateProjectCache,
         'privateProject': privateProject,
