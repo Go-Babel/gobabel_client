@@ -28,7 +28,6 @@ abstract class Project implements _i1.SerializableModel {
     required this.name,
     required this.createdAt,
     required this.updatedAt,
-    required this.currentTranslationsKeysSha,
     required this.projectShaIdentifier,
     required this.description,
     required this.gitOriginUrl,
@@ -56,7 +55,6 @@ abstract class Project implements _i1.SerializableModel {
     required String name,
     required DateTime createdAt,
     required DateTime updatedAt,
-    required String currentTranslationsKeysSha,
     required BigInt projectShaIdentifier,
     required String description,
     required String gitOriginUrl,
@@ -87,8 +85,6 @@ abstract class Project implements _i1.SerializableModel {
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
       updatedAt:
           _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
-      currentTranslationsKeysSha:
-          jsonSerialization['currentTranslationsKeysSha'] as String,
       projectShaIdentifier: _i1.BigIntJsonExtension.fromJson(
           jsonSerialization['projectShaIdentifier']),
       description: jsonSerialization['description'] as String,
@@ -156,8 +152,6 @@ abstract class Project implements _i1.SerializableModel {
 
   DateTime updatedAt;
 
-  String currentTranslationsKeysSha;
-
   BigInt projectShaIdentifier;
 
   String description;
@@ -206,7 +200,6 @@ abstract class Project implements _i1.SerializableModel {
     String? name,
     DateTime? createdAt,
     DateTime? updatedAt,
-    String? currentTranslationsKeysSha,
     BigInt? projectShaIdentifier,
     String? description,
     String? gitOriginUrl,
@@ -235,7 +228,6 @@ abstract class Project implements _i1.SerializableModel {
       'name': name,
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
-      'currentTranslationsKeysSha': currentTranslationsKeysSha,
       'projectShaIdentifier': projectShaIdentifier.toJson(),
       'description': description,
       'gitOriginUrl': gitOriginUrl,
@@ -287,7 +279,6 @@ class _ProjectImpl extends Project {
     required String name,
     required DateTime createdAt,
     required DateTime updatedAt,
-    required String currentTranslationsKeysSha,
     required BigInt projectShaIdentifier,
     required String description,
     required String gitOriginUrl,
@@ -313,7 +304,6 @@ class _ProjectImpl extends Project {
           name: name,
           createdAt: createdAt,
           updatedAt: updatedAt,
-          currentTranslationsKeysSha: currentTranslationsKeysSha,
           projectShaIdentifier: projectShaIdentifier,
           description: description,
           gitOriginUrl: gitOriginUrl,
@@ -345,7 +335,6 @@ class _ProjectImpl extends Project {
     String? name,
     DateTime? createdAt,
     DateTime? updatedAt,
-    String? currentTranslationsKeysSha,
     BigInt? projectShaIdentifier,
     String? description,
     String? gitOriginUrl,
@@ -372,8 +361,6 @@ class _ProjectImpl extends Project {
       name: name ?? this.name,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      currentTranslationsKeysSha:
-          currentTranslationsKeysSha ?? this.currentTranslationsKeysSha,
       projectShaIdentifier: projectShaIdentifier ?? this.projectShaIdentifier,
       description: description ?? this.description,
       gitOriginUrl: gitOriginUrl ?? this.gitOriginUrl,

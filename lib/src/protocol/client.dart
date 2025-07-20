@@ -29,18 +29,20 @@ import 'package:gobabel_client/src/protocol/response/paginated_label_response.da
 import 'package:gobabel_client/src/protocol/project/project.dart' as _i11;
 import 'package:gobabel_client/src/protocol/project/project_cache_map.dart'
     as _i12;
-import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
+import 'package:gobabel_client/src/protocol/project/project_arb_keys_appearances_path.dart'
     as _i13;
-import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
+import 'package:gobabel_client/src/protocol/account_related/plan_tier.dart'
     as _i14;
-import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+import 'package:gobabel_client/src/protocol/account_related/subscription_recurrency.dart'
     as _i15;
-import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i16;
-import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i17;
-import 'package:gobabel_client/src/protocol/response_input/language_data_payload.dart'
-    as _i18;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i19;
-import 'protocol.dart' as _i20;
+import 'package:gobabel_client/src/protocol/project/arb_keys_appearances_path.dart'
+    as _i16;
+import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i17;
+import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i18;
+import 'package:gobabel_client/src/protocol/response/project_locale_data.dart'
+    as _i19;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i20;
+import 'protocol.dart' as _i21;
 
 /// {@category Endpoint}
 class EndpointPrivateAccount extends _i1.EndpointRef {
@@ -80,31 +82,6 @@ class EndpointPrivateAddNewLanguage extends _i1.EndpointRef {
           'toCountryCode': toCountryCode,
           'referenceLanguageCode': referenceLanguageCode,
           'referenceCountryCode': referenceCountryCode,
-        },
-      );
-}
-
-/// {@category Endpoint}
-class EndpointPrivateArb extends _i1.EndpointRef {
-  EndpointPrivateArb(_i1.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'privateArb';
-
-  _i2.Future<void> update({
-    required BigInt projectShaIdentifier,
-    required String languageCode,
-    required String countryCode,
-    required Map<String, String> updatedLabels,
-  }) =>
-      caller.callServerEndpoint<void>(
-        'privateArb',
-        'update',
-        {
-          'projectShaIdentifier': projectShaIdentifier,
-          'languageCode': languageCode,
-          'countryCode': countryCode,
-          'updatedLabels': updatedLabels,
         },
       );
 }
@@ -284,21 +261,6 @@ class EndpointPrivateLabels extends _i1.EndpointRef {
           'countryCode': countryCode,
         },
       );
-
-  _i2.Future<void> updateLabel({
-    required BigInt projectShaIdentifier,
-    required int labelValueId,
-    required String newContent,
-  }) =>
-      caller.callServerEndpoint<void>(
-        'privateLabels',
-        'updateLabel',
-        {
-          'projectShaIdentifier': projectShaIdentifier,
-          'labelValueId': labelValueId,
-          'newContent': newContent,
-        },
-      );
 }
 
 /// {@category Endpoint}
@@ -358,6 +320,14 @@ class EndpointPrivateProject extends _i1.EndpointRef {
   @override
   String get name => 'privateProject';
 
+  _i2.Future<_i13.ProjectArbKeysAppearancesPath> getProjectArbKeyAppearences(
+          {required BigInt projectShaIdentifier}) =>
+      caller.callServerEndpoint<_i13.ProjectArbKeysAppearancesPath>(
+        'privateProject',
+        'getProjectArbKeyAppearences',
+        {'projectShaIdentifier': projectShaIdentifier},
+      );
+
   _i2.Future<_i12.ProjectCacheMap> getProjectData(
           {required BigInt projectShaIdentifier}) =>
       caller.callServerEndpoint<_i12.ProjectCacheMap>(
@@ -389,8 +359,8 @@ class EndpointSubscriptionsManagement extends _i1.EndpointRef {
       );
 
   _i2.Future<String> generateSubscriptionPaymentLink({
-    required _i13.PlanTier targetPlanTier,
-    required _i14.SubscriptionRecurrency targetSubscriptionRecurrency,
+    required _i14.PlanTier targetPlanTier,
+    required _i15.SubscriptionRecurrency targetSubscriptionRecurrency,
     required String userEmail,
   }) =>
       caller.callServerEndpoint<String>(
@@ -483,9 +453,9 @@ class EndpointPublicGenerate extends _i1.EndpointRef {
     required _i2.Stream<Map<String, Map<String, Map<String, String>>>>
         madeTranslations,
     required Set<String> projectCodeBaseFolders,
-    required _i15.ArbKeysAppearancesPath pathsOfKeys,
-    required _i16.GitCommit gitCommit,
-    required _i17.GitUser gitUser,
+    required _i16.ArbKeysAppearancesPath pathsOfKeys,
+    required _i17.GitCommit gitCommit,
+    required _i18.GitUser gitUser,
     required Map<String, String> hardcodedStringToKeyCache,
     required Map<String, String> keyToDeclaration,
     required Map<String, String> keyToImplementation,
@@ -617,7 +587,7 @@ class EndpointPublicHistory extends _i1.EndpointRef {
   _i2.Future<void> setCommit({
     required BigInt projectShaIdentifier,
     required int generateHistoryId,
-    required _i16.GitCommit commit,
+    required _i17.GitCommit commit,
   }) =>
       caller.callServerEndpoint<void>(
         'publicHistory',
@@ -637,19 +607,9 @@ class EndpointPublicProject extends _i1.EndpointRef {
   @override
   String get name => 'publicProject';
 
-  _i2.Future<
-      ({
-        List<_i18.LanguageDataPayload> languages,
-        int maxLanguageCount,
-        DateTime updatedAt
-      })> getProjectLanguages(
+  _i2.Future<_i19.ProjectLanguageDataResponse> getProjectLanguages(
           {required BigInt projectShaIdentifier}) =>
-      caller.callServerEndpoint<
-          ({
-            List<_i18.LanguageDataPayload> languages,
-            int maxLanguageCount,
-            DateTime updatedAt
-          })>(
+      caller.callServerEndpoint<_i19.ProjectLanguageDataResponse>(
         'publicProject',
         'getProjectLanguages',
         {'projectShaIdentifier': projectShaIdentifier},
@@ -679,7 +639,7 @@ class EndpointPublicTier extends _i1.EndpointRef {
   _i2.Future<void> updatePlayerTier({
     required String email,
     required String tierManipulationKey,
-    required _i13.PlanTier planTier,
+    required _i14.PlanTier planTier,
   }) =>
       caller.callServerEndpoint<void>(
         'publicTier',
@@ -708,7 +668,7 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
     required String referenceLanguageCode,
     required String referenceCountryCode,
     required Map<String, String> referenceArb,
-    required _i15.ArbKeysAppearancesPath pathsOfKeys,
+    required _i16.ArbKeysAppearancesPath pathsOfKeys,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
         'publicTranslateArb',
@@ -728,10 +688,10 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i19.Caller(client);
+    auth = _i20.Caller(client);
   }
 
-  late final _i19.Caller auth;
+  late final _i20.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -750,7 +710,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i20.Protocol(),
+          _i21.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -762,7 +722,6 @@ class Client extends _i1.ServerpodClientShared {
         ) {
     privateAccount = EndpointPrivateAccount(this);
     privateAddNewLanguage = EndpointPrivateAddNewLanguage(this);
-    privateArb = EndpointPrivateArb(this);
     privateContext = EndpointPrivateContext(this);
     privateHistory = EndpointPrivateHistory(this);
     privateLabels = EndpointPrivateLabels(this);
@@ -786,8 +745,6 @@ class Client extends _i1.ServerpodClientShared {
   late final EndpointPrivateAccount privateAccount;
 
   late final EndpointPrivateAddNewLanguage privateAddNewLanguage;
-
-  late final EndpointPrivateArb privateArb;
 
   late final EndpointPrivateContext privateContext;
 
@@ -830,7 +787,6 @@ class Client extends _i1.ServerpodClientShared {
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'privateAccount': privateAccount,
         'privateAddNewLanguage': privateAddNewLanguage,
-        'privateArb': privateArb,
         'privateContext': privateContext,
         'privateHistory': privateHistory,
         'privateLabels': privateLabels,
