@@ -41,8 +41,10 @@ import 'package:gobabel_client/src/protocol/project/git_commit.dart' as _i17;
 import 'package:gobabel_client/src/protocol/project/git_user.dart' as _i18;
 import 'package:gobabel_client/src/protocol/response/project_locale_data.dart'
     as _i19;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i20;
-import 'protocol.dart' as _i21;
+import 'package:gobabel_client/src/protocol/response/review/hardcodedstring_userfacing_view_state.dart'
+    as _i20;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i21;
+import 'protocol.dart' as _i22;
 
 /// {@category Endpoint}
 class EndpointPrivateAccount extends _i1.EndpointRef {
@@ -513,40 +515,22 @@ class EndpointPublicSync extends _i1.EndpointRef {
 
 /// Endpoint for ARB file helper operations like generating keys and translating content
 /// {@category Endpoint}
-class EndpointPublicArbHelpers extends _i1.EndpointRef {
-  EndpointPublicArbHelpers(_i1.EndpointCaller caller) : super(caller);
+class EndpointPublicCreateArbKeyNames extends _i1.EndpointRef {
+  EndpointPublicCreateArbKeyNames(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'publicArbHelpers';
-
-  /// Analyzes a map of strings from Dart files to determine if they should be translated
-  /// Returns a map where the key is the original string and the value is a boolean indicating
-  /// if it should be translated (true) or not (false)
-  _i2.Future<Map<String, bool>> analyseIfStringIsADisplayableLabel({
-    required String projectApiToken,
-    required BigInt projectShaIdentifier,
-    required Map<String, String> extractedStrings,
-  }) =>
-      caller.callServerEndpoint<Map<String, bool>>(
-        'publicArbHelpers',
-        'analyseIfStringIsADisplayableLabel',
-        {
-          'projectApiToken': projectApiToken,
-          'projectShaIdentifier': projectShaIdentifier,
-          'extractedStrings': extractedStrings,
-        },
-      );
+  String get name => 'publicCreateArbKeyNames';
 
   /// Generate coherent ARB keys for a map of translation content
   /// Returns a map where the key is the generated ARB key and the value is the original content
-  _i2.Future<Map<String, String>> createArbKeyNames({
+  _i2.Future<Map<String, String>> call({
     required String projectApiToken,
     required BigInt projectShaIdentifier,
     required Map<String, String> translationContents,
   }) =>
       caller.callServerEndpoint<Map<String, String>>(
-        'publicArbHelpers',
-        'createArbKeyNames',
+        'publicCreateArbKeyNames',
+        'call',
         {
           'projectApiToken': projectApiToken,
           'projectShaIdentifier': projectShaIdentifier,
@@ -612,6 +596,14 @@ class EndpointPublicProject extends _i1.EndpointRef {
       caller.callServerEndpoint<_i19.ProjectLanguageDataResponse>(
         'publicProject',
         'getProjectLanguages',
+        {'projectShaIdentifier': projectShaIdentifier},
+      );
+
+  _i2.Future<Map<String, String>> getProjectDeclarationFunctions(
+          {required BigInt projectShaIdentifier}) =>
+      caller.callServerEndpoint<Map<String, String>>(
+        'publicProject',
+        'getProjectDeclarationFunctions',
         {'projectShaIdentifier': projectShaIdentifier},
       );
 
@@ -686,12 +678,83 @@ class EndpointPublicTranslateArb extends _i1.EndpointRef {
       );
 }
 
+/// {@category Endpoint}
+class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
+  EndpointPublicStringsReviewSession(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'publicStringsReviewSession';
+
+  _i2.Stream<_i20.HardcodedStringUserFacingViewState>
+      listenToSessionTranslations({required String sessionUuid}) =>
+          caller.callStreamingServerEndpoint<
+              _i2.Stream<_i20.HardcodedStringUserFacingViewState>,
+              _i20.HardcodedStringUserFacingViewState>(
+            'publicStringsReviewSession',
+            'listenToSessionTranslations',
+            {'sessionUuid': sessionUuid},
+            {},
+          );
+
+  _i2.Future<Map<String, String>> getMapsOfFieldsToBeAnalysed(
+          String sessionUuid) =>
+      caller.callServerEndpoint<Map<String, String>>(
+        'publicStringsReviewSession',
+        'getMapsOfFieldsToBeAnalysed',
+        {'sessionUuid': sessionUuid},
+      );
+
+  _i2.Future<void> notifySessionReview({
+    required String sessionUuid,
+    required Map<String, bool> sessionResponse,
+  }) =>
+      caller.callServerEndpoint<void>(
+        'publicStringsReviewSession',
+        'notifySessionReview',
+        {
+          'sessionUuid': sessionUuid,
+          'sessionResponse': sessionResponse,
+        },
+      );
+
+  /// Will await until there is a response for the session in the stream.
+  _i2.Stream<Map<String, bool>> getSessionResponse(
+          {required String sessionUuid}) =>
+      caller.callStreamingServerEndpoint<_i2.Stream<Map<String, bool>>,
+          Map<String, bool>>(
+        'publicStringsReviewSession',
+        'getSessionResponse',
+        {'sessionUuid': sessionUuid},
+        {},
+      );
+
+  _i2.Future<String> createSession({
+    required String projectApiToken,
+    required BigInt projectShaIdentifier,
+    required DateTime createdAt,
+    required Map<String, String> hardcodedStringsToBeAnalysed,
+    required bool dangerouslyAutoDetectUserFacingHardcodedStrings,
+  }) =>
+      caller.callServerEndpoint<String>(
+        'publicStringsReviewSession',
+        'createSession',
+        {
+          'projectApiToken': projectApiToken,
+          'projectShaIdentifier': projectShaIdentifier,
+          'createdAt': createdAt,
+          'hardcodedStringsToBeAnalysed': hardcodedStringsToBeAnalysed,
+          'dangerouslyAutoDetectUserFacingHardcodedStrings':
+              dangerouslyAutoDetectUserFacingHardcodedStrings,
+        },
+      );
+}
+
 class Modules {
   Modules(Client client) {
-    auth = _i20.Caller(client);
+    auth = _i21.Caller(client);
   }
 
-  late final _i20.Caller auth;
+  late final _i21.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -710,7 +773,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i21.Protocol(),
+          _i22.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
@@ -733,12 +796,13 @@ class Client extends _i1.ServerpodClientShared {
     publicCreateProject = EndpointPublicCreateProject(this);
     publicGenerate = EndpointPublicGenerate(this);
     publicSync = EndpointPublicSync(this);
-    publicArbHelpers = EndpointPublicArbHelpers(this);
+    publicCreateArbKeyNames = EndpointPublicCreateArbKeyNames(this);
     publicHardcodedStringKeyCache = EndpointPublicHardcodedStringKeyCache(this);
     publicHistory = EndpointPublicHistory(this);
     publicProject = EndpointPublicProject(this);
     publicTier = EndpointPublicTier(this);
     publicTranslateArb = EndpointPublicTranslateArb(this);
+    publicStringsReviewSession = EndpointPublicStringsReviewSession(this);
     modules = Modules(this);
   }
 
@@ -768,7 +832,7 @@ class Client extends _i1.ServerpodClientShared {
 
   late final EndpointPublicSync publicSync;
 
-  late final EndpointPublicArbHelpers publicArbHelpers;
+  late final EndpointPublicCreateArbKeyNames publicCreateArbKeyNames;
 
   late final EndpointPublicHardcodedStringKeyCache
       publicHardcodedStringKeyCache;
@@ -780,6 +844,8 @@ class Client extends _i1.ServerpodClientShared {
   late final EndpointPublicTier publicTier;
 
   late final EndpointPublicTranslateArb publicTranslateArb;
+
+  late final EndpointPublicStringsReviewSession publicStringsReviewSession;
 
   late final Modules modules;
 
@@ -798,12 +864,13 @@ class Client extends _i1.ServerpodClientShared {
         'publicCreateProject': publicCreateProject,
         'publicGenerate': publicGenerate,
         'publicSync': publicSync,
-        'publicArbHelpers': publicArbHelpers,
+        'publicCreateArbKeyNames': publicCreateArbKeyNames,
         'publicHardcodedStringKeyCache': publicHardcodedStringKeyCache,
         'publicHistory': publicHistory,
         'publicProject': publicProject,
         'publicTier': publicTier,
         'publicTranslateArb': publicTranslateArb,
+        'publicStringsReviewSession': publicStringsReviewSession,
       };
 
   @override
