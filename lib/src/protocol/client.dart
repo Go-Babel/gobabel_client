@@ -717,6 +717,14 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
         },
       );
 
+  _i2.Future<void> notifyThatSessionCanBeDisposedSession(
+          {required String sessionUuid}) =>
+      caller.callServerEndpoint<void>(
+        'publicStringsReviewSession',
+        'notifyThatSessionCanBeDisposedSession',
+        {'sessionUuid': sessionUuid},
+      );
+
   /// Will await until there is a response for the session in the stream.
   _i2.Stream<Map<String, bool>> getSessionResponse(
           {required String sessionUuid}) =>
