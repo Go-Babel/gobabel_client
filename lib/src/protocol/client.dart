@@ -569,6 +569,7 @@ class EndpointPublicHistory extends _i1.EndpointRef {
   String get name => 'publicHistory';
 
   _i2.Future<void> setCommit({
+    required String projectApiToken,
     required BigInt projectShaIdentifier,
     required int generateHistoryId,
     required _i17.GitCommit commit,
@@ -577,6 +578,7 @@ class EndpointPublicHistory extends _i1.EndpointRef {
         'publicHistory',
         'setCommit',
         {
+          'projectApiToken': projectApiToken,
           'projectShaIdentifier': projectShaIdentifier,
           'generateHistoryId': generateHistoryId,
           'commit': commit,
