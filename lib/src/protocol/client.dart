@@ -706,6 +706,13 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
         {'sessionUuid': sessionUuid},
       );
 
+  _i2.Future<DateTime> getSessionStartTime(String sessionUuid) =>
+      caller.callServerEndpoint<DateTime>(
+        'publicStringsReviewSession',
+        'getSessionStartTime',
+        {'sessionUuid': sessionUuid},
+      );
+
   _i2.Future<void> notifySessionReview({
     required String sessionUuid,
     required Map<String, bool> sessionResponse,
@@ -741,7 +748,6 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
   _i2.Future<String> createSession({
     required String projectApiToken,
     required BigInt projectShaIdentifier,
-    required DateTime createdAt,
     required Map<String, String> hardcodedStringsToBeAnalysed,
     required bool dangerouslyAutoDetectUserFacingHardcodedStrings,
   }) =>
@@ -751,7 +757,6 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
         {
           'projectApiToken': projectApiToken,
           'projectShaIdentifier': projectShaIdentifier,
-          'createdAt': createdAt,
           'hardcodedStringsToBeAnalysed': hardcodedStringsToBeAnalysed,
           'dangerouslyAutoDetectUserFacingHardcodedStrings':
               dangerouslyAutoDetectUserFacingHardcodedStrings,
