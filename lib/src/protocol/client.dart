@@ -43,8 +43,10 @@ import 'package:gobabel_client/src/protocol/response/project_locale_data.dart'
     as _i19;
 import 'package:gobabel_client/src/protocol/response/review/hardcodedstring_userfacing_view_state.dart'
     as _i20;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i21;
-import 'protocol.dart' as _i22;
+import 'package:gobabel_client/src/protocol/response/review_session_response.dart'
+    as _i21;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i22;
+import 'protocol.dart' as _i23;
 
 /// {@category Endpoint}
 class EndpointPrivateAccount extends _i1.EndpointRef {
@@ -713,14 +715,6 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
         {'sessionUuid': sessionUuid},
       );
 
-  _i2.Future<Map<String, String>> getRemapedHardcodedStrings(
-          String sessionUuid) =>
-      caller.callServerEndpoint<Map<String, String>>(
-        'publicStringsReviewSession',
-        'getRemapedHardcodedStrings',
-        {'sessionUuid': sessionUuid},
-      );
-
   _i2.Future<void> notifySessionReview({
     required String sessionUuid,
     required Map<String, bool> sessionResponse,
@@ -745,10 +739,10 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
       );
 
   /// Will await until there is a response for the session in the stream.
-  _i2.Stream<Map<String, bool>> getSessionResponse(
+  _i2.Stream<_i21.ReviewSessionResponse> getSessionResponse(
           {required String sessionUuid}) =>
-      caller.callStreamingServerEndpoint<_i2.Stream<Map<String, bool>>,
-          Map<String, bool>>(
+      caller.callStreamingServerEndpoint<_i2.Stream<_i21.ReviewSessionResponse>,
+          _i21.ReviewSessionResponse>(
         'publicStringsReviewSession',
         'getSessionResponse',
         {'sessionUuid': sessionUuid},
@@ -776,10 +770,10 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
 
 class Modules {
   Modules(Client client) {
-    auth = _i21.Caller(client);
+    auth = _i22.Caller(client);
   }
 
-  late final _i21.Caller auth;
+  late final _i22.Caller auth;
 }
 
 class Client extends _i1.ServerpodClientShared {
@@ -798,7 +792,7 @@ class Client extends _i1.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
           host,
-          _i22.Protocol(),
+          _i23.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,
