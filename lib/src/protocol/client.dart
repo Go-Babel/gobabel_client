@@ -713,9 +713,18 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
         {'sessionUuid': sessionUuid},
       );
 
+  _i2.Future<Map<String, String>> getRemapedHardcodedStrings(
+          String sessionUuid) =>
+      caller.callServerEndpoint<Map<String, String>>(
+        'publicStringsReviewSession',
+        'getRemapedHardcodedStrings',
+        {'sessionUuid': sessionUuid},
+      );
+
   _i2.Future<void> notifySessionReview({
     required String sessionUuid,
     required Map<String, bool> sessionResponse,
+    required Map<String, String> remapedHardcodedStrings,
   }) =>
       caller.callServerEndpoint<void>(
         'publicStringsReviewSession',
@@ -723,6 +732,7 @@ class EndpointPublicStringsReviewSession extends _i1.EndpointRef {
         {
           'sessionUuid': sessionUuid,
           'sessionResponse': sessionResponse,
+          'remapedHardcodedStrings': remapedHardcodedStrings,
         },
       );
 
